@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "items")
-public class Item {
+@Table(name = "rentables")
+public class Rentable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,6 +18,8 @@ public class Item {
     private String desc;
     @Column(name = "price")
     private BigDecimal price;
+    @Column(name = "price_period")
+    private String pricePeriod;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -25,10 +27,8 @@ public class Item {
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
-    @OneToMany(mappedBy = "item")
-    private List<CartItem> cartItems;
-    @OneToMany(mappedBy = "item")
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "rentable")
+    private List<Rental> rentals;
 
     public long getId() {
         return id;
@@ -62,6 +62,14 @@ public class Item {
         this.price = price;
     }
 
+    public String getPricePeriod() {
+        return pricePeriod;
+    }
+
+    public void setPricePeriod(String pricePeriod) {
+        this.pricePeriod = pricePeriod;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -86,47 +94,40 @@ public class Item {
         this.modifiedAt = modifiedAt;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    public List<Rental> getRentals() {
+        return rentals;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public Rentable() {
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public Item() {
-    }
-
-    public Item(long id, String name, String desc, BigDecimal price, Category category, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<CartItem> cartItems, List<OrderItem> orderItems) {
+    public Rentable(long id, String name, String desc, BigDecimal price, String pricePeriod, Category category, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Rental> rentals) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.price = price;
+        this.pricePeriod = pricePeriod;
         this.category = category;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
-        this.cartItems = cartItems;
-        this.orderItems = orderItems;
+        this.rentals = rentals;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return id == item.id && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(price, item.price) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(cartItems, item.cartItems) && Objects.equals(orderItems, item.orderItems);
+        Rentable rentable = (Rentable) o;
+        return id == rentable.id && Objects.equals(name, rentable.name) && Objects.equals(desc, rentable.desc) && Objects.equals(price, rentable.price) && Objects.equals(pricePeriod, rentable.pricePeriod) && Objects.equals(category, rentable.category) && Objects.equals(createdAt, rentable.createdAt) && Objects.equals(modifiedAt, rentable.modifiedAt) && Objects.equals(rentals, rentable.rentals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, price, category, createdAt, modifiedAt, cartItems, orderItems);
+        return Objects.hash(id, name, desc, price, pricePeriod, category, createdAt, modifiedAt, rentals);
     }
 }
+
