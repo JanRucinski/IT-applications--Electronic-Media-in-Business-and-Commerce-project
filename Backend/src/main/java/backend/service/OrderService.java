@@ -4,7 +4,7 @@ import backend.model.Order;
 
 import java.util.List;
 
-interface OrderService {
+public interface OrderService {
     Order addOrder(Order order);
     Order deleteOrder(long id);
     List<Order> findAllOrders();

@@ -83,6 +83,12 @@ public class CartItem {
         this.modifiedAt = modifiedAt;
     }
 
+    public CartItem(int quantity, Cart cart, Item item) {
+        this.quantity = quantity;
+        this.cart = cart;
+        this.item = item;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

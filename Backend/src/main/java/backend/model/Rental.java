@@ -129,6 +129,14 @@ public class Rental {
         this.modifiedAt = modifiedAt;
     }
 
+    public Rental(OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, Rentable rentable, User user) {
+        this.rentalStart = rentalStart;
+        this.rentalEnd = rentalEnd;
+        this.total = total;
+        this.rentable = rentable;
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -117,6 +117,14 @@ public class Rentable {
         this.rentals = rentals;
     }
 
+    public Rentable(String name, String desc, BigDecimal price, String pricePeriod, Category category) {
+        this.name = name;
+        this.desc = desc;
+        this.price = price;
+        this.pricePeriod = pricePeriod;
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

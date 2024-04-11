@@ -84,6 +84,13 @@ public class Cart {
         this.cartItems = cartItems;
     }
 
+    public Cart(BigDecimal total, User user) {
+        this.total = total;
+        this.user = user;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

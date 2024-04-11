@@ -104,6 +104,11 @@ public class Payment {
         this.rental = rental;
     }
 
+    public Payment(BigDecimal amount, String provider) {
+        this.amount = amount;
+        this.provider = provider;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

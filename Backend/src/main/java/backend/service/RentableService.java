@@ -4,7 +4,7 @@ import backend.model.Rentable;
 
 import java.util.List;
 
-interface RentableService {
+public interface RentableService {
     Rentable addRentable(Rentable rentable);
     Rentable deleteRentable(long id);
     List<Rentable> findAllRentables();

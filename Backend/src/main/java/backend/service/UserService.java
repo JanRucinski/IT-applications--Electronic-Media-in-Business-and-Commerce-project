@@ -4,7 +4,7 @@ import backend.model.User;
 
 import java.util.List;
 
-interface UserService {
+public interface UserService {
     User addUser(User user);
     User deleteUser(long id);
     List<User> findAllUsers();

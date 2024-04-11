@@ -83,6 +83,12 @@ public class OrderItem {
         this.modifiedAt = modifiedAt;
     }
 
+    public OrderItem(int quantity, Order order, Item item) {
+        this.quantity = quantity;
+        this.order = order;
+        this.item = item;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

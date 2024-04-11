@@ -149,6 +149,15 @@ public class User {
         this.rentals = rentals;
     }
 
+    public User(String username, String password, String email, String firstName, String lastName, int phone) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

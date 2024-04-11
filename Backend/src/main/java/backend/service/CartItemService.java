@@ -4,7 +4,7 @@ import backend.model.CartItem;
 
 import java.util.List;
 
-interface CartItemService {
+public interface CartItemService {
     CartItem addCartItem(CartItem cartItem);
     CartItem deleteCartItem(long id);
     List<CartItem> findAllCartItems();

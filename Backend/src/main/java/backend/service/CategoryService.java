@@ -4,7 +4,7 @@ import backend.model.Category;
 
 import java.util.List;
 
-interface CategoryService {
+public interface CategoryService {
     Category addCategory(Category category);
     Category deleteCategory(long id);
     List<Category> findAllCategories();

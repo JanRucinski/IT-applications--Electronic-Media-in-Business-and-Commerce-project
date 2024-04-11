@@ -96,6 +96,11 @@ public class Order {
         this.orderItems = orderItems;
     }
 
+    public Order(User user, BigDecimal total) {
+        this.user = user;
+        this.total = total;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

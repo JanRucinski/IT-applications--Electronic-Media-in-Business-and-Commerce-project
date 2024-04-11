@@ -117,6 +117,13 @@ public class Item {
         this.orderItems = orderItems;
     }
 
+    public Item(String name, String desc, BigDecimal price, Category category) {
+        this.name = name;
+        this.desc = desc;
+        this.price = price;
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

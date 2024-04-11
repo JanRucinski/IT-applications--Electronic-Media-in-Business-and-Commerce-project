@@ -4,7 +4,7 @@ import backend.model.Item;
 
 import java.util.List;
 
-interface ItemService {
+public interface ItemService {
     Item addItem(Item item);
     Item deleteItem(long id);
     List<Item> findAllItems();
