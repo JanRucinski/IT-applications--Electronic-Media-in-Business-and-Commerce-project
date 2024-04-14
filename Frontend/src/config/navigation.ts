@@ -1,16 +1,24 @@
 import { NavItem } from '@/types/config';
 
 export const headerItems: NavItem[] = [
+  // {
+  //   title: 'Home',
+  //   to: '/',
+  // },
   {
-    title: 'Home',
-    to: '/',
+    title: 'Shop',
+    to: '/shop',
   },
   {
-    title: 'Products',
-    to: '/products',
+    title: 'Rental',
+    to: '/rental',
   },
   {
-    title: 'About',
+    title: 'Parts',
+    to: '/parts',
+  },
+  {
+    title: 'About us',
     to: '/about',
   },
   {

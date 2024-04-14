@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import MainLogo from './MainLogo';
 import AuthButtons from './AuthButtons';
 import UserNav from './UserNav';
 import { headerItems } from '@/config/navigation';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 const Header = () => {
   // TODO: Implement authentication
-  const isAuthenticate = false;
+  const isAuthenticated = false;
+  const { pathname } = useLocation();
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background">
@@ -20,8 +22,11 @@ const Header = () => {
               <li key={item.title}>
                 <Button
                   asChild
-                  variant="link"
-                  className="text-base text-sky-950"
+                  variant="nav"
+                  className={cn(
+                    'text-base',
+                    pathname === item.to && 'text-primary'
+                  )}
                 >
                   <Link to={item.to}>{item.title}</Link>
                 </Button>
@@ -30,7 +35,7 @@ const Header = () => {
           </ul>
         </nav>
         <nav className="flex items-center justify-center">
-          {isAuthenticate ? (
+          {isAuthenticated ? (
             <UserNav
               name="Murad"
               surname="Shahbazov"
