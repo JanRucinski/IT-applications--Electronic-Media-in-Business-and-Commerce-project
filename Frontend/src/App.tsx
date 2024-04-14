@@ -1,9 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { HomePage, Unauthorized, PageNotFound, LoginPage } from './pages';
+import {
+  HomePage,
+  Unauthorized,
+  PageNotFound,
+  LoginPage,
+  SignUpPage,
+  ShopPage,
+} from './pages';
 import Layout from './components/layouts/Layout';
 import AuthLayout from './components/layouts/AuthLayout';
-import SignUpPage from './pages/SignUpPage';
 
 function App() {
   return (
@@ -11,6 +17,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ShopPage />} />
         </Route>
 
         <Route element={<AuthLayout />}>
