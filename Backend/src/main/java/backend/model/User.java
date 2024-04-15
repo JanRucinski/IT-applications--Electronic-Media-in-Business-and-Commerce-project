@@ -1,6 +1,7 @@
 package backend.model;
 
 import jakarta.persistence.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -12,11 +13,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "first_name")
     private String firstName;
@@ -28,7 +29,7 @@ public class User {
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private Cart cart;
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
@@ -56,7 +57,15 @@ public class User {
     }
 
     public void setPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public void setPlainPassword(String password) {
         this.password = password;
+    }
+
+    public boolean verifyPassword(String password) {
+        return BCrypt.checkpw(password, this.password);
     }
 
     public String getEmail() {
@@ -137,7 +146,7 @@ public class User {
     public User(long id, String username, String password, String email, String firstName, String lastName, int phone, OffsetDateTime createdAt, OffsetDateTime modifiedAt, Cart cart, List<Order> orders, List<Rental> rentals) {
         this.id = id;
         this.username = username;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -151,7 +160,7 @@ public class User {
 
     public User(String username, String password, String email, String firstName, String lastName, int phone) {
         this.username = username;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

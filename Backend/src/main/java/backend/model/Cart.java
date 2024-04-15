@@ -14,7 +14,7 @@ public class Cart {
     private long id;
     @Column(name = "total")
     private BigDecimal total;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @Column(name = "created_at")
