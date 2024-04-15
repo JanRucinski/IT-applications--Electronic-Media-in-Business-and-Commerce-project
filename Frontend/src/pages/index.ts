@@ -4,6 +4,7 @@ import PageNotFound from './PageNotFound';
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
 import ShopPage from './ShopPage';
+import ContactPage from './ContactPage';
 
 export {
   HomePage,
@@ -12,4 +13,5 @@ export {
   LoginPage,
   ShopPage,
   SignUpPage,
+  ContactPage,
 };

@@ -7,6 +7,7 @@ import {
   LoginPage,
   SignUpPage,
   ShopPage,
+  ContactPage,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import AuthLayout from './components/layouts/AuthLayout';
@@ -18,6 +19,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Route>
 
         <Route element={<AuthLayout />}>
