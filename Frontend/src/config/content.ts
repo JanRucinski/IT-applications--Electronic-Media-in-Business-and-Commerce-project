@@ -7,7 +7,7 @@ export const heroSection = {
   ctaButtons: [
     {
       title: 'Explore available models',
-      to: '/products',
+      to: '/shop',
     },
     {
       title: 'Sign-in',
