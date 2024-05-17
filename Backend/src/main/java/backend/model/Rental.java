@@ -18,15 +18,16 @@ public class Rental {
     @Column(name = "total")
     private BigDecimal total;
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private RentalStatus status;
     @ManyToOne
-    @JoinColumn(name = "rentable_id")
-    private Rentable rentable;
+    @JoinColumn(name = "item_id")
+    private Item item;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    @JoinColumn(name = "payment_id")
     private Payment payment;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
@@ -65,20 +66,20 @@ public class Rental {
         this.total = total;
     }
 
-    public String getStatus() {
+    public RentalStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(RentalStatus status) {
         this.status = status;
     }
 
-    public Rentable getRentable() {
-        return rentable;
+    public Item getItem() {
+        return item;
     }
 
-    public void setRentable(Rentable rentable) {
-        this.rentable = rentable;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public User getUser() {
@@ -113,28 +114,38 @@ public class Rental {
         this.modifiedAt = modifiedAt;
     }
 
+    public enum RentalStatus {
+        REQUESTED,
+        CANCELLED,
+        IN_PROGRESS,
+        COMPLETED
+    }
+
     public Rental() {
     }
 
-    public Rental(long id, OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, String status, Rentable rentable, User user, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
+    public Rental(long id, OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, RentalStatus status, Item item, User user, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
         this.id = id;
         this.rentalStart = rentalStart;
         this.rentalEnd = rentalEnd;
         this.total = total;
         this.status = status;
-        this.rentable = rentable;
+        this.item = item;
         this.user = user;
         this.payment = payment;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
 
-    public Rental(OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, Rentable rentable, User user) {
+    public Rental(OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, Item item, User user) {
         this.rentalStart = rentalStart;
         this.rentalEnd = rentalEnd;
         this.total = total;
-        this.rentable = rentable;
+        this.item = item;
         this.user = user;
+        this.status = RentalStatus.REQUESTED;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
     }
 
     @Override
@@ -142,11 +153,11 @@ public class Rental {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rental rental = (Rental) o;
-        return id == rental.id && Objects.equals(rentalStart, rental.rentalStart) && Objects.equals(rentalEnd, rental.rentalEnd) && Objects.equals(total, rental.total) && Objects.equals(status, rental.status) && Objects.equals(rentable, rental.rentable) && Objects.equals(user, rental.user) && Objects.equals(payment, rental.payment) && Objects.equals(createdAt, rental.createdAt) && Objects.equals(modifiedAt, rental.modifiedAt);
+        return id == rental.id && Objects.equals(rentalStart, rental.rentalStart) && Objects.equals(rentalEnd, rental.rentalEnd) && Objects.equals(total, rental.total) && Objects.equals(status, rental.status) && Objects.equals(item, rental.item) && Objects.equals(user, rental.user) && Objects.equals(payment, rental.payment) && Objects.equals(createdAt, rental.createdAt) && Objects.equals(modifiedAt, rental.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rentalStart, rentalEnd, total, status, rentable, user, payment, createdAt, modifiedAt);
+        return Objects.hash(id, rentalStart, rentalEnd, total, status, item, user, payment, createdAt, modifiedAt);
     }
 }

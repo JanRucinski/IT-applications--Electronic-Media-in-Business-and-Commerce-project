@@ -18,7 +18,7 @@ public class Order {
     @Column(name = "total")
     private BigDecimal total;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    @JoinColumn(name = "payment_id")
     private Payment payment;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
@@ -99,6 +99,8 @@ public class Order {
     public Order(User user, BigDecimal total) {
         this.user = user;
         this.total = total;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
     }
 
     @Override

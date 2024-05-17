@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
                 ou.get().setPhone(userDTO.getPhone());
                 ou.get().setModifiedAt(OffsetDateTime.now());
                 userRepository.save(ou.get());
-                userDTO.setModifiedAt(ou.get().getModifiedAt());
+                userDTO = createDTOFromEntity(ou.get());
                 return userDTO;
             }
         }

@@ -29,8 +29,6 @@ public class User {
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
-    @OneToOne(mappedBy = "user", orphanRemoval = true)
-    private Cart cart;
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
     @OneToMany(mappedBy = "user")
@@ -116,14 +114,6 @@ public class User {
         this.modifiedAt = modifiedAt;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
@@ -143,7 +133,7 @@ public class User {
     public User() {
     }
 
-    public User(long id, String username, String password, String email, String firstName, String lastName, int phone, OffsetDateTime createdAt, OffsetDateTime modifiedAt, Cart cart, List<Order> orders, List<Rental> rentals) {
+    public User(long id, String username, String password, String email, String firstName, String lastName, int phone, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Order> orders, List<Rental> rentals) {
         this.id = id;
         this.username = username;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -153,7 +143,6 @@ public class User {
         this.phone = phone;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
-        this.cart = cart;
         this.orders = orders;
         this.rentals = rentals;
     }
@@ -165,6 +154,8 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
     }
 
     @Override
@@ -172,11 +163,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && phone == user.phone && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(cart, user.cart) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
+        return id == user.id && phone == user.phone && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName, phone, createdAt, modifiedAt, cart, orders, rentals);
+        return Objects.hash(id, username, password, email, firstName, lastName, phone, createdAt, modifiedAt, orders, rentals);
     }
 }

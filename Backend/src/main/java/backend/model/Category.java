@@ -13,14 +13,15 @@ public class Category {
     private long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "super_category")
+    @Enumerated(EnumType.STRING)
+    private SuperCategory superCategory;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
     @OneToMany(mappedBy = "category")
     private List<Item> items;
-    @OneToMany(mappedBy = "category")
-    private List<Rentable> rentables;
 
     public long getId() {
         return id;
@@ -36,6 +37,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public SuperCategory getSuperCategory() {
+        return superCategory;
+    }
+
+    public void setSuperCategory(SuperCategory superCategory) {
+        this.superCategory = superCategory;
     }
 
     public OffsetDateTime getCreatedAt() {
@@ -62,28 +71,27 @@ public class Category {
         this.items = items;
     }
 
-    public List<Rentable> getRentables() {
-        return rentables;
-    }
-
-    public void setRentables(List<Rentable> rentables) {
-        this.rentables = rentables;
+    public enum SuperCategory {
+        BIKES,
+        PARTS,
+        RENTABLES
     }
 
     public Category() {
     }
 
-    public Category(long id, String name, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Item> items, List<Rentable> rentables) {
+    public Category(long id, String name, SuperCategory superCategory, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Item> items) {
         this.id = id;
         this.name = name;
+        this.superCategory = superCategory;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.items = items;
-        this.rentables = rentables;
     }
 
-    public Category(String name) {
+    public Category(String name, SuperCategory superCategory) {
         this.name = name;
+        this.superCategory = superCategory;
     }
 
     @Override
@@ -91,11 +99,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && Objects.equals(name, category.name) && Objects.equals(createdAt, category.createdAt) && Objects.equals(modifiedAt, category.modifiedAt) && Objects.equals(items, category.items) && Objects.equals(rentables, category.rentables);
+        return id == category.id && Objects.equals(name, category.name) && superCategory == category.superCategory && Objects.equals(createdAt, category.createdAt) && Objects.equals(modifiedAt, category.modifiedAt) && Objects.equals(items, category.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, createdAt, modifiedAt, items, rentables);
+        return Objects.hash(id, name, superCategory, createdAt, modifiedAt, items);
     }
 }
