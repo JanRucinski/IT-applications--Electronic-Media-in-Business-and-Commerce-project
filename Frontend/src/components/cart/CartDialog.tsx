@@ -28,7 +28,7 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
         <div>
           <ul>
             {items.map((item) => (
-              <CartItem item={item} />
+              <CartItem item={item} key={item.id} />
             ))}
           </ul>
           <Button className="mt-4">Checkout</Button>

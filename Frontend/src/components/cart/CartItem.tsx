@@ -22,7 +22,7 @@ export const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
-    <li key={item.id}>
+    <li>
       {item.quantity} x {item.name}
       <div>{item.price * item.quantity} €</div>
       <Button onClick={() => removeItem(item.id)}>Remove item</Button>

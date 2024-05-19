@@ -8,6 +8,7 @@ interface CartState {
   addItem: (item: CartItemType) => void;
   removeItem: (id: string) => void;
   updateItem: (id: string, quantity: number) => void;
+  resetCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -23,10 +24,10 @@ export const useCartStore = create<CartState>()(
             item.id === id ? { ...item, quantity } : item
           ),
         })),
+      resetCart: () => set({ cart: [] }),
     }),
     {
       name: 'cart',
-      getStorage: () => localStorage,
     }
   )
 );
