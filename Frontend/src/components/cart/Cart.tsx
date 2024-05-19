@@ -3,11 +3,11 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 
-import { useCart } from '@/hooks/use-cart';
+import { useCartStore } from '@/hooks/context/use-cart-store';
 import { CartDialog } from './CartDialog';
 
 const Cart = () => {
-  const { cart } = useCart();
+  const { cart } = useCartStore();
   const [open, setOpen] = useState(false);
 
   return (

@@ -1,13 +1,13 @@
 import { CartItemType } from '@/models/cart-item';
 import { Button } from '../ui/button';
-import { useCart } from '@/hooks/use-cart';
+import { useCartStore } from '@/hooks/context/use-cart-store';
 
 type CartItemProps = {
   item: CartItemType;
 };
 
 export const CartItem = ({ item }: CartItemProps) => {
-  const { removeItem, updateItem } = useCart();
+  const { removeItem, updateItem } = useCartStore();
 
   const increment = () => {
     updateItem(item.id, item.quantity + 1);

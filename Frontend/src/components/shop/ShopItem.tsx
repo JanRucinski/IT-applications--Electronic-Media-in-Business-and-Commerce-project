@@ -9,8 +9,32 @@ import {
 import { Button } from '../ui/button';
 import { Item } from '@/models/item';
 import { Link } from 'react-router-dom';
+import { useCartStore } from '@/hooks/context/use-cart-store';
 
-const ShopItem = ({ id, name, description, price, image }: Item) => {
+const ShopItem = ({
+  id,
+  name,
+  description,
+  price,
+  image,
+  maxQuantity,
+}: Item) => {
+  const { addItem, removeItem, cart } = useCartStore();
+
+  const addToCart = () => {
+    addItem({
+      id,
+      name,
+      price,
+      quantity: 1,
+      maxQuantity: maxQuantity ? maxQuantity : 1,
+    });
+  };
+
+  const removeFromCart = () => {
+    removeItem(id);
+  };
+
   return (
     <Card className="flex flex-col justify-between hover:cursor-pointer hover:scale-105 transition-transform">
       <CardHeader>
@@ -32,7 +56,15 @@ const ShopItem = ({ id, name, description, price, image }: Item) => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between gap-4">
-        <Button className="flex-1">Add to Cart</Button>
+        {cart.find((item) => item.id === id) ? (
+          <Button className="flex-1" onClick={removeFromCart}>
+            Remove from Cart
+          </Button>
+        ) : (
+          <Button className="flex-1" onClick={addToCart}>
+            Add to Cart
+          </Button>
+        )}
         <Button variant="link" className="text-sky-950" asChild>
           <Link to={`/shop/${id}`}>Details</Link>
         </Button>
