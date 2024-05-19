@@ -11,14 +11,15 @@ import { Item } from '@/models/item';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '@/hooks/context/use-cart-store';
 
+type ShopItemProps = {
+  item: Item;
+  type: 'shop' | 'parts';
+};
+
 const ShopItem = ({
-  id,
-  name,
-  description,
-  price,
-  image,
-  maxQuantity,
-}: Item) => {
+  item: { id, description, image, maxQuantity, name, price },
+  type,
+}: ShopItemProps) => {
   const { addItem, removeItem, cart } = useCartStore();
 
   const addToCart = () => {
@@ -36,7 +37,7 @@ const ShopItem = ({
   };
 
   return (
-    <Card className="flex flex-col justify-between hover:cursor-pointer hover:scale-105 transition-transform">
+    <Card className="flex flex-col justify-between">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{description}</CardDescription>
@@ -57,7 +58,11 @@ const ShopItem = ({
       </CardContent>
       <CardFooter className="flex justify-between gap-4">
         {cart.find((item) => item.id === id) ? (
-          <Button className="flex-1" onClick={removeFromCart}>
+          <Button
+            className="flex-1"
+            onClick={removeFromCart}
+            variant="destructive"
+          >
             Remove from Cart
           </Button>
         ) : (
@@ -66,7 +71,7 @@ const ShopItem = ({
           </Button>
         )}
         <Button variant="link" className="text-sky-950" asChild>
-          <Link to={`/shop/${id}`}>Details</Link>
+          <Link to={`/${type}/${id}`}>Details</Link>
         </Button>
       </CardFooter>
     </Card>

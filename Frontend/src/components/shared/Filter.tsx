@@ -11,10 +11,11 @@ import {
 } from '../ui/dropdown-menu';
 
 type FilterProps = {
+  filterOptions: string[];
   buttonStyle?: string;
 };
 
-const Filter = ({ buttonStyle }: FilterProps) => {
+const Filter = ({ buttonStyle, filterOptions }: FilterProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className={buttonStyle}>
@@ -28,9 +29,11 @@ const Filter = ({ buttonStyle }: FilterProps) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Filter by</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuCheckboxItem>Road</DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>Mountain</DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>BMX</DropdownMenuCheckboxItem>
+        {filterOptions.map((option) => (
+          <DropdownMenuCheckboxItem key={option}>
+            {option}
+          </DropdownMenuCheckboxItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
