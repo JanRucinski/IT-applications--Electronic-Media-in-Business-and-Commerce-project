@@ -9,7 +9,7 @@ import {
 import { Button } from '../ui/button';
 import { Item } from '@/models/item';
 import { Link } from 'react-router-dom';
-import { useCartStore } from '@/hooks/context/use-cart-store';
+import { useCartStore } from '@/store/cart';
 
 type ShopItemProps = {
   item: Item;

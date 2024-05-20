@@ -3,7 +3,7 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 
-import { useCartStore } from '@/hooks/context/use-cart-store';
+import { useCartStore } from '@/store/cart';
 import { CartDialog } from './CartDialog';
 
 const Cart = () => {

@@ -1,6 +1,6 @@
 import { CartItemType } from '@/models/cart-item';
 import { Button } from '../ui/button';
-import { useCartStore } from '@/hooks/context/use-cart-store';
+import { useCartStore } from '@/store/cart';
 
 type CartItemProps = {
   item: CartItemType;
