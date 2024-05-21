@@ -1,4 +1,5 @@
 package backend.model;
+
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -22,6 +23,28 @@ public class OrderItem {
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
+
+    public OrderItem() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public OrderItem(long id, int quantity, Order order, Item item, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
+        this.id = id;
+        this.quantity = quantity;
+        this.order = order;
+        this.item = item;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public OrderItem(int quantity, Order order, Item item) {
+        this.quantity = quantity;
+        this.order = order;
+        this.item = item;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -69,24 +92,6 @@ public class OrderItem {
 
     public void setModifiedAt(OffsetDateTime modifiedAt) {
         this.modifiedAt = modifiedAt;
-    }
-
-    public OrderItem() {
-    }
-
-    public OrderItem(long id, int quantity, Order order, Item item, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
-        this.id = id;
-        this.quantity = quantity;
-        this.order = order;
-        this.item = item;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-    }
-
-    public OrderItem(int quantity, Order order, Item item) {
-        this.quantity = quantity;
-        this.order = order;
-        this.item = item;
     }
 
     @Override

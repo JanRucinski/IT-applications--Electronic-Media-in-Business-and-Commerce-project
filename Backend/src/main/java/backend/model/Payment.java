@@ -1,4 +1,5 @@
 package backend.model;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -16,7 +17,8 @@ public class Payment {
     @Column(name = "provider")
     private String provider;
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
@@ -25,6 +27,30 @@ public class Payment {
     private Order order;
     @OneToOne(mappedBy = "payment")
     private Rental rental;
+
+    public Payment() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public Payment(long id, BigDecimal amount, String provider, PaymentStatus status, OffsetDateTime createdAt, OffsetDateTime modifiedAt, Order order, Rental rental) {
+        this.id = id;
+        this.amount = amount;
+        this.provider = provider;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.order = order;
+        this.rental = rental;
+    }
+
+    public Payment(BigDecimal amount, String provider) {
+        this.amount = amount;
+        this.provider = provider;
+        this.status = PaymentStatus.PENDING;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -50,11 +76,11 @@ public class Payment {
         this.provider = provider;
     }
 
-    public String getStatus() {
+    public PaymentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PaymentStatus status) {
         this.status = status;
     }
 
@@ -90,25 +116,6 @@ public class Payment {
         this.rental = rental;
     }
 
-    public Payment() {
-    }
-
-    public Payment(long id, BigDecimal amount, String provider, String status, OffsetDateTime createdAt, OffsetDateTime modifiedAt, Order order, Rental rental) {
-        this.id = id;
-        this.amount = amount;
-        this.provider = provider;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.order = order;
-        this.rental = rental;
-    }
-
-    public Payment(BigDecimal amount, String provider) {
-        this.amount = amount;
-        this.provider = provider;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,5 +127,13 @@ public class Payment {
     @Override
     public int hashCode() {
         return Objects.hash(id, amount, provider, status, createdAt, modifiedAt, order, rental);
+    }
+
+    public enum PaymentStatus {
+        PENDING,
+        COMPLETED,
+        FAILED,
+        CANCELLED,
+        REFUNDED
     }
 }

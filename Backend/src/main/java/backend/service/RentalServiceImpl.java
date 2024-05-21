@@ -7,80 +7,55 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-public class RentalServiceImpl implements RentalService{
+public class RentalServiceImpl implements RentalService {
+    private final RentalRepository rentalRepository;
     @Autowired
-    private RentalRepository rentalRepository;
-
-    @Override
-    public Rental addRental(Rental rentalDTO) {
-        Rental rental = rentalRepository.save(new Rental(rentalDTO.getRentalStart(), rentalDTO.getRentalEnd(), rentalDTO.getTotal(), rentalDTO.getItem(), rentalDTO.getUser()));
-        rentalDTO.setId(rental.getId());
-        rentalDTO.setCreatedAt(rental.getCreatedAt());
-        rentalDTO.setModifiedAt(rental.getModifiedAt());
-        return rentalDTO;
+    public RentalServiceImpl(RentalRepository rentalRepository) {
+        this.rentalRepository = rentalRepository;
     }
 
     @Override
-    public Rental deleteRental(long id) {
-        Optional<Rental> or = rentalRepository.findById(id);
-        if (or.isPresent()) {
+    public Rental addRental(Rental rental) {
+        return rentalRepository.save(rental);
+    }
+
+    @Override
+    public boolean deleteRental(Long id) {
+        if (rentalRepository.existsById(id)) {
             rentalRepository.deleteById(id);
-            return createDTOFromEntity(or.get());
+            return true;
+        } else {
+            return false;
         }
-        return null;
     }
 
     @Override
     public List<Rental> findAllRentals() {
-        List<Rental> rentals = rentalRepository.findAll();
-        List<Rental> rentalDTOs = new ArrayList<>();
-        for (Rental rental : rentals) {
-            rentalDTOs.add(createDTOFromEntity(rental));
-        }
-        return rentalDTOs;
+        return rentalRepository.findAll();
     }
 
     @Override
-    public Rental updateRental(Rental rentalDTO) {
-        Optional<Rental> or = rentalRepository.findById(rentalDTO.getId());
+    public Rental updateRental(Long id, Rental rental) {
+        Optional<Rental> or = rentalRepository.findById(id);
         if (or.isPresent()) {
-            or.get().setRentalStart(rentalDTO.getRentalStart());
-            or.get().setRentalEnd(rentalDTO.getRentalEnd());
-            or.get().setTotal(rentalDTO.getTotal());
-            or.get().setItem(rentalDTO.getItem());
-            or.get().setStatus(rentalDTO.getStatus());
+            or.get().setRentalStart(rental.getRentalStart());
+            or.get().setRentalEnd(rental.getRentalEnd());
+            or.get().setTotal(rental.getTotal());
+            or.get().setItem(rental.getItem());
+            or.get().setStatus(rental.getStatus());
             or.get().setModifiedAt(OffsetDateTime.now());
-            rentalRepository.save(or.get());
-            rentalDTO = createDTOFromEntity(or.get());
-            return rentalDTO;
+            return rentalRepository.save(or.get());
         }
         return null;
     }
 
     @Override
-    public Rental findRentalById(long id) {
-        Optional<Rental> or = rentalRepository.findById(id);
-        return or.map(this::createDTOFromEntity).orElse(null);
-    }
-
-    public Rental createDTOFromEntity(Rental rental) {
-        Rental rentalDTO = new Rental();
-        rentalDTO.setId(rental.getId());
-        rentalDTO.setRentalStart(rental.getRentalStart());
-        rentalDTO.setRentalEnd(rental.getRentalEnd());
-        rentalDTO.setTotal(rental.getTotal());
-        rentalDTO.setStatus(rental.getStatus());
-        rentalDTO.setItem(rental.getItem());
-        rentalDTO.setUser(rental.getUser());
-        rentalDTO.setPayment(rental.getPayment());
-        rentalDTO.setCreatedAt(rental.getCreatedAt());
-        rentalDTO.setModifiedAt(rental.getModifiedAt());
-        return rentalDTO;
+    public Rental findRentalById(Long id) {
+        return rentalRepository.findById(id).orElse(null);
     }
 }

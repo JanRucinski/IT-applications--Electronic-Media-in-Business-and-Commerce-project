@@ -34,6 +34,36 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Rental> rentals;
 
+    public User() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public User(long id, String username, String password, String email, String firstName, String lastName, int phone, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Order> orders, List<Rental> rentals) {
+        this.id = id;
+        this.username = username;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.orders = orders;
+        this.rentals = rentals;
+    }
+
+    public User(String username, String password, String email, String firstName, String lastName, int phone) {
+        this.username = username;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
     public long getId() {
         return id;
     }
@@ -128,34 +158,6 @@ public class User {
 
     public void setRentals(List<Rental> rentals) {
         this.rentals = rentals;
-    }
-
-    public User() {
-    }
-
-    public User(long id, String username, String password, String email, String firstName, String lastName, int phone, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Order> orders, List<Rental> rentals) {
-        this.id = id;
-        this.username = username;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.orders = orders;
-        this.rentals = rentals;
-    }
-
-    public User(String username, String password, String email, String firstName, String lastName, int phone) {
-        this.username = username;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     @Override

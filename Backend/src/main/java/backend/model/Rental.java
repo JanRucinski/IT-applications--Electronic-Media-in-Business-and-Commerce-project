@@ -1,4 +1,5 @@
 package backend.model;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -33,6 +34,35 @@ public class Rental {
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
+
+    public Rental() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public Rental(long id, OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, RentalStatus status, Item item, User user, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
+        this.id = id;
+        this.rentalStart = rentalStart;
+        this.rentalEnd = rentalEnd;
+        this.total = total;
+        this.status = status;
+        this.item = item;
+        this.user = user;
+        this.payment = payment;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public Rental(OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, Item item, User user) {
+        this.rentalStart = rentalStart;
+        this.rentalEnd = rentalEnd;
+        this.total = total;
+        this.item = item;
+        this.user = user;
+        this.status = RentalStatus.REQUESTED;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -114,40 +144,6 @@ public class Rental {
         this.modifiedAt = modifiedAt;
     }
 
-    public enum RentalStatus {
-        REQUESTED,
-        CANCELLED,
-        IN_PROGRESS,
-        COMPLETED
-    }
-
-    public Rental() {
-    }
-
-    public Rental(long id, OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, RentalStatus status, Item item, User user, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
-        this.id = id;
-        this.rentalStart = rentalStart;
-        this.rentalEnd = rentalEnd;
-        this.total = total;
-        this.status = status;
-        this.item = item;
-        this.user = user;
-        this.payment = payment;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-    }
-
-    public Rental(OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, Item item, User user) {
-        this.rentalStart = rentalStart;
-        this.rentalEnd = rentalEnd;
-        this.total = total;
-        this.item = item;
-        this.user = user;
-        this.status = RentalStatus.REQUESTED;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -159,5 +155,12 @@ public class Rental {
     @Override
     public int hashCode() {
         return Objects.hash(id, rentalStart, rentalEnd, total, status, item, user, payment, createdAt, modifiedAt);
+    }
+
+    public enum RentalStatus {
+        REQUESTED,
+        CANCELLED,
+        IN_PROGRESS,
+        COMPLETED
     }
 }

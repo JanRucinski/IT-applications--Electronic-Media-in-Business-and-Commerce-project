@@ -1,4 +1,5 @@
 package backend.model;
+
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
@@ -22,6 +23,27 @@ public class Category {
     private OffsetDateTime modifiedAt;
     @OneToMany(mappedBy = "category")
     private List<Item> items;
+
+    public Category() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public Category(long id, String name, SuperCategory superCategory, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Item> items) {
+        this.id = id;
+        this.name = name;
+        this.superCategory = superCategory;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.items = items;
+    }
+
+    public Category(String name, SuperCategory superCategory) {
+        this.name = name;
+        this.superCategory = superCategory;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -71,29 +93,6 @@ public class Category {
         this.items = items;
     }
 
-    public enum SuperCategory {
-        BIKES,
-        PARTS,
-        RENTABLES
-    }
-
-    public Category() {
-    }
-
-    public Category(long id, String name, SuperCategory superCategory, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Item> items) {
-        this.id = id;
-        this.name = name;
-        this.superCategory = superCategory;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.items = items;
-    }
-
-    public Category(String name, SuperCategory superCategory) {
-        this.name = name;
-        this.superCategory = superCategory;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,5 +104,11 @@ public class Category {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, superCategory, createdAt, modifiedAt, items);
+    }
+
+    public enum SuperCategory {
+        BIKES,
+        PARTS,
+        RENT_ITEMS
     }
 }

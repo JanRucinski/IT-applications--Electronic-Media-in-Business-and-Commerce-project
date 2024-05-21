@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface RentalService {
     Rental addRental(Rental rental);
-    Rental deleteRental(long id);
+
+    boolean deleteRental(Long id);
+
     List<Rental> findAllRentals();
-    Rental updateRental(Rental rental);
-    Rental findRentalById(long id);
+
+    Rental updateRental(Long id, Rental rental);
+
+    Rental findRentalById(Long id);
 }

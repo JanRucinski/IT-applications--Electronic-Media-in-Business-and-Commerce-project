@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface PaymentService {
     Payment addPayment(Payment payment);
-    Payment deletePayment(long id);
+
+    boolean deletePayment(Long id);
+
     List<Payment> findAllPayments();
-    Payment updatePayment(Payment payment);
-    Payment findPaymentById(long id);
+
+    Payment updatePayment(Long id, Payment payment);
+
+    Payment findPaymentById(Long id);
 }

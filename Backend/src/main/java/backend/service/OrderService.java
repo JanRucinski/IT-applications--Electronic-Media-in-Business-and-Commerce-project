@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface OrderService {
     Order addOrder(Order order);
-    Order deleteOrder(long id);
+
+    boolean deleteOrder(Long id);
+
     List<Order> findAllOrders();
-    Order updateOrder(Order order);
-    Order findOrderById(long id);
+
+    Order updateOrder(Long id, Order order);
+
+    Order findOrderById(Long id);
 }

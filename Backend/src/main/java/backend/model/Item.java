@@ -1,4 +1,5 @@
 package backend.model;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -27,6 +28,31 @@ public class Item {
     private OffsetDateTime modifiedAt;
     @OneToMany(mappedBy = "item")
     private List<OrderItem> orderItems;
+
+    public Item() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public Item(long id, String name, String desc, BigDecimal price, Category category, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<OrderItem> orderItems) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+        this.price = price;
+        this.category = category;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.orderItems = orderItems;
+    }
+
+    public Item(String name, String desc, BigDecimal price, Category category) {
+        this.name = name;
+        this.desc = desc;
+        this.price = price;
+        this.category = category;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -90,27 +116,6 @@ public class Item {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
-    }
-
-    public Item() {
-    }
-
-    public Item(long id, String name, String desc, BigDecimal price, Category category, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<OrderItem> orderItems) {
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.category = category;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.orderItems = orderItems;
-    }
-
-    public Item(String name, String desc, BigDecimal price, Category category) {
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.category = category;
     }
 
     @Override

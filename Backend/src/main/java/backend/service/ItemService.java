@@ -6,8 +6,18 @@ import java.util.List;
 
 public interface ItemService {
     Item addItem(Item item);
-    Item deleteItem(long id);
+
+    boolean deleteItem(Long id);
+
     List<Item> findAllItems();
-    Item updateItem(Item item);
-    Item findItemById(long id);
+
+    Item updateItem(Long id, Item item);
+
+    Item findItemById(Long id);
+
+    List<Item> findAllBikes();
+
+    List<Item> findAllParts();
+
+    List<Item> findAllRentItems();
 }

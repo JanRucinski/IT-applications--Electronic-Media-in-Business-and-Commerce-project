@@ -1,4 +1,5 @@
 package backend.model;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -26,6 +27,28 @@ public class Order {
     private OffsetDateTime modifiedAt;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
+
+    public Order() {
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
+
+    public Order(long id, User user, BigDecimal total, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<OrderItem> orderItems) {
+        this.id = id;
+        this.user = user;
+        this.total = total;
+        this.payment = payment;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.orderItems = orderItems;
+    }
+
+    public Order(User user, BigDecimal total) {
+        this.user = user;
+        this.total = total;
+        this.createdAt = OffsetDateTime.now();
+        this.modifiedAt = OffsetDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -81,26 +104,6 @@ public class Order {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
-    }
-
-    public Order() {
-    }
-
-    public Order(long id, User user, BigDecimal total, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<OrderItem> orderItems) {
-        this.id = id;
-        this.user = user;
-        this.total = total;
-        this.payment = payment;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.orderItems = orderItems;
-    }
-
-    public Order(User user, BigDecimal total) {
-        this.user = user;
-        this.total = total;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     @Override
