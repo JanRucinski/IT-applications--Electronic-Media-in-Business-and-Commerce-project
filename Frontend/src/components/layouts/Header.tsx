@@ -18,7 +18,7 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between py-9">
         <MainLogo />
         <nav>
-          <ul className="flex space-x-6">
+          <ul className="flex space-x-8">
             {headerItems.map((item) => (
               <li key={item.title}>
                 <Button
