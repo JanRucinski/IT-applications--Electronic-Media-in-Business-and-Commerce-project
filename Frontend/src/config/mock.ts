@@ -141,3 +141,38 @@ export const mockedBikeParts: Item[] = [
     maxQuantity: 2,
   },
 ];
+
+export const mockedRentals: Item[] = [
+  {
+    id: '1a',
+    name: 'Specialized Sirrus 1.0 L',
+    description: 'Gloss Sky Blue/Cast Blue/Satin',
+    price: 8,
+    image:
+      'https://bikeshop.com.pl/8818-home_default/specialized-sirrus-10-l-2022-gloss-sky-bluecast-bluesatin-black-reflective.jpg',
+  },
+  {
+    id: '1b',
+    name: 'Limber 20 girl 2022',
+    description: 'Limber 20',
+    price: 12,
+    image:
+      'https://bikeshop.com.pl/12094-home_default/limber-20-girl-ciemny-rozowy-2022.jpg',
+  },
+  {
+    id: '1c',
+    name: 'Storm Shark 29 7',
+    description: 'Storm Shark',
+    price: 23,
+    image:
+      'https://bikeshop.com.pl/11529-home_default/storm-shark-29-70-man-bialyczarny-21-2023.jpg',
+  },
+  {
+    id: '1d',
+    name: 'Romet E-Gazela 504Wh',
+    description: '504Wh 19 L',
+    price: 9,
+    image:
+      'https://bikeshop.com.pl/12046-home_default/romet-e-gazela-10-504wh-bordowy-19-l-2024.jpg',
+  },
+];

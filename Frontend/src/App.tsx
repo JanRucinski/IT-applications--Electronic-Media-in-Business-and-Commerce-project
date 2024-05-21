@@ -10,6 +10,7 @@ import {
   ContactPage,
   AboutPage,
   PartsPage,
+  RentalPage,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import AuthLayout from './components/layouts/AuthLayout';
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/parts" element={<PartsPage />} />
+          <Route path="/rental" element={<RentalPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Route>
