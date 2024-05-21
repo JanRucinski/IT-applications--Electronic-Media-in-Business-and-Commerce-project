@@ -4,4 +4,5 @@ export type CartItemType = {
   price: number;
   quantity: number;
   maxQuantity: number;
+  image: string;
 };

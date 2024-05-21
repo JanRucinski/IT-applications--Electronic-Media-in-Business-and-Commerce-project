@@ -27,6 +27,7 @@ const ShopItem = ({
       id,
       name,
       price,
+      image,
       quantity: 1,
       maxQuantity: maxQuantity ? maxQuantity : 1,
     });
