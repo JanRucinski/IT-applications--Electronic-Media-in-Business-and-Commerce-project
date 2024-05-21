@@ -11,7 +11,7 @@ const Faq = () => {
     <Accordion type="single" collapsible className="w-full">
       {aboutSection.map((item) => {
         return (
-          <AccordionItem value={item.question}>
+          <AccordionItem key={item.question} value={item.question}>
             <AccordionTrigger>{item.question}</AccordionTrigger>
             <AccordionContent>{item.answer}</AccordionContent>
           </AccordionItem>

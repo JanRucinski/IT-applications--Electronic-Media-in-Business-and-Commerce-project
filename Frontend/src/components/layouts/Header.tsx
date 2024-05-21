@@ -6,6 +6,7 @@ import UserNav from './UserNav';
 import { headerItems } from '@/config/navigation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import Cart from '../cart/Cart';
 
 const Header = () => {
   // TODO: Implement authentication
@@ -17,12 +18,13 @@ const Header = () => {
       <div className="container flex h-16 items-center justify-between py-9">
         <MainLogo />
         <nav>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-8">
             {headerItems.map((item) => (
               <li key={item.title}>
                 <Button
                   asChild
                   variant="nav"
+                  size="link"
                   className={cn(
                     'text-base',
                     pathname === item.to && 'text-primary'
@@ -35,6 +37,7 @@ const Header = () => {
           </ul>
         </nav>
         <nav className="flex items-center justify-center">
+          <Cart />
           {isAuthenticated ? (
             <UserNav
               name="Murad"

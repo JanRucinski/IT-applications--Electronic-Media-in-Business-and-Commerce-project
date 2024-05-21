@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-const PARTS_URL = '/rent-items';
+const PARTS_URL = '/parts';
 
 export const useParts = (searchQuery: string) => {
   const { data, isLoading, error, mutate } = useSWR(

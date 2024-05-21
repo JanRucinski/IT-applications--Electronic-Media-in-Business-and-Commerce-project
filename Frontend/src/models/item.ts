@@ -4,4 +4,5 @@ export type Item = {
   description: string;
   price: number;
   image: string;
+  maxQuantity?: number;
 };
