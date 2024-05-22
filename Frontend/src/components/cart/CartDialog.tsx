@@ -27,7 +27,7 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
   );
 
   return (
-    <DialogContent className="sm:max-w-md min-w-min max-h-[95%] overflow-y-scroll">
+    <DialogContent className="sm:max-w-md min-w-min max-h-[92%] overflow-y-scroll">
       <DialogHeader>
         <DialogTitle className="text-2xl text-sky-950">
           Shopping Cart
