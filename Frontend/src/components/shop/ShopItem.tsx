@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import {
   Card,
   CardContent,
@@ -8,17 +10,16 @@ import {
 } from '@/components/ui/card';
 import { Button } from '../ui/button';
 import { Item } from '@/models/item';
-import { Link } from 'react-router-dom';
-import { useCartStore } from '@/store/cart';
-import { createCartItem } from '@/utils/helper';
+import { ItemCategory } from '@/types/config';
+import { useManageCartItem } from '@/hooks/use-common-actions';
 
 type ShopItemProps = {
   item: Item;
-  type: 'shop' | 'parts';
+  itemCategory: ItemCategory;
 };
 
-const ShopItem = ({ item, type }: ShopItemProps) => {
-  const { addItem, removeItem, cart } = useCartStore();
+const ShopItem = ({ item, itemCategory }: ShopItemProps) => {
+  const { isItemInCart, buttonAction, buttonLabel } = useManageCartItem(item);
 
   return (
     <Card className="flex flex-col justify-between">
@@ -41,24 +42,15 @@ const ShopItem = ({ item, type }: ShopItemProps) => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between gap-4">
-        {cart.some((cartItem) => cartItem.id === item.id) ? (
-          <Button
-            className="flex-1"
-            onClick={() => removeItem(item.id)}
-            variant="destructive"
-          >
-            Remove from Cart
-          </Button>
-        ) : (
-          <Button
-            className="flex-1"
-            onClick={() => addItem(createCartItem({ ...item }))}
-          >
-            Add to Cart
-          </Button>
-        )}
+        <Button
+          className="flex-1"
+          onClick={buttonAction}
+          variant={isItemInCart ? 'outline' : 'default'}
+        >
+          {buttonLabel}
+        </Button>
         <Button variant="link" className="text-sky-950" asChild>
-          <Link to={`/${type}/${item.id}`}>Details</Link>
+          <Link to={`/${itemCategory}/${item.id}`}>Details</Link>
         </Button>
       </CardFooter>
     </Card>

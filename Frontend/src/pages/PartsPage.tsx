@@ -18,7 +18,7 @@ const PartsPage = () => {
       </div>
       <div className="grid md:grid-cols-4 md:gap-10 my-4">
         {mockedBikeParts.map((item) => (
-          <ShopItem key={item.id} item={item} type="parts" />
+          <ShopItem key={item.id} item={item} itemCategory="parts" />
         ))}
       </div>
       {mockedBikeParts.length > maxItemsPerPage && (

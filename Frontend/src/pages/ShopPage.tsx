@@ -25,7 +25,7 @@ const ShopPage = () => {
       </div>
       <div className="grid md:grid-cols-4 md:gap-10 my-4">
         {mockedBikes.map((item) => (
-          <ShopItem key={item.id} item={item} type="shop" />
+          <ShopItem key={item.id} item={item} itemCategory="shop" />
         ))}
       </div>
       {mockedBikes.length > maxItemsPerPage && (
