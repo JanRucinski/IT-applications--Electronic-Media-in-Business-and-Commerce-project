@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 
 import ItemDetails from '@/components/shop/ItemDetails';
-import { mockedBikes } from '@/config/mock';
+import { mockedBike, mockedBikes } from '@/config/mock';
+import { DetailedBikeItem } from '@/models/item';
 
 const ShopItemDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,11 +13,13 @@ const ShopItemDetails = () => {
     return <div>Item not found</div>;
   }
 
-  return (
-    <section>
-      <ItemDetails item={item} />
-    </section>
-  );
+  // !TEMP MOCK
+  const bike = {
+    ...item,
+    ...mockedBike,
+  } as DetailedBikeItem;
+
+  return <ItemDetails item={bike} itemCategory="shop" />;
 };
 
 export default ShopItemDetails;
