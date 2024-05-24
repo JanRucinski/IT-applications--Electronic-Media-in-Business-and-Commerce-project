@@ -11,6 +11,8 @@ import {
   AboutPage,
   PartsPage,
   RentalPage,
+  ShopItemDetails,
+  PartDetails,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import AuthLayout from './components/layouts/AuthLayout';
@@ -22,7 +24,9 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:id" element={<ShopItemDetails />} />
           <Route path="/parts" element={<PartsPage />} />
+          <Route path="/parts/:id" element={<PartDetails />} />
           <Route path="/rental" element={<RentalPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />

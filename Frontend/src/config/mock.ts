@@ -176,3 +176,15 @@ export const mockedRentals: Item[] = [
       'https://bikeshop.com.pl/12046-home_default/romet-e-gazela-10-504wh-bordowy-19-l-2024.jpg',
   },
 ];
+
+export const mockedBike = {
+  bikeType: 'Road Bike',
+  frameMaterial: 'Carbon',
+  brakeType: 'Disc',
+  wheelSize: 29,
+};
+
+export const mockedPart = {
+  partType: 'Wheel',
+  material: 'Carbon',
+};

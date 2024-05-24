@@ -5,3 +5,10 @@ export type NavItem = {
   icon?: LucideIcon;
   to: string;
 };
+
+export type BreadcrumbItemType = {
+  name: string;
+  url: string;
+};
+
+export type ItemCategory = 'shop' | 'parts';
