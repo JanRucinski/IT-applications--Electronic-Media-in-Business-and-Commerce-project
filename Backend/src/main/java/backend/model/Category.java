@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "super_category")
@@ -29,27 +29,17 @@ public class Category {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public Category(long id, String name, SuperCategory superCategory, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Item> items) {
-        this.id = id;
-        this.name = name;
-        this.superCategory = superCategory;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.items = items;
+    public Category(CategoryDTO categoryDTO) {
+        this.id = categoryDTO.getId();
+        this.name = categoryDTO.getName();
+        this.superCategory = categoryDTO.getSuperCategory();
     }
 
-    public Category(String name, SuperCategory superCategory) {
-        this.name = name;
-        this.superCategory = superCategory;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

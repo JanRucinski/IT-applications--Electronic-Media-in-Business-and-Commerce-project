@@ -15,6 +15,7 @@ import java.util.Optional;
 @Transactional
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
+
     @Autowired
     public ItemServiceImpl(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
@@ -46,6 +47,7 @@ public class ItemServiceImpl implements ItemService {
         if (oi.isPresent()) {
             oi.get().setName(item.getName());
             oi.get().setDesc(item.getDesc());
+            oi.get().setQuantity(item.getQuantity());
             oi.get().setPrice(item.getPrice());
             oi.get().setCategory(item.getCategory());
             oi.get().setModifiedAt(OffsetDateTime.now());

@@ -12,11 +12,13 @@ import java.util.Objects;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "desc")
     private String desc;
+    @Column(name = "quantity")
+    private Integer quantity;
     @Column(name = "price")
     private BigDecimal price;
     @ManyToOne
@@ -34,31 +36,19 @@ public class Item {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public Item(long id, String name, String desc, BigDecimal price, Category category, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<OrderItem> orderItems) {
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.category = category;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.orderItems = orderItems;
+    public Item(ItemDTO itemDTO) {
+        this.id = itemDTO.getId();
+        this.name = itemDTO.getName();
+        this.desc = itemDTO.getDesc();
+        this.quantity = itemDTO.getQuantity();
+        this.price = itemDTO.getPrice();
     }
 
-    public Item(String name, String desc, BigDecimal price, Category category) {
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.category = category;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,6 +66,14 @@ public class Item {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public BigDecimal getPrice() {
@@ -123,11 +121,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(price, item.price) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, price, category, createdAt, modifiedAt, orderItems);
+        return Objects.hash(id, name, desc, quantity, price, category, createdAt, modifiedAt, orderItems);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "amount")
     private BigDecimal amount;
     @Column(name = "provider")
@@ -33,30 +33,19 @@ public class Payment {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public Payment(long id, BigDecimal amount, String provider, PaymentStatus status, OffsetDateTime createdAt, OffsetDateTime modifiedAt, Order order, Rental rental) {
-        this.id = id;
-        this.amount = amount;
-        this.provider = provider;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.order = order;
-        this.rental = rental;
+    public Payment(PaymentDTO paymentDTO) {
+        this.id = paymentDTO.getId();
+        this.amount = paymentDTO.getAmount();
+        this.provider = paymentDTO.getProvider();
+        this.status = paymentDTO.getStatus();
+
     }
 
-    public Payment(BigDecimal amount, String provider) {
-        this.amount = amount;
-        this.provider = provider;
-        this.status = PaymentStatus.PENDING;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

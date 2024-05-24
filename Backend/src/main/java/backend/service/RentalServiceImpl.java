@@ -14,6 +14,7 @@ import java.util.Optional;
 @Transactional
 public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
+
     @Autowired
     public RentalServiceImpl(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;

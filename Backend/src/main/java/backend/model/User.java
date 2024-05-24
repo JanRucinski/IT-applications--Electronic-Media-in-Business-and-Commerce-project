@@ -12,7 +12,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "username", unique = true)
     private String username;
     @Column(name = "password")
@@ -24,7 +24,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "phone")
-    private int phone;
+    private String phone;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
@@ -39,36 +39,21 @@ public class User {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public User(long id, String username, String password, String email, String firstName, String lastName, int phone, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<Order> orders, List<Rental> rentals) {
-        this.id = id;
-        this.username = username;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.orders = orders;
-        this.rentals = rentals;
+    public User(UserDTO userDTO) {
+        this.id = userDTO.getId();
+        this.username = userDTO.getUsername();
+        setPassword(userDTO.getPassword());
+        this.email = userDTO.getEmail();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.phone = userDTO.getPhone();
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, int phone) {
-        this.username = username;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -120,11 +105,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -165,7 +150,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && phone == user.phone && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
     }
 
     @Override

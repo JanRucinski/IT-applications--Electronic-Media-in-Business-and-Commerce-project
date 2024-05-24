@@ -10,9 +10,9 @@ import java.util.Objects;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -29,36 +29,24 @@ public class OrderItem {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public OrderItem(long id, int quantity, Order order, Item item, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
-        this.id = id;
-        this.quantity = quantity;
-        this.order = order;
-        this.item = item;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+    public OrderItem(OrderItemDTO orderItemDTO) {
+        this.id = orderItemDTO.getId();
+        this.quantity = orderItemDTO.getQuantity();
     }
 
-    public OrderItem(int quantity, Order order, Item item) {
-        this.quantity = quantity;
-        this.order = order;
-        this.item = item;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -99,7 +87,7 @@ public class OrderItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItem orderItem = (OrderItem) o;
-        return id == orderItem.id && quantity == orderItem.quantity && Objects.equals(order, orderItem.order) && Objects.equals(item, orderItem.item) && Objects.equals(createdAt, orderItem.createdAt) && Objects.equals(modifiedAt, orderItem.modifiedAt);
+        return Objects.equals(id, orderItem.id) && Objects.equals(quantity, orderItem.quantity) && Objects.equals(order, orderItem.order) && Objects.equals(item, orderItem.item) && Objects.equals(createdAt, orderItem.createdAt) && Objects.equals(modifiedAt, orderItem.modifiedAt);
     }
 
     @Override

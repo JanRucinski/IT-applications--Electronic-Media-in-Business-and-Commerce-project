@@ -1,5 +1,7 @@
 package backend;
 
+import backend.model.Category;
+import backend.service.CategoryService;
 import backend.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 class BikeShopApplicationTests {
     @Autowired
     private UserService userService;
+    @Autowired
+    private CategoryService categoryService;
 
     @Test
     void contextLoads() {
+        Category category = new Category();
+        category.setSuperCategory(Category.SuperCategory.BIKES);
+        category.setName("test");
+        categoryService.addCategory(category);
+//        Category category = categoryService.findCategoryById(1L);
+//        System.out.println(category);
 //        User user1 = new User("testlogin", "test", "testemail", "test", "test", 111111111);
 //        user1.setPlainPassword("test");
 //        User user2 = new User("test2", "test", "test2", "test", "test", 111111111);

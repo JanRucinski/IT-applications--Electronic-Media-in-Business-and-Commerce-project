@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,28 +33,16 @@ public class Order {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public Order(long id, User user, BigDecimal total, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt, List<OrderItem> orderItems) {
-        this.id = id;
-        this.user = user;
-        this.total = total;
-        this.payment = payment;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.orderItems = orderItems;
+    public Order(OrderDTO orderDTO) {
+        this.id = orderDTO.getId();
+        this.total = orderDTO.getTotal();
     }
 
-    public Order(User user, BigDecimal total) {
-        this.user = user;
-        this.total = total;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

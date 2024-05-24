@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "rental_start")
     private OffsetDateTime rentalStart;
     @Column(name = "rental_end")
@@ -40,35 +40,19 @@ public class Rental {
         this.modifiedAt = OffsetDateTime.now();
     }
 
-    public Rental(long id, OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, RentalStatus status, Item item, User user, Payment payment, OffsetDateTime createdAt, OffsetDateTime modifiedAt) {
-        this.id = id;
-        this.rentalStart = rentalStart;
-        this.rentalEnd = rentalEnd;
-        this.total = total;
-        this.status = status;
-        this.item = item;
-        this.user = user;
-        this.payment = payment;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+    public Rental(RentalDTO rentalDTO) {
+        this.id = rentalDTO.getId();
+        this.rentalStart = rentalDTO.getRentalStart();
+        this.rentalEnd = rentalDTO.getRentalEnd();
+        this.total = rentalDTO.getTotal();
+        this.status = rentalDTO.getStatus();
     }
 
-    public Rental(OffsetDateTime rentalStart, OffsetDateTime rentalEnd, BigDecimal total, Item item, User user) {
-        this.rentalStart = rentalStart;
-        this.rentalEnd = rentalEnd;
-        this.total = total;
-        this.item = item;
-        this.user = user;
-        this.status = RentalStatus.REQUESTED;
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
