@@ -49,6 +49,7 @@ public class RentalServiceImpl implements RentalService {
             or.get().setTotal(rental.getTotal());
             or.get().setItem(rental.getItem());
             or.get().setStatus(rental.getStatus());
+            or.get().setPayment(rental.getPayment());
             or.get().setModifiedAt(OffsetDateTime.now());
             return rentalRepository.save(or.get());
         }

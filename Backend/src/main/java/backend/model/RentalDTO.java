@@ -12,7 +12,7 @@ public class RentalDTO {
     private Rental.RentalStatus status;
     private Long itemId;
     private Long userId;
-    private Long paymentId;
+    private PaymentDTO payment;
 
     public RentalDTO() {
     }
@@ -25,7 +25,7 @@ public class RentalDTO {
         this.status = rental.getStatus();
         this.itemId = rental.getItem().getId();
         this.userId = rental.getUser().getId();
-        this.paymentId = rental.getPayment().getId();
+        this.payment = new PaymentDTO(rental.getPayment());
     }
 
     public Long getId() {
@@ -84,12 +84,12 @@ public class RentalDTO {
         this.userId = userId;
     }
 
-    public Long getPaymentId() {
-        return paymentId;
+    public PaymentDTO getPayment() {
+        return payment;
     }
 
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
+    public void setPayment(PaymentDTO payment) {
+        this.payment = payment;
     }
 
     @Override
@@ -97,11 +97,11 @@ public class RentalDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RentalDTO rentalDTO = (RentalDTO) o;
-        return Objects.equals(id, rentalDTO.id) && Objects.equals(rentalStart, rentalDTO.rentalStart) && Objects.equals(rentalEnd, rentalDTO.rentalEnd) && Objects.equals(total, rentalDTO.total) && status == rentalDTO.status && Objects.equals(itemId, rentalDTO.itemId) && Objects.equals(userId, rentalDTO.userId) && Objects.equals(paymentId, rentalDTO.paymentId);
+        return Objects.equals(id, rentalDTO.id) && Objects.equals(rentalStart, rentalDTO.rentalStart) && Objects.equals(rentalEnd, rentalDTO.rentalEnd) && Objects.equals(total, rentalDTO.total) && status == rentalDTO.status && Objects.equals(itemId, rentalDTO.itemId) && Objects.equals(userId, rentalDTO.userId) && Objects.equals(payment, rentalDTO.payment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rentalStart, rentalEnd, total, status, itemId, userId, paymentId);
+        return Objects.hash(id, rentalStart, rentalEnd, total, status, itemId, userId, payment);
     }
 }

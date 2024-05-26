@@ -2,6 +2,7 @@ package backend.api;
 
 import backend.model.*;
 import backend.service.ItemService;
+import backend.service.PaymentService;
 import backend.service.RentalService;
 import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ public class RentalController {
     private final RentalService rs;
     private final ItemService is;
     private final UserService us;
+    private final PaymentService ps;
 
     @Autowired
-    public RentalController(RentalService rs, ItemService is, UserService us) {
+    public RentalController(RentalService rs, ItemService is, UserService us, PaymentService ps) {
         this.rs = rs;
         this.is = is;
         this.us = us;
+        this.ps = ps;
     }
 
     @PostMapping
@@ -33,14 +36,14 @@ public class RentalController {
         }
         Item item = is.findItemById(rentalDTO.getUserId());
         User user = us.findUserById(rentalDTO.getUserId());
-        // smth with payment
+        Payment payment = new Payment(rentalDTO.getPayment());
         if (item == null || user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Rental rental = new Rental(rentalDTO);
         rental.setItem(item);
         rental.setUser(user);
-        // smth with payment
+        rental.setPayment(payment);
         Rental createdRental = rs.addRental(rental);
         return ResponseEntity.status(HttpStatus.CREATED).body(new RentalDTO(createdRental));
     }
@@ -63,19 +66,19 @@ public class RentalController {
 
     @PutMapping("/{id}")
     public ResponseEntity<RentalDTO> updateRental(@PathVariable Long id, @RequestBody RentalDTO rentalDTO) {
-        if (rentalDTO == null || rentalDTO.getItemId() == null || rentalDTO.getUserId() == null) {
+        if (rentalDTO == null || rentalDTO.getItemId() == null || rentalDTO.getUserId() == null || rentalDTO.getPayment().getId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Item item = is.findItemById(rentalDTO.getUserId());
         User user = us.findUserById(rentalDTO.getUserId());
-        // smth with payment
-        if (item == null || user == null) {
+        Payment payment = ps.findPaymentById(rentalDTO.getPayment().getId());
+        if (item == null || user == null || payment == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Rental rental = new Rental(rentalDTO);
         rental.setItem(item);
         rental.setUser(user);
-        // smth with payment
+        rental.setPayment(new Payment(rentalDTO.getPayment()));
         Rental updatedRental = rs.updateRental(id, rental);
         if (updatedRental != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new RentalDTO(updatedRental));
