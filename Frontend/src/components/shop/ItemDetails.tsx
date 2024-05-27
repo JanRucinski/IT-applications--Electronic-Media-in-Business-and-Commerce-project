@@ -33,7 +33,7 @@ const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
               alt={item.name}
             />
           </div>
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-4 px-8">
             <div>
               <h1 className="text-4xl font-semibold">{item.name}</h1>
               <p className="text-lg text-muted-foreground">
