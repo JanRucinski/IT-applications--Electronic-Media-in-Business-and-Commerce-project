@@ -2,6 +2,7 @@ package backend.service;
 
 import backend.model.Category;
 import backend.model.Item;
+import backend.model.OrderItem;
 import backend.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +75,15 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findAllRentItems() {
         return itemRepository.findItemsByCategorySuperCategory(Category.SuperCategory.RENT_ITEMS);
+    }
+
+    @Override
+    public void updateItemQuantity(OrderItem orderItem) {
+        Optional<Item> oi = itemRepository.findById(orderItem.getItem().getId());
+        if (oi.isPresent()) {
+            oi.get().setQuantity(oi.get().getQuantity() - orderItem.getQuantity());
+            oi.get().setModifiedAt(OffsetDateTime.now());
+            itemRepository.save(oi.get());
+        }
     }
 }

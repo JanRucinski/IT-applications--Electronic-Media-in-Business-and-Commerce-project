@@ -31,7 +31,7 @@ public class RentalController {
 
     @PostMapping
     public ResponseEntity<RentalDTO> addRental(@RequestBody RentalDTO rentalDTO) {
-        if (rentalDTO == null || rentalDTO.getItemId() == null || rentalDTO.getUserId() == null) {
+        if (rentalDTO == null || rentalDTO.getItemId() == null || rentalDTO.getUserId() == null || rentalDTO.getPayment() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Item item = is.findItemById(rentalDTO.getUserId());
@@ -44,8 +44,8 @@ public class RentalController {
         rental.setItem(item);
         rental.setUser(user);
         rental.setPayment(payment);
-        Rental createdRental = rs.addRental(rental);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new RentalDTO(createdRental));
+        rental = rs.addRental(rental);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new RentalDTO(rental));
     }
 
     @GetMapping("/{id}")
@@ -79,9 +79,9 @@ public class RentalController {
         rental.setItem(item);
         rental.setUser(user);
         rental.setPayment(new Payment(rentalDTO.getPayment()));
-        Rental updatedRental = rs.updateRental(id, rental);
-        if (updatedRental != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(new RentalDTO(updatedRental));
+        rental = rs.updateRental(id, rental);
+        if (rental != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(new RentalDTO(rental));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

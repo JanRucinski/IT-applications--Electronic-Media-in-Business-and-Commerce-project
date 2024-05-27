@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class Order {
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems;
 
     public Order() {
@@ -36,6 +37,12 @@ public class Order {
     public Order(OrderDTO orderDTO) {
         this.id = orderDTO.getId();
         this.total = orderDTO.getTotal();
+        this.orderItems = new ArrayList<>();
+        for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
+            OrderItem orderItem = new OrderItem(orderItemDTO);
+            orderItem.setOrder(this);
+            this.orderItems.add(orderItem);
+        }
     }
 
     public Long getId() {

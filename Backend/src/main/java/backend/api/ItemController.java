@@ -36,8 +36,8 @@ public class ItemController {
         }
         Item item = new Item(itemDTO);
         item.setCategory(category);
-        Item createdItem = is.addItem(item);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ItemDTO(createdItem));
+        item = is.addItem(item);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ItemDTO(item));
     }
 
     @GetMapping("/{id}")
@@ -67,9 +67,9 @@ public class ItemController {
         }
         Item item = new Item(itemDTO);
         item.setCategory(cs.findCategoryById(itemDTO.getCategoryId()));
-        Item updatedItem = is.updateItem(id, item);
-        if (updatedItem != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(new ItemDTO(updatedItem));
+        item = is.updateItem(id, item);
+        if (item != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ItemDTO(item));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

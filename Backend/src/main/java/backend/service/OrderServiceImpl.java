@@ -1,6 +1,7 @@
 package backend.service;
 
 import backend.model.Order;
+import backend.model.OrderItem;
 import backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -45,7 +47,15 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> oo = orderRepository.findById(id);
         if (oo.isPresent()) {
             oo.get().setTotal(order.getTotal());
+            oo.get().setPayment(order.getPayment());
             oo.get().setModifiedAt(OffsetDateTime.now());
+            for (OrderItem orderItem : oo.get().getOrderItems()) {
+                for (OrderItem changedOrderItem : order.getOrderItems()) {
+                    if (Objects.equals(orderItem.getId(), changedOrderItem.getId())) {
+                        orderItem.setQuantity(changedOrderItem.getQuantity());
+                    }
+                }
+            }
             return orderRepository.save(oo.get());
         }
         return null;

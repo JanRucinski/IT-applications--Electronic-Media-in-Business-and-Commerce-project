@@ -9,7 +9,7 @@ public class OrderDTO {
     private Long id;
     private Long userId;
     private BigDecimal total;
-    private Long paymentId;
+    private PaymentDTO payment;
     private List<OrderItemDTO> orderItems;
 
     public OrderDTO() {
@@ -19,10 +19,12 @@ public class OrderDTO {
         this.id = order.getId();
         this.userId = order.getUser().getId();
         this.total = order.getTotal();
-        this.paymentId = order.getPayment().getId();
+        this.payment = new PaymentDTO(order.getPayment());
         this.orderItems = new ArrayList<>();
-        for (OrderItem orderItem : order.getOrderItems() ) {
-           this.orderItems.add(new OrderItemDTO(orderItem));
+        for (OrderItem orderItem : order.getOrderItems()) {
+            OrderItemDTO orderItemDTO = new OrderItemDTO(orderItem);
+            orderItemDTO.setOrderId(order.getId());
+            this.orderItems.add(new OrderItemDTO(orderItem));
         }
     }
 
@@ -50,12 +52,12 @@ public class OrderDTO {
         this.total = total;
     }
 
-    public Long getPaymentId() {
-        return paymentId;
+    public PaymentDTO getPayment() {
+        return payment;
     }
 
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
+    public void setPayment(PaymentDTO payment) {
+        this.payment = payment;
     }
 
     public List<OrderItemDTO> getOrderItems() {
@@ -71,11 +73,11 @@ public class OrderDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(total, orderDTO.total) && Objects.equals(paymentId, orderDTO.paymentId) && Objects.equals(orderItems, orderDTO.orderItems);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(total, orderDTO.total) && Objects.equals(payment, orderDTO.payment) && Objects.equals(orderItems, orderDTO.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, total, paymentId, orderItems);
+        return Objects.hash(id, userId, total, payment, orderItems);
     }
 }

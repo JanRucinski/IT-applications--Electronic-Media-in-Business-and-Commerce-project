@@ -4,9 +4,9 @@ INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUE
 INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (102, 'Brakes', 'PARTS', '2024-05-19 12:00:00 +02:00', '2024-05-19 12:00:00 +02:00');
 
 -- Insert entries into items table
-INSERT INTO items (id, name, `desc`, price, category_id, created_at, modified_at) VALUES (100, 'Trek Mountain Bike', 'A high-quality mountain bike.', 1200.00, 100, '2024-05-19 10:30:00 +02:00', '2024-05-19 10:30:00 +02:00');
-INSERT INTO items (id, name, `desc`, price, category_id, created_at, modified_at) VALUES (101, 'Giant Road Bike', 'A lightweight road bike.', 1500.00, 101, '2024-05-19 11:30:00 +02:00', '2024-05-19 11:30:00 +02:00');
-INSERT INTO items (id, name, `desc`, price, category_id, created_at, modified_at) VALUES (102, 'Shimano Brake Set', 'A reliable brake set.', 200.00, 102, '2024-05-19 12:30:00 +02:00', '2024-05-19 12:30:00 +02:00');
+INSERT INTO items (id, name, `desc`, quantity, price, category_id, created_at, modified_at) VALUES (100, 'Trek Mountain Bike', 'A high-quality mountain bike.', 10, 1200.00, 100, '2024-05-19 10:30:00 +02:00', '2024-05-19 10:30:00 +02:00');
+INSERT INTO items (id, name, `desc`, quantity, price, category_id, created_at, modified_at) VALUES (101, 'Giant Road Bike', 'A lightweight road bike.', 10, 1500.00, 101, '2024-05-19 11:30:00 +02:00', '2024-05-19 11:30:00 +02:00');
+INSERT INTO items (id, name, `desc`, quantity, price, category_id, created_at, modified_at) VALUES (102, 'Shimano Brake Set', 'A reliable brake set.', 10, 200.00, 102, '2024-05-19 12:30:00 +02:00', '2024-05-19 12:30:00 +02:00');
 
 -- Insert entries into users table
 INSERT INTO users (id, username, password, email, first_name, last_name, phone, created_at, modified_at) VALUES (100, 'johndoe', '$2a$10$KbQmX0trE/.xj8aJQxIl3uUh3dSO2Qnr6p/qz3lkUae.FUaf0W4ty', 'john.doe@example.com', 'John', 'Doe', 1234567890, '2024-05-19 10:00:00 +02:00', '2024-05-19 10:00:00 +02:00');

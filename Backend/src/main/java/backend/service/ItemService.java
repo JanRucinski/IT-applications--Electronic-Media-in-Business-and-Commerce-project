@@ -1,6 +1,7 @@
 package backend.service;
 
 import backend.model.Item;
+import backend.model.OrderItem;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface ItemService {
     List<Item> findAllParts();
 
     List<Item> findAllRentItems();
+
+    void updateItemQuantity(OrderItem orderItem);
 }
