@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import { Button } from '../ui/button';
 import {
   Card,
@@ -10,6 +8,7 @@ import {
   CardTitle,
 } from '../ui/card';
 import { Item } from '@/models/item';
+import RentAction from './RentAction';
 
 const RentItem = ({ id, name, description, image, price }: Item) => {
   return (
@@ -35,9 +34,9 @@ const RentItem = ({ id, name, description, image, price }: Item) => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="flex-1" asChild>
-          <Link to={`/rental/${id}`}>Rent now</Link>
-        </Button>
+        <RentAction bikeId={id}>
+          <Button className="flex-1">Rent now</Button>
+        </RentAction>
       </CardFooter>
     </Card>
   );
