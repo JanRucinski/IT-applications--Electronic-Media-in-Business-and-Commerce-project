@@ -22,6 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category addCategory(Category category) {
+        category.setModifiedAt(OffsetDateTime.now());
+        category.setCreatedAt(OffsetDateTime.now());
         return categoryRepository.save(category);
     }
 

@@ -22,6 +22,8 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public Rental addRental(Rental rental) {
+        rental.setModifiedAt(OffsetDateTime.now());
+        rental.setCreatedAt(OffsetDateTime.now());
         return rentalRepository.save(rental);
     }
 

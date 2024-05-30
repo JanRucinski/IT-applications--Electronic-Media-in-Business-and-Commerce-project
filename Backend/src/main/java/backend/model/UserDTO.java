@@ -1,5 +1,6 @@
 package backend.model;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class UserDTO {
@@ -10,6 +11,8 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String phone;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime modifiedAt;
 
     public UserDTO() {
     }
@@ -22,6 +25,8 @@ public class UserDTO {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.phone = user.getPhone();
+        this.createdAt = user.getCreatedAt();
+        this.modifiedAt = user.getModifiedAt();
     }
 
     public Long getId() {
@@ -80,16 +85,32 @@ public class UserDTO {
         this.phone = phone;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(OffsetDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(id, userDTO.id) && Objects.equals(username, userDTO.username) && Objects.equals(password, userDTO.password) && Objects.equals(email, userDTO.email) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(phone, userDTO.phone);
+        return Objects.equals(id, userDTO.id) && Objects.equals(username, userDTO.username) && Objects.equals(password, userDTO.password) && Objects.equals(email, userDTO.email) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(phone, userDTO.phone) && Objects.equals(createdAt, userDTO.createdAt) && Objects.equals(modifiedAt, userDTO.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName, phone);
+        return Objects.hash(id, username, password, email, firstName, lastName, phone, createdAt, modifiedAt);
     }
 }

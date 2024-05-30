@@ -24,6 +24,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item addItem(Item item) {
+        item.setModifiedAt(OffsetDateTime.now());
+        item.setCreatedAt(OffsetDateTime.now());
         return itemRepository.save(item);
     }
 

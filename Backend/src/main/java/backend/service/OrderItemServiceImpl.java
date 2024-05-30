@@ -22,6 +22,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItem addOrderItem(OrderItem orderItem) {
+        orderItem.setModifiedAt(OffsetDateTime.now());
+        orderItem.setCreatedAt(OffsetDateTime.now());
         return orderItemRepository.save(orderItem);
     }
 

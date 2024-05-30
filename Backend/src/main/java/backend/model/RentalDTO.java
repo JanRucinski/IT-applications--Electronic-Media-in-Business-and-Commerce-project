@@ -13,6 +13,8 @@ public class RentalDTO {
     private Long itemId;
     private Long userId;
     private PaymentDTO payment;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime modifiedAt;
 
     public RentalDTO() {
     }
@@ -26,6 +28,8 @@ public class RentalDTO {
         this.itemId = rental.getItem().getId();
         this.userId = rental.getUser().getId();
         this.payment = new PaymentDTO(rental.getPayment());
+        this.createdAt = rental.getCreatedAt();
+        this.modifiedAt = rental.getModifiedAt();
     }
 
     public Long getId() {
@@ -92,16 +96,32 @@ public class RentalDTO {
         this.payment = payment;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(OffsetDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RentalDTO rentalDTO = (RentalDTO) o;
-        return Objects.equals(id, rentalDTO.id) && Objects.equals(rentalStart, rentalDTO.rentalStart) && Objects.equals(rentalEnd, rentalDTO.rentalEnd) && Objects.equals(total, rentalDTO.total) && status == rentalDTO.status && Objects.equals(itemId, rentalDTO.itemId) && Objects.equals(userId, rentalDTO.userId) && Objects.equals(payment, rentalDTO.payment);
+        return Objects.equals(id, rentalDTO.id) && Objects.equals(rentalStart, rentalDTO.rentalStart) && Objects.equals(rentalEnd, rentalDTO.rentalEnd) && Objects.equals(total, rentalDTO.total) && status == rentalDTO.status && Objects.equals(itemId, rentalDTO.itemId) && Objects.equals(userId, rentalDTO.userId) && Objects.equals(payment, rentalDTO.payment) && Objects.equals(createdAt, rentalDTO.createdAt) && Objects.equals(modifiedAt, rentalDTO.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rentalStart, rentalEnd, total, status, itemId, userId, payment);
+        return Objects.hash(id, rentalStart, rentalEnd, total, status, itemId, userId, payment, createdAt, modifiedAt);
     }
 }

@@ -22,6 +22,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Payment payment) {
+        payment.setModifiedAt(OffsetDateTime.now());
+        payment.setCreatedAt(OffsetDateTime.now());
         return paymentRepository.save(payment);
     }
 

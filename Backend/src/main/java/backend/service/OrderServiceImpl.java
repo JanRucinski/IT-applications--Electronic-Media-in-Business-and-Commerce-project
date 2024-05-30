@@ -24,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order addOrder(Order order) {
+        order.setModifiedAt(OffsetDateTime.now());
+        order.setCreatedAt(OffsetDateTime.now());
         return orderRepository.save(order);
     }
 

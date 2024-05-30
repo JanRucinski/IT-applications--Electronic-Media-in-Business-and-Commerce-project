@@ -1,6 +1,7 @@
 package backend.model;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +12,8 @@ public class OrderDTO {
     private BigDecimal total;
     private PaymentDTO payment;
     private List<OrderItemDTO> orderItems;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime modifiedAt;
 
     public OrderDTO() {
     }
@@ -26,6 +29,8 @@ public class OrderDTO {
             orderItemDTO.setOrderId(order.getId());
             this.orderItems.add(new OrderItemDTO(orderItem));
         }
+        this.createdAt = order.getCreatedAt();
+        this.modifiedAt = order.getModifiedAt();
     }
 
     public Long getId() {
@@ -68,16 +73,32 @@ public class OrderDTO {
         this.orderItems = orderItems;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(OffsetDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(total, orderDTO.total) && Objects.equals(payment, orderDTO.payment) && Objects.equals(orderItems, orderDTO.orderItems);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(total, orderDTO.total) && Objects.equals(payment, orderDTO.payment) && Objects.equals(orderItems, orderDTO.orderItems) && Objects.equals(createdAt, orderDTO.createdAt) && Objects.equals(modifiedAt, orderDTO.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, total, payment, orderItems);
+        return Objects.hash(id, userId, total, payment, orderItems, createdAt, modifiedAt);
     }
 }

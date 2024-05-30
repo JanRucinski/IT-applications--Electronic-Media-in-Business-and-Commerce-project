@@ -1,5 +1,6 @@
 package backend.model;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class OrderItemDTO {
@@ -7,6 +8,8 @@ public class OrderItemDTO {
     private Integer quantity;
     private Long orderId;
     private Long itemId;
+    private OffsetDateTime createdAt;
+    private OffsetDateTime modifiedAt;
 
     public OrderItemDTO() {
     }
@@ -16,6 +19,8 @@ public class OrderItemDTO {
         this.quantity = orderItem.getQuantity();
         this.orderId = orderItem.getOrder().getId();
         this.itemId = orderItem.getItem().getId();
+        this.createdAt = orderItem.getCreatedAt();
+        this.modifiedAt = orderItem.getModifiedAt();
     }
 
     public Long getId() {
@@ -50,16 +55,32 @@ public class OrderItemDTO {
         this.itemId = itemId;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(OffsetDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItemDTO that = (OrderItemDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(quantity, that.quantity) && Objects.equals(orderId, that.orderId) && Objects.equals(itemId, that.itemId);
+        return Objects.equals(id, that.id) && Objects.equals(quantity, that.quantity) && Objects.equals(orderId, that.orderId) && Objects.equals(itemId, that.itemId) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantity, orderId, itemId);
+        return Objects.hash(id, quantity, orderId, itemId, createdAt, modifiedAt);
     }
 }
