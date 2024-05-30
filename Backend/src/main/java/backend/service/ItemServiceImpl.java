@@ -80,10 +80,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateItemQuantity(OrderItem orderItem) {
+    public void updateItemQuantity(OrderItem orderItem, Boolean subtract) {
         Optional<Item> oi = itemRepository.findById(orderItem.getItem().getId());
         if (oi.isPresent()) {
-            oi.get().setQuantity(oi.get().getQuantity() - orderItem.getQuantity());
+            if (subtract) {
+                oi.get().setQuantity(oi.get().getQuantity() - orderItem.getQuantity());
+            } else {
+                oi.get().setQuantity(oi.get().getQuantity() + orderItem.getQuantity());
+            }
             oi.get().setModifiedAt(OffsetDateTime.now());
             itemRepository.save(oi.get());
         }

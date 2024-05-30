@@ -10,6 +10,7 @@ public class OrderDTO {
     private Long id;
     private Long userId;
     private BigDecimal total;
+    private Order.OrderStatus status;
     private PaymentDTO payment;
     private List<OrderItemDTO> orderItems;
     private OffsetDateTime createdAt;
@@ -22,6 +23,7 @@ public class OrderDTO {
         this.id = order.getId();
         this.userId = order.getUser().getId();
         this.total = order.getTotal();
+        this.status = order.getStatus();
         this.payment = new PaymentDTO(order.getPayment());
         this.orderItems = new ArrayList<>();
         for (OrderItem orderItem : order.getOrderItems()) {
@@ -55,6 +57,14 @@ public class OrderDTO {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public Order.OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(Order.OrderStatus status) {
+        this.status = status;
     }
 
     public PaymentDTO getPayment() {
@@ -94,11 +104,11 @@ public class OrderDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(total, orderDTO.total) && Objects.equals(payment, orderDTO.payment) && Objects.equals(orderItems, orderDTO.orderItems) && Objects.equals(createdAt, orderDTO.createdAt) && Objects.equals(modifiedAt, orderDTO.modifiedAt);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(userId, orderDTO.userId) && Objects.equals(total, orderDTO.total) && status == orderDTO.status && Objects.equals(payment, orderDTO.payment) && Objects.equals(orderItems, orderDTO.orderItems) && Objects.equals(createdAt, orderDTO.createdAt) && Objects.equals(modifiedAt, orderDTO.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, total, payment, orderItems, createdAt, modifiedAt);
+        return Objects.hash(id, userId, total, status, payment, orderItems, createdAt, modifiedAt);
     }
 }

@@ -2,6 +2,7 @@ package backend.service;
 
 import backend.model.Order;
 import backend.model.OrderItem;
+import backend.model.Payment;
 import backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,12 @@ public class OrderServiceImpl implements OrderService {
     public Order addOrder(Order order) {
         order.setModifiedAt(OffsetDateTime.now());
         order.setCreatedAt(OffsetDateTime.now());
+        order.getPayment().setModifiedAt(OffsetDateTime.now());
+        order.getPayment().setCreatedAt(OffsetDateTime.now());
+        for (OrderItem orderItem : order.getOrderItems()) {
+            orderItem.setModifiedAt(OffsetDateTime.now());
+            orderItem.setCreatedAt(OffsetDateTime.now());
+        }
         return orderRepository.save(order);
     }
 
@@ -48,15 +55,12 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrder(Long id, Order order) {
         Optional<Order> oo = orderRepository.findById(id);
         if (oo.isPresent()) {
-            oo.get().setTotal(order.getTotal());
-            oo.get().setPayment(order.getPayment());
+            oo.get().setStatus(order.getStatus());
+            oo.get().getPayment().setStatus(order.getPayment().getStatus());
+            oo.get().getPayment().setModifiedAt(OffsetDateTime.now());
             oo.get().setModifiedAt(OffsetDateTime.now());
             for (OrderItem orderItem : oo.get().getOrderItems()) {
-                for (OrderItem changedOrderItem : order.getOrderItems()) {
-                    if (Objects.equals(orderItem.getId(), changedOrderItem.getId())) {
-                        orderItem.setQuantity(changedOrderItem.getQuantity());
-                    }
-                }
+                orderItem.setModifiedAt(OffsetDateTime.now());
             }
             return orderRepository.save(oo.get());
         }

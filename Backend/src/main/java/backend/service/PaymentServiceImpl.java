@@ -46,7 +46,6 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment updatePayment(Long id, Payment payment) {
         Optional<Payment> op = paymentRepository.findById(id);
         if (op.isPresent()) {
-            op.get().setAmount(payment.getAmount());
             op.get().setStatus(payment.getStatus());
             op.get().setModifiedAt(OffsetDateTime.now());
             return paymentRepository.save(op.get());

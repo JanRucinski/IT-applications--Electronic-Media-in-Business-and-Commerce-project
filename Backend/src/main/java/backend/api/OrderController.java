@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,15 +20,13 @@ public class OrderController {
     private final ItemService is;
     private final UserService us;
     private final PaymentService ps;
-    private final OrderItemService ois;
 
     @Autowired
-    public OrderController(OrderService os, ItemService is, UserService us, PaymentService ps, OrderItemService ois) {
+    public OrderController(OrderService os, ItemService is, UserService us, PaymentService ps) {
         this.os = os;
         this.is = is;
         this.us = us;
         this.ps = ps;
-        this.ois = ois;
     }
 
     @PostMapping
@@ -35,34 +34,41 @@ public class OrderController {
         if (orderDTO == null || orderDTO.getUserId() == null || orderDTO.getPayment() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+
         for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
             if (orderItemDTO == null || orderItemDTO.getItemId() == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
+
         User user = us.findUserById(orderDTO.getUserId());
-        Payment payment = new Payment(orderDTO.getPayment());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Order order = new Order(orderDTO);
         order.setUser(user);
-        order.setPayment(payment);
+        order.setPayment(new Payment(orderDTO.getPayment()));
+
         List<OrderItem> orderItems = new ArrayList<>();
         for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
             Item item = is.findItemById(orderItemDTO.getItemId());
-            if (item == null) {
+            if (item == null || item.getQuantity() < orderItemDTO.getQuantity()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
             OrderItem orderItem = new OrderItem(orderItemDTO);
             orderItem.setOrder(order);
             orderItem.setItem(item);
+            orderItem.setPrize(item.getPrice());
             orderItems.add(orderItem);
         }
         order.setOrderItems(orderItems);
+
+        order.setTotal(order.getOrderItems().stream().map(item -> item.getPrize().multiply(BigDecimal.valueOf(item.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add));
+        order.getPayment().setAmount(order.getTotal());
+
         order = os.addOrder(order);
         for (OrderItem orderItem : order.getOrderItems()) {
-            is.updateItemQuantity(orderItem);
+            is.updateItemQuantity(orderItem, true);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderDTO(order));
     }
@@ -85,37 +91,22 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
-        if (orderDTO == null || orderDTO.getUserId() == null || orderDTO.getPayment().getId() == null) {
+        if (orderDTO == null || orderDTO.getPayment().getId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
-            if (orderItemDTO == null || orderItemDTO.getItemId() == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-        }
-        User user = us.findUserById(orderDTO.getUserId());
         Payment payment = ps.findPaymentById(orderDTO.getPayment().getId());
-        if (user == null || payment == null) {
+        if (payment == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Order order = new Order(orderDTO);
-        order.setUser(user);
         order.setPayment(new Payment(orderDTO.getPayment()));
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
-            Item item = is.findItemById(orderItemDTO.getItemId());
-            OrderItem orderItem = ois.findOrderItemById(orderItemDTO.getId());
-            if (item == null || orderItem == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            orderItem = new OrderItem(orderItemDTO);
-            orderItem.setOrder(order);
-            orderItem.setItem(item);
-            orderItems.add(orderItem);
-        }
-        order.setOrderItems(orderItems);
         order = os.updateOrder(id, order);
         if (order != null) {
+            if (orderDTO.getStatus() == Order.OrderStatus.CANCELLED) {
+                for (OrderItem orderItem : order.getOrderItems()) {
+                    is.updateItemQuantity(orderItem, false);
+                }
+            }
             return ResponseEntity.status(HttpStatus.CREATED).body(new OrderDTO(order));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

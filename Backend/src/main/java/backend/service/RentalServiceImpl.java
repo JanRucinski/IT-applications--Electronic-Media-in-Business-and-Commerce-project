@@ -24,6 +24,8 @@ public class RentalServiceImpl implements RentalService {
     public Rental addRental(Rental rental) {
         rental.setModifiedAt(OffsetDateTime.now());
         rental.setCreatedAt(OffsetDateTime.now());
+        rental.getPayment().setCreatedAt(OffsetDateTime.now());
+        rental.getPayment().setModifiedAt(OffsetDateTime.now());
         return rentalRepository.save(rental);
     }
 
@@ -46,12 +48,9 @@ public class RentalServiceImpl implements RentalService {
     public Rental updateRental(Long id, Rental rental) {
         Optional<Rental> or = rentalRepository.findById(id);
         if (or.isPresent()) {
-            or.get().setRentalStart(rental.getRentalStart());
-            or.get().setRentalEnd(rental.getRentalEnd());
-            or.get().setTotal(rental.getTotal());
-            or.get().setItem(rental.getItem());
             or.get().setStatus(rental.getStatus());
-            or.get().setPayment(rental.getPayment());
+            or.get().getPayment().setStatus(rental.getPayment().getStatus());
+            or.get().getPayment().setModifiedAt(OffsetDateTime.now());
             or.get().setModifiedAt(OffsetDateTime.now());
             return rentalRepository.save(or.get());
         }

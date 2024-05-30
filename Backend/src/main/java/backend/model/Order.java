@@ -19,6 +19,9 @@ public class Order {
     private User user;
     @Column(name = "total")
     private BigDecimal total;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")
     private Payment payment;
@@ -37,11 +40,14 @@ public class Order {
     public Order(OrderDTO orderDTO) {
         this.id = orderDTO.getId();
         this.total = orderDTO.getTotal();
+        this.status = orderDTO.getStatus();
         this.orderItems = new ArrayList<>();
-        for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
-            OrderItem orderItem = new OrderItem(orderItemDTO);
-            orderItem.setOrder(this);
-            this.orderItems.add(orderItem);
+        if (orderDTO.getOrderItems() != null) {
+            for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
+                OrderItem orderItem = new OrderItem(orderItemDTO);
+                orderItem.setOrder(this);
+                this.orderItems.add(orderItem);
+            }
         }
     }
 
@@ -67,6 +73,14 @@ public class Order {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public Payment getPayment() {
@@ -106,11 +120,19 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id && Objects.equals(user, order.user) && Objects.equals(total, order.total) && Objects.equals(payment, order.payment) && Objects.equals(createdAt, order.createdAt) && Objects.equals(modifiedAt, order.modifiedAt) && Objects.equals(orderItems, order.orderItems);
+        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(total, order.total) && status == order.status && Objects.equals(payment, order.payment) && Objects.equals(createdAt, order.createdAt) && Objects.equals(modifiedAt, order.modifiedAt) && Objects.equals(orderItems, order.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, total, payment, createdAt, modifiedAt, orderItems);
+        return Objects.hash(id, user, total, status, payment, createdAt, modifiedAt, orderItems);
+    }
+
+    public enum OrderStatus {
+        PENDING,
+        PROCESSING,
+        SHIPPED,
+        DELIVERED,
+        CANCELLED;
     }
 }

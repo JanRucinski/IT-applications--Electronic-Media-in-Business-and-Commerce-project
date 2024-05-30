@@ -2,6 +2,7 @@ package backend.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -13,6 +14,8 @@ public class OrderItem {
     private Long id;
     @Column(name = "quantity")
     private Integer quantity;
+    @Column(name = "prize")
+    private BigDecimal prize;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -48,6 +51,14 @@ public class OrderItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public BigDecimal getPrize() {
+        return prize;
+    }
+
+    public void setPrize(BigDecimal prize) {
+        this.prize = prize;
     }
 
     public Order getOrder() {
@@ -87,11 +98,11 @@ public class OrderItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItem orderItem = (OrderItem) o;
-        return Objects.equals(id, orderItem.id) && Objects.equals(quantity, orderItem.quantity) && Objects.equals(order, orderItem.order) && Objects.equals(item, orderItem.item) && Objects.equals(createdAt, orderItem.createdAt) && Objects.equals(modifiedAt, orderItem.modifiedAt);
+        return Objects.equals(id, orderItem.id) && Objects.equals(quantity, orderItem.quantity) && Objects.equals(prize, orderItem.prize) && Objects.equals(order, orderItem.order) && Objects.equals(item, orderItem.item) && Objects.equals(createdAt, orderItem.createdAt) && Objects.equals(modifiedAt, orderItem.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantity, order, item, createdAt, modifiedAt);
+        return Objects.hash(id, quantity, prize, order, item, createdAt, modifiedAt);
     }
 }

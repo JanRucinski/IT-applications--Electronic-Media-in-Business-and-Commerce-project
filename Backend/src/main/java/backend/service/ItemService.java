@@ -22,5 +22,5 @@ public interface ItemService {
 
     List<Item> findAllRentItems();
 
-    void updateItemQuantity(OrderItem orderItem);
+    void updateItemQuantity(OrderItem orderItem, Boolean subtract);
 }
