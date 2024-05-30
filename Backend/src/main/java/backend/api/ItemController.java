@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,6 +109,14 @@ public class ItemController {
     public ResponseEntity<List<ItemDTO>> getRentItems() {
         List<Item> rentItems = is.findAllRentItems();
         return ResponseEntity.status(HttpStatus.OK).body(rentItems.stream().map(ItemDTO::new).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ItemDTO>> searchItems(@RequestParam(required = false) String name,
+                                                     @RequestParam(required = false) String[] categoryNames,
+                                                     @RequestParam(required = false) BigDecimal minPrice,
+                                                     @RequestParam(required = false) BigDecimal maxPrice) {
+        return ResponseEntity.status(HttpStatus.OK).body(is.searchItems(name, categoryNames, minPrice, maxPrice).stream().map(ItemDTO::new).collect(Collectors.toList()));
     }
 
     private Item readItemFromPayload(String itemDTOString) {

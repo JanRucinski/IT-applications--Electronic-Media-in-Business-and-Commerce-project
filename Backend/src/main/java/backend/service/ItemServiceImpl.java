@@ -4,11 +4,15 @@ import backend.model.Category;
 import backend.model.Item;
 import backend.model.OrderItem;
 import backend.repository.ItemRepository;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,5 +96,28 @@ public class ItemServiceImpl implements ItemService {
             oi.get().setModifiedAt(OffsetDateTime.now());
             itemRepository.save(oi.get());
         }
+    }
+
+    @Override
+    public List<Item> searchItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+        return itemRepository.findAll((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (name != null && !name.isEmpty()) {
+                predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+            }
+            if (categoryNames != null && categoryNames.length > 0) {
+                Join<Item, Category> categoryJoin = root.join("category");
+                predicates.add(categoryJoin.get("name").in((Object[]) categoryNames));
+            }
+            if (minPrice != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+            }
+            if (maxPrice != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
     }
 }
