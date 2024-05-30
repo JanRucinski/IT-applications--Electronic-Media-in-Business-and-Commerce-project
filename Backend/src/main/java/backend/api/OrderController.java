@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")
+@CrossOrigin(origins = "http://localhost:5173/", maxAge = 3600)
 public class OrderController {
     private final OrderService os;
     private final ItemService is;

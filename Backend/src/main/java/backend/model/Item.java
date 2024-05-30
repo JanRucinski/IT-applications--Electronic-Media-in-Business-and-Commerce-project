@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +22,9 @@ public class Item {
     private Integer quantity;
     @Column(name = "price")
     private BigDecimal price;
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -84,6 +88,14 @@ public class Item {
         this.price = price;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -121,11 +133,13 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Arrays.equals(image, item.image) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, quantity, price, category, createdAt, modifiedAt, orderItems);
+        int result = Objects.hash(id, name, desc, quantity, price, category, createdAt, modifiedAt, orderItems);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package backend.model;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class ItemDTO {
@@ -9,6 +10,7 @@ public class ItemDTO {
     private String desc;
     private Integer quantity;
     private BigDecimal price;
+    private byte[] image;
     private Long categoryId;
 
     public ItemDTO() {
@@ -20,6 +22,7 @@ public class ItemDTO {
         this.desc = item.getDesc();
         this.quantity = item.getQuantity();
         this.price = item.getPrice();
+        this.image = item.getImage();
         this.categoryId = item.getCategory().getId();
     }
 
@@ -63,6 +66,14 @@ public class ItemDTO {
         this.price = price;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public Long getCategoryId() {
         return categoryId;
     }
@@ -76,11 +87,13 @@ public class ItemDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemDTO itemDTO = (ItemDTO) o;
-        return Objects.equals(id, itemDTO.id) && Objects.equals(name, itemDTO.name) && Objects.equals(desc, itemDTO.desc) && Objects.equals(quantity, itemDTO.quantity) && Objects.equals(price, itemDTO.price) && Objects.equals(categoryId, itemDTO.categoryId);
+        return Objects.equals(id, itemDTO.id) && Objects.equals(name, itemDTO.name) && Objects.equals(desc, itemDTO.desc) && Objects.equals(quantity, itemDTO.quantity) && Objects.equals(price, itemDTO.price) && Arrays.equals(image, itemDTO.image) && Objects.equals(categoryId, itemDTO.categoryId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, quantity, price, categoryId);
+        int result = Objects.hash(id, name, desc, quantity, price, categoryId);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 }
