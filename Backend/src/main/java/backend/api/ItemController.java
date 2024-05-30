@@ -84,7 +84,7 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Item item = new Item(itemDTO);
-        item.setCategory(cs.findCategoryById(itemDTO.getCategoryId()));
+        item.setCategory(category);
         item = is.updateItem(id, item);
         if (item != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new ItemDTO(item));

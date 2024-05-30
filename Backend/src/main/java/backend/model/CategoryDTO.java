@@ -1,7 +1,5 @@
 package backend.model;
 
-import jakarta.persistence.Column;
-
 import java.time.OffsetDateTime;
 import java.util.Objects;
 

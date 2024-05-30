@@ -28,8 +28,6 @@ public class OrderItem {
     private OffsetDateTime modifiedAt;
 
     public OrderItem() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public OrderItem(OrderItemDTO orderItemDTO) {

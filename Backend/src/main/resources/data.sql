@@ -17,12 +17,12 @@ INSERT INTO payments (id, amount, provider, status, created_at, modified_at) VAL
 INSERT INTO payments (id, amount, provider, status, created_at, modified_at) VALUES (101, 1700.00, 'Stripe', 'COMPLETED', '2024-05-19 11:40:00 +02:00', '2024-05-19 11:40:00 +02:00');
 
 -- Insert entries into orders table
-INSERT INTO orders (id, user_id, total, payment_id, created_at, modified_at) VALUES (100, 100, 1400.00, 100, '2024-05-19 10:45:00 +02:00', '2024-05-19 10:45:00 +02:00');
-INSERT INTO orders (id, user_id, total, payment_id, created_at, modified_at) VALUES (101, 101, 1700.00, 101, '2024-05-19 11:45:00 +02:00', '2024-05-19 11:45:00 +02:00');
+INSERT INTO orders (id, user_id, total, status, payment_id, created_at, modified_at) VALUES (100, 100, 1400.00, 'PENDING', 100, '2024-05-19 10:45:00 +02:00', '2024-05-19 10:45:00 +02:00');
+INSERT INTO orders (id, user_id, total, status, payment_id, created_at, modified_at) VALUES (101, 101, 1700.00, 'DELIVERED', 101, '2024-05-19 11:45:00 +02:00', '2024-05-19 11:45:00 +02:00');
 
 -- Insert entries into order_items table
-INSERT INTO order_items (id, quantity, order_id, item_id, created_at, modified_at) VALUES (100, 1, 100, 100, '2024-05-19 10:50:00 +02:00', '2024-05-19 10:50:00 +02:00');
-INSERT INTO order_items (id, quantity, order_id, item_id, created_at, modified_at) VALUES (101, 1, 101, 101, '2024-05-19 11:50:00 +02:00', '2024-05-19 11:50:00 +02:00');
+INSERT INTO order_items (id, quantity, prize, order_id, item_id, created_at, modified_at) VALUES (100, 1, 1200.00, 100, 100, '2024-05-19 10:50:00 +02:00', '2024-05-19 10:50:00 +02:00');
+INSERT INTO order_items (id, quantity, prize, order_id, item_id, created_at, modified_at) VALUES (101, 1, 1500.00, 101, 101, '2024-05-19 11:50:00 +02:00', '2024-05-19 11:50:00 +02:00');
 
 -- Insert entries into rentals table
 INSERT INTO rentals (id, rental_start, rental_end, total, status, item_id, user_id, payment_id, created_at, modified_at) VALUES (100, '2024-06-01 08:00:00 +02:00', '2024-06-07 20:00:00 +02:00', 300.00, 'IN_PROGRESS', 100, 100, 100, '2024-05-19 10:00:00 +02:00', '2024-05-19 10:00:00 +02:00');

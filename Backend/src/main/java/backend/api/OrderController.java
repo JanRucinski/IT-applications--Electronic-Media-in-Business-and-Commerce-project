@@ -1,7 +1,10 @@
 package backend.api;
 
 import backend.model.*;
-import backend.service.*;
+import backend.service.ItemService;
+import backend.service.OrderService;
+import backend.service.PaymentService;
+import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -29,8 +29,6 @@ public class Payment {
     private Rental rental;
 
     public Payment() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public Payment(PaymentDTO paymentDTO) {

@@ -36,8 +36,6 @@ public class Rental {
     private OffsetDateTime modifiedAt;
 
     public Rental() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public Rental(RentalDTO rentalDTO) {
@@ -133,7 +131,7 @@ public class Rental {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rental rental = (Rental) o;
-        return id == rental.id && Objects.equals(rentalStart, rental.rentalStart) && Objects.equals(rentalEnd, rental.rentalEnd) && Objects.equals(total, rental.total) && Objects.equals(status, rental.status) && Objects.equals(item, rental.item) && Objects.equals(user, rental.user) && Objects.equals(payment, rental.payment) && Objects.equals(createdAt, rental.createdAt) && Objects.equals(modifiedAt, rental.modifiedAt);
+        return Objects.equals(id, rental.id) && Objects.equals(rentalStart, rental.rentalStart) && Objects.equals(rentalEnd, rental.rentalEnd) && Objects.equals(total, rental.total) && Objects.equals(status, rental.status) && Objects.equals(item, rental.item) && Objects.equals(user, rental.user) && Objects.equals(payment, rental.payment) && Objects.equals(createdAt, rental.createdAt) && Objects.equals(modifiedAt, rental.modifiedAt);
     }
 
     @Override

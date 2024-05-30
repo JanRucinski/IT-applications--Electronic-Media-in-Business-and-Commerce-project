@@ -36,8 +36,6 @@ public class Item {
     private List<OrderItem> orderItems;
 
     public Item() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public Item(ItemDTO itemDTO) {

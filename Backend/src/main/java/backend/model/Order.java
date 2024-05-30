@@ -33,8 +33,6 @@ public class Order {
     private List<OrderItem> orderItems;
 
     public Order() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public Order(OrderDTO orderDTO) {
@@ -133,6 +131,6 @@ public class Order {
         PROCESSING,
         SHIPPED,
         DELIVERED,
-        CANCELLED;
+        CANCELLED
     }
 }

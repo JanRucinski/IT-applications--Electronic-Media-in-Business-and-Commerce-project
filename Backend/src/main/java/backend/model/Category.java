@@ -25,8 +25,6 @@ public class Category {
     private List<Item> items;
 
     public Category() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public Category(CategoryDTO categoryDTO) {
@@ -88,7 +86,7 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && Objects.equals(name, category.name) && superCategory == category.superCategory && Objects.equals(createdAt, category.createdAt) && Objects.equals(modifiedAt, category.modifiedAt) && Objects.equals(items, category.items);
+        return Objects.equals(id, category.id) && Objects.equals(name, category.name) && superCategory == category.superCategory && Objects.equals(createdAt, category.createdAt) && Objects.equals(modifiedAt, category.modifiedAt) && Objects.equals(items, category.items);
     }
 
     @Override

@@ -35,8 +35,6 @@ public class User {
     private List<Rental> rentals;
 
     public User() {
-        this.createdAt = OffsetDateTime.now();
-        this.modifiedAt = OffsetDateTime.now();
     }
 
     public User(UserDTO userDTO) {
@@ -71,10 +69,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    public void setPlainPassword(String password) {
-        this.password = password;
     }
 
     public boolean verifyPassword(String password) {
