@@ -52,6 +52,7 @@ public class ItemServiceImpl implements ItemService {
             oi.get().setDesc(item.getDesc());
             oi.get().setQuantity(item.getQuantity());
             oi.get().setPrice(item.getPrice());
+            oi.get().setImage(item.getImage());
             oi.get().setCategory(item.getCategory());
             oi.get().setModifiedAt(OffsetDateTime.now());
             return itemRepository.save(oi.get());

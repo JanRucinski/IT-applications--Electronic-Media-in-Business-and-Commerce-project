@@ -33,26 +33,13 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<ItemDTO> addItem(@RequestParam("itemDTO") String itemDTOString,
                                            @RequestParam("image") MultipartFile file) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ItemDTO itemDTO;
-        try {
-            itemDTO = objectMapper.readValue(itemDTOString, ItemDTO.class);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        if (itemDTO == null || itemDTO.getCategoryId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        Category category = cs.findCategoryById(itemDTO.getCategoryId());
-        if (category == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        Item item = new Item(itemDTO);
-        item.setCategory(category);
-        try {
-            item.setImage(file.getBytes());
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        Item item = readItemFromPayload(itemDTOString);
+        if (item != null) {
+            try {
+                item.setImage(file.getBytes());
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
         }
         item = is.addItem(item);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ItemDTO(item));
@@ -75,16 +62,17 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ItemDTO> updateItem(@PathVariable Long id, @RequestBody ItemDTO itemDTO) {
-        if (itemDTO == null || itemDTO.getCategoryId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public ResponseEntity<ItemDTO> updateItem(@PathVariable Long id,
+                                              @RequestParam("itemDTO") String itemDTOString,
+                                              @RequestParam("image") MultipartFile file) {
+        Item item = readItemFromPayload(itemDTOString);
+        if (item != null && file != null) {
+            try {
+                item.setImage(file.getBytes());
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
         }
-        Category category = cs.findCategoryById(itemDTO.getCategoryId());
-        if (category == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        Item item = new Item(itemDTO);
-        item.setCategory(category);
         item = is.updateItem(id, item);
         if (item != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new ItemDTO(item));
@@ -120,5 +108,25 @@ public class ItemController {
     public ResponseEntity<List<ItemDTO>> getRentItems() {
         List<Item> rentItems = is.findAllRentItems();
         return ResponseEntity.status(HttpStatus.OK).body(rentItems.stream().map(ItemDTO::new).collect(Collectors.toList()));
+    }
+
+    private Item readItemFromPayload(String itemDTOString) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ItemDTO itemDTO;
+        try {
+            itemDTO = objectMapper.readValue(itemDTOString, ItemDTO.class);
+        } catch (IOException e) {
+            return null;
+        }
+        if (itemDTO == null || itemDTO.getCategoryId() == null) {
+            return null;
+        }
+        Category category = cs.findCategoryById(itemDTO.getCategoryId());
+        if (category == null) {
+            return null;
+        }
+        Item item = new Item(itemDTO);
+        item.setCategory(category);
+        return item;
     }
 }
