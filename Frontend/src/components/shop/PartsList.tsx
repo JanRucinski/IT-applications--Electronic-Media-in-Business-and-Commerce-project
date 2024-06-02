@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import { useParts } from '@/hooks/use-items';
 import ShopItem from './ShopItem';
 import LoadingState from '../shared/LoadingState';
@@ -6,7 +8,10 @@ import { Item } from '@/models/item';
 import NotFoundState from '../shared/NotFoundState';
 
 const PartsList = () => {
-  const { data, error, isLoading } = useParts();
+  const [params] = useSearchParams();
+  const query = params.get('name') || '';
+
+  const { data, error, isLoading } = useParts(query);
   if (isLoading) {
     return <LoadingState className="h-96" spinnerSize={16} />;
   }

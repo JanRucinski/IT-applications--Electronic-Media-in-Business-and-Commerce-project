@@ -15,7 +15,7 @@ export const useBikes = (searchQuery?: string) => {
 
 export const useParts = (searchQuery?: string) => {
   const { data, isLoading, error, mutate } = useSWR(
-    searchQuery ? `${PARTS_URL}?type=${searchQuery}` : PARTS_URL
+    searchQuery ? `${PARTS_URL}?name=${searchQuery}` : PARTS_URL
   );
 
   return { data, isLoading, error, mutate };
