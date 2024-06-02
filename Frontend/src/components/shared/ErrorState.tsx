@@ -8,8 +8,14 @@ const ErrorState = ({ errorLabel }: { errorLabel: string }) => {
   return (
     <section className="container flex-1 content-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 text-primary">{errorLabel}</h1>
-        <Button size="lg" onClick={navigate.bind(null, 0)}>
+        <h1 className="text-4xl font-bold mb-4 text-primary text-red-700">
+          {errorLabel}
+        </h1>
+        <Button
+          size="lg"
+          onClick={navigate.bind(null, 0)}
+          className="bg-red-700"
+        >
           Retry
         </Button>
       </div>

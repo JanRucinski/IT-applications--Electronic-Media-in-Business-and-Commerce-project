@@ -3,6 +3,7 @@ import ShopItem from './ShopItem';
 import LoadingState from '../shared/LoadingState';
 import ErrorState from '../shared/ErrorState';
 import { Item } from '@/models/item';
+import NotFoundState from '../shared/NotFoundState';
 
 const BikesList = () => {
   const { data, error, isLoading } = useBikes();
@@ -16,6 +17,10 @@ const BikesList = () => {
         <ErrorState errorLabel="Failed to fetch bikes." />
       </div>
     );
+  }
+
+  if (!data.length) {
+    return <NotFoundState />;
   }
 
   return (

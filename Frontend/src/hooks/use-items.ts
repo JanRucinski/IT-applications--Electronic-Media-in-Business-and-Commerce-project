@@ -32,9 +32,3 @@ export const useRentItems = () => {
 
   return { data, isLoading, error, mutate };
 };
-
-export const useRentItem = (id: string) => {
-  const { data, isLoading, error, mutate } = useSWR(`${ITEMS_URL}/${id}`);
-
-  return { data, isLoading, error, mutate };
-};

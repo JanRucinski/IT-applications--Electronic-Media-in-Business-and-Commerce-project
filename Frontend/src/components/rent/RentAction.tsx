@@ -1,8 +1,8 @@
 import { PropsWithChildren, useState } from 'react';
 
 import { Dialog, DialogTrigger } from '../ui/dialog';
-import { mockedRentals } from '@/config/mock';
 import RentDialog from './RentDialog';
+import { useItem } from '@/hooks/use-items';
 
 type RentActionProps = PropsWithChildren & {
   bikeId: string;
@@ -11,16 +11,16 @@ type RentActionProps = PropsWithChildren & {
 const RentAction = ({ bikeId, children }: RentActionProps) => {
   const [open, setOpen] = useState(false);
 
-  const bike = mockedRentals.find((rental) => rental.id === bikeId);
+  const { data, error, isLoading } = useItem(bikeId);
 
-  if (!bike) {
+  if (!data || error || isLoading) {
     return null;
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <RentDialog bike={bike} />
+      <RentDialog bike={data} />
     </Dialog>
   );
 };

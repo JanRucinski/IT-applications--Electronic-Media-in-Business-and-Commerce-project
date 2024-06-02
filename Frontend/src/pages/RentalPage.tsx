@@ -1,7 +1,31 @@
 import RentItem from '@/components/rent/RentItem';
-import { mockedRentals } from '@/config/mock';
+import ErrorState from '@/components/shared/ErrorState';
+import LoadingState from '@/components/shared/LoadingState';
+import { useRentItems } from '@/hooks/use-items';
+import { Item } from '@/models/item';
 
 const RentalPage = () => {
+  const { data, error, isLoading } = useRentItems();
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
+
+  if (error) {
+    return <ErrorState errorLabel="Failed to fetch rentals." />;
+  }
+
+  if (!data.length) {
+    return (
+      <div className="flex-1 flex justify-center items-center">
+        <h1 className="text-2xl text-center text-sky-950">
+          Seems like there are no rentals available at the moment. Please check
+          back later.
+        </h1>
+      </div>
+    );
+  }
+
   return (
     <section className="container">
       <div className="mt-5 mb-10 flex justify-between">
@@ -15,7 +39,7 @@ const RentalPage = () => {
         </div>
       </div>
       <div className="grid md:grid-cols-4 md:gap-10 my-4">
-        {mockedRentals.map((item) => (
+        {data.map((item: Item) => (
           <RentItem key={item.id} {...item} />
         ))}
       </div>
