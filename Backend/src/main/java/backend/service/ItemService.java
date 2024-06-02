@@ -17,13 +17,11 @@ public interface ItemService {
 
     Item findItemById(Long id);
 
-    List<Item> findAllBikes();
+    List<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
 
-    List<Item> findAllParts();
+    List<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
 
-    List<Item> findAllRentItems();
+    List<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
 
     void updateItemQuantity(OrderItem orderItem, Boolean subtract);
-
-    List<Item> searchItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
 }

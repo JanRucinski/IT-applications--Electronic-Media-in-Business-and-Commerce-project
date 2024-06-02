@@ -93,30 +93,31 @@ public class ItemController {
     }
 
     @GetMapping("/bikes")
-    public ResponseEntity<List<ItemDTO>> getBikes() {
-        List<Item> bikes = is.findAllBikes();
+    public ResponseEntity<List<ItemDTO>> getBikes(@RequestParam(required = false) String name,
+                                                  @RequestParam(required = false) String[] categoryNames,
+                                                  @RequestParam(required = false) BigDecimal minPrice,
+                                                  @RequestParam(required = false) BigDecimal maxPrice) {
+        List<Item> bikes = is.findAllBikes(name, categoryNames, minPrice, maxPrice);
         return ResponseEntity.status(HttpStatus.OK).body(bikes.stream().map(ItemDTO::new).collect(Collectors.toList()));
 
     }
 
     @GetMapping("/parts")
-    public ResponseEntity<List<ItemDTO>> getParts() {
-        List<Item> parts = is.findAllParts();
+    public ResponseEntity<List<ItemDTO>> getParts(@RequestParam(required = false) String name,
+                                                  @RequestParam(required = false) String[] categoryNames,
+                                                  @RequestParam(required = false) BigDecimal minPrice,
+                                                  @RequestParam(required = false) BigDecimal maxPrice) {
+        List<Item> parts = is.findAllParts(name, categoryNames, minPrice, maxPrice);
         return ResponseEntity.status(HttpStatus.OK).body(parts.stream().map(ItemDTO::new).collect(Collectors.toList()));
     }
 
     @GetMapping("/rent-items")
-    public ResponseEntity<List<ItemDTO>> getRentItems() {
-        List<Item> rentItems = is.findAllRentItems();
+    public ResponseEntity<List<ItemDTO>> getRentItems(@RequestParam(required = false) String name,
+                                                      @RequestParam(required = false) String[] categoryNames,
+                                                      @RequestParam(required = false) BigDecimal minPrice,
+                                                      @RequestParam(required = false) BigDecimal maxPrice) {
+        List<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice);
         return ResponseEntity.status(HttpStatus.OK).body(rentItems.stream().map(ItemDTO::new).collect(Collectors.toList()));
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<ItemDTO>> searchItems(@RequestParam(required = false) String name,
-                                                     @RequestParam(required = false) String[] categoryNames,
-                                                     @RequestParam(required = false) BigDecimal minPrice,
-                                                     @RequestParam(required = false) BigDecimal maxPrice) {
-        return ResponseEntity.status(HttpStatus.OK).body(is.searchItems(name, categoryNames, minPrice, maxPrice).stream().map(ItemDTO::new).collect(Collectors.toList()));
     }
 
     private Item readItemFromPayload(String itemDTOString) {

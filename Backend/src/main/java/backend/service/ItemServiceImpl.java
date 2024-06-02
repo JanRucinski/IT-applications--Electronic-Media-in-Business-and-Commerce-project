@@ -4,8 +4,10 @@ import backend.model.Category;
 import backend.model.Item;
 import backend.model.OrderItem;
 import backend.repository.ItemRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,18 +72,39 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAllBikes() {
-        return itemRepository.findItemsByCategorySuperCategory(Category.SuperCategory.BIKES);
+    public List<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+        return itemRepository.findAll((root, query, criteriaBuilder) -> {
+            Join<Item, Category> categoryJoin = root.join("category");
+            List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
+
+            predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.BIKES));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
     }
 
     @Override
-    public List<Item> findAllParts() {
-        return itemRepository.findItemsByCategorySuperCategory(Category.SuperCategory.PARTS);
+    public List<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+        return itemRepository.findAll((root, query, criteriaBuilder) -> {
+            Join<Item, Category> categoryJoin = root.join("category");
+            List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
+
+            predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.PARTS));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
     }
 
     @Override
-    public List<Item> findAllRentItems() {
-        return itemRepository.findItemsByCategorySuperCategory(Category.SuperCategory.RENT_ITEMS);
+    public List<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+        return itemRepository.findAll((root, query, criteriaBuilder) -> {
+            Join<Item, Category> categoryJoin = root.join("category");
+            List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
+
+            predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.RENT_ITEMS));
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
     }
 
     @Override
@@ -98,26 +121,20 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
-    @Override
-    public List<Item> searchItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
-        return itemRepository.findAll((root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-
-            if (name != null && !name.isEmpty()) {
-                predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
-            }
-            if (categoryNames != null && categoryNames.length > 0) {
-                Join<Item, Category> categoryJoin = root.join("category");
-                predicates.add(categoryJoin.get("name").in((Object[]) categoryNames));
-            }
-            if (minPrice != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
-            }
-            if (maxPrice != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
-            }
-
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
+    private List<Predicate> generateCommonItemPredicates(Root<Item> root, CriteriaBuilder criteriaBuilder, Join<Item, Category> categoryJoin, String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+        }
+        if (categoryNames != null && categoryNames.length > 0) {
+            predicates.add(categoryJoin.get("name").in((Object[]) categoryNames));
+        }
+        if (minPrice != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+        }
+        if (maxPrice != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+        }
+        return predicates;
     }
 }
