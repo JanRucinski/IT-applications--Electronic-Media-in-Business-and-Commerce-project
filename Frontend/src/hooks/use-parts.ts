@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 const PARTS_URL = '/parts';
 
-export const useParts = (searchQuery: string) => {
+export const useParts = (searchQuery?: string) => {
   const { data, isLoading, error, mutate } = useSWR(
     searchQuery ? `${PARTS_URL}?type=${searchQuery}` : PARTS_URL
   );

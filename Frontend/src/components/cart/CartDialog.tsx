@@ -44,7 +44,7 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
       <DialogFooter>
         {isEmpty ? (
           <Button asChild className="flex-1">
-            <Link to="/shop" onClick={onClose}>
+            <Link to="/bikes" onClick={onClose}>
               Explore our shop
             </Link>
           </Button>

@@ -2,7 +2,7 @@ import useSWR from 'swr';
 
 const BIKES_URL = '/bikes';
 
-export const useBikes = (searchQuery: string) => {
+export const useBikes = (searchQuery?: string) => {
   const { data, isLoading, error, mutate } = useSWR(
     searchQuery ? `${BIKES_URL}?type=${searchQuery}` : BIKES_URL
   );

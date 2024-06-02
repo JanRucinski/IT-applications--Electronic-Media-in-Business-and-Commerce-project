@@ -3,14 +3,19 @@ import { Link, useLocation } from 'react-router-dom';
 import MainLogo from './MainLogo';
 import AuthButtons from './AuthButtons';
 import UserNav from './UserNav';
-import { headerItems } from '@/config/navigation';
+import { headerItems, adminHeaderItems } from '@/config/navigation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import Cart from '../cart/Cart';
 
-const Header = () => {
+type HeaderProps = {
+  isAdmin?: boolean;
+};
+
+const Header = ({ isAdmin }: HeaderProps) => {
   // TODO: Implement authentication
   const isAuthenticated = false;
+  const navItems = isAdmin ? adminHeaderItems : headerItems;
   const { pathname } = useLocation();
 
   return (
@@ -19,7 +24,7 @@ const Header = () => {
         <MainLogo />
         <nav>
           <ul className="flex space-x-8">
-            {headerItems.map((item) => (
+            {navItems.map((item) => (
               <li key={item.title}>
                 <Button
                   asChild
@@ -27,7 +32,7 @@ const Header = () => {
                   size="link"
                   className={cn(
                     'text-base',
-                    pathname === item.to && 'text-primary'
+                    pathname.includes(item.to) && 'text-primary'
                   )}
                 >
                   <Link to={item.to}>{item.title}</Link>
@@ -37,7 +42,7 @@ const Header = () => {
           </ul>
         </nav>
         <nav className="flex items-center justify-center">
-          <Cart />
+          {!isAdmin ? <Cart /> : null}
           {isAuthenticated ? (
             <UserNav
               name="Murad"

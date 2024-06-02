@@ -17,10 +17,10 @@ export const createCartItem = (item: Item) =>
 
 export const createBreadcrumb = (itemCategory: ItemCategory) => {
   switch (itemCategory) {
-    case 'shop':
+    case 'bikes':
       return [
         {
-          name: 'Shop',
+          name: 'Bikes',
           url: `/${itemCategory}`,
         },
       ];

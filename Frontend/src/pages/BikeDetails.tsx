@@ -4,7 +4,7 @@ import ItemDetails from '@/components/shop/ItemDetails';
 import { mockedBike, mockedBikes } from '@/config/mock';
 import { DetailedBikeItem } from '@/models/item';
 
-const ShopItemDetails = () => {
+const BikeDetails = () => {
   const { id } = useParams<{ id: string }>();
 
   const item = mockedBikes.find((bike) => bike.id === id);
@@ -19,7 +19,7 @@ const ShopItemDetails = () => {
     ...mockedBike,
   } as DetailedBikeItem;
 
-  return <ItemDetails item={bike} itemCategory="shop" />;
+  return <ItemDetails item={bike} itemCategory="bikes" />;
 };
 
-export default ShopItemDetails;
+export default BikeDetails;

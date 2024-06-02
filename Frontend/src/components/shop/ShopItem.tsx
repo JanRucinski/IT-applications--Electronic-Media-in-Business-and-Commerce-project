@@ -12,13 +12,15 @@ import { Button } from '../ui/button';
 import { Item } from '@/models/item';
 import { ItemCategory } from '@/types/config';
 import { useManageCartItem } from '@/hooks/use-common-actions';
+import ShopItemFooter from '../dashboard/items/ShopItemFooter';
 
 type ShopItemProps = {
   item: Item;
   itemCategory: ItemCategory;
+  isAdmin?: boolean;
 };
 
-const ShopItem = ({ item, itemCategory }: ShopItemProps) => {
+const ShopItem = ({ item, itemCategory, isAdmin }: ShopItemProps) => {
   const { isItemInCart, buttonAction, buttonLabel } = useManageCartItem(item);
 
   return (
@@ -41,18 +43,22 @@ const ShopItem = ({ item, itemCategory }: ShopItemProps) => {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between gap-4">
-        <Button
-          className="flex-1"
-          onClick={buttonAction}
-          variant={isItemInCart ? 'outline' : 'default'}
-        >
-          {buttonLabel}
-        </Button>
-        <Button variant="link" className="text-sky-950" asChild>
-          <Link to={`/${itemCategory}/${item.id}`}>Details</Link>
-        </Button>
-      </CardFooter>
+      {isAdmin ? (
+        <ShopItemFooter itemCategory={itemCategory} item={item} />
+      ) : (
+        <CardFooter className="flex justify-between gap-4">
+          <Button
+            className="flex-1"
+            onClick={buttonAction}
+            variant={isItemInCart ? 'outline' : 'default'}
+          >
+            {buttonLabel}
+          </Button>
+          <Button variant="link" className="text-sky-950" asChild>
+            <Link to={`/${itemCategory}/${item.id}`}>Details</Link>
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };

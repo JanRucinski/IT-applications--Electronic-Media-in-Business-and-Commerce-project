@@ -6,11 +6,15 @@ import Header from './Header';
 import Footer from './Footer';
 import { swrConfig } from '@/lib/swr-config';
 
-const Layout = () => {
+type LayoutProps = {
+  isAdmin?: boolean;
+};
+
+const Layout = ({ isAdmin }: LayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <SWRConfig value={swrConfig}>
-        <Header />
+        <Header isAdmin={isAdmin} />
         <main className="flex w-full flex-1 flex-col overflow-hidden">
           <Outlet />
         </main>
