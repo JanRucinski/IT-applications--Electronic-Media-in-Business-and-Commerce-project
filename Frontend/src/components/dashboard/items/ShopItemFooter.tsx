@@ -11,7 +11,7 @@ type ShopItemFooterProps = {
 
 const ShopItemFooter = ({ item, itemCategory }: ShopItemFooterProps) => {
   return (
-    <CardFooter className="flex justify-between gap-4">
+    <CardFooter className="flex justify-between gap-2">
       <EditItem item={item} itemCategory={itemCategory} />
       <DeleteShopItem
         itemCategory={itemCategory}

@@ -22,7 +22,8 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
   const isEmpty = !items.length;
 
   const totalCost = useMemo(
-    () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    () =>
+      items.reduce((acc, item) => acc + item.price * item.selectedQuantity, 0),
     [items]
   );
 

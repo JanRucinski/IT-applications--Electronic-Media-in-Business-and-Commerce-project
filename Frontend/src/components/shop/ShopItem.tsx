@@ -27,7 +27,7 @@ const ShopItem = ({ item, itemCategory, isAdmin }: ShopItemProps) => {
     <Card className="flex flex-col justify-between">
       <CardHeader>
         <CardTitle>{item.name}</CardTitle>
-        <CardDescription>{item.description}</CardDescription>
+        <CardDescription>{item.desc}</CardDescription>
       </CardHeader>
       <CardContent>
         <div>

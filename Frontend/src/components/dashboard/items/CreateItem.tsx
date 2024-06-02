@@ -11,8 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { ItemForm } from './ItemForm';
-import { useParts } from '@/hooks/use-parts';
-import { useBikes } from '@/hooks/use-bikes';
+import { useBikes, useParts } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 import { ItemSchemaType } from '@/lib/validation/item-schema';
 import { createItem } from '@/services/items';

@@ -1,25 +1,22 @@
 import { useParams } from 'react-router-dom';
 
-import { mockedBikeParts, mockedPart } from '@/config/mock';
 import ItemDetails from '@/components/shop/ItemDetails';
-import { DetailedPartItem } from '@/models/item';
+import { useItem } from '@/hooks/use-items';
+import ErrorState from '@/components/shared/ErrorState';
+import LoadingState from '@/components/shared/LoadingState';
 
 const PartDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const { data, error, isLoading } = useItem(id as string);
 
-  const part = mockedBikeParts.find((part) => part.id === id);
-
-  if (!part) {
-    return <div>Part not found</div>;
+  if (isLoading) {
+    return <LoadingState />;
   }
 
-  // !TEMP MOCK
-  const item = {
-    ...part,
-    ...mockedPart,
-  } as DetailedPartItem;
-
-  return <ItemDetails item={item} itemCategory="parts" />;
+  if (error) {
+    return <ErrorState errorLabel="Failed to fetch this bike part." />;
+  }
+  return <ItemDetails item={data} itemCategory="parts" />;
 };
 
 export default PartDetails;

@@ -11,7 +11,7 @@ const Cart = () => {
   const [open, setOpen] = useState(false);
 
   const total = useMemo(
-    () => cart.reduce((acc, item) => acc + item.quantity, 0),
+    () => cart.reduce((acc, item) => acc + item.selectedQuantity, 0),
     [cart]
   );
 

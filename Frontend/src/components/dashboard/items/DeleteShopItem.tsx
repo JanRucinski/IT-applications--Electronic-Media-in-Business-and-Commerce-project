@@ -14,8 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import axiosInstance from '@/lib/axios-instance';
-import { useBikes } from '@/hooks/use-bikes';
-import { useParts } from '@/hooks/use-parts';
+import { useBikes, useParts } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 
 type DeleteShopItemProps = {

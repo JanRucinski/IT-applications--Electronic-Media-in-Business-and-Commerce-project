@@ -1,7 +1,7 @@
 import Filter from '@/components/shared/Filter';
 import SearchBar from '@/components/shared/SearchBar';
 import Sort from '@/components/shared/Sort';
-import ShopItem from '@/components/shop/ShopItem';
+import BikesList from '@/components/shop/BikesList';
 import ShopPagination from '@/components/shop/ShopPagination';
 import { bikeTypes } from '@/config/filter-options';
 import { mockedBikes } from '@/config/mock';
@@ -23,11 +23,7 @@ const BikesPage = () => {
           <Sort setValue={(value) => console.log(value)} />
         </div>
       </div>
-      <div className="grid md:grid-cols-4 md:gap-10 my-4">
-        {mockedBikes.map((item) => (
-          <ShopItem key={item.id} item={item} itemCategory="bikes" />
-        ))}
-      </div>
+      <BikesList />
       {mockedBikes.length > maxItemsPerPage && (
         <ShopPagination className="mt-16" />
       )}

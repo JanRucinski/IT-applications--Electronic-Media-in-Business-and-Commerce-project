@@ -11,8 +11,8 @@ export const createCartItem = (item: Item) =>
     name: item.name,
     price: item.price,
     image: item.image,
-    quantity: 1,
-    maxQuantity: item.maxQuantity ? item.maxQuantity : 1,
+    selectedQuantity: 1,
+    quantity: item.quantity ? item.quantity : 1,
   } as CartItemType);
 
 export const createBreadcrumb = (itemCategory: ItemCategory) => {

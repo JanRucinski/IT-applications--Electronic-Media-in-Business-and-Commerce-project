@@ -13,8 +13,7 @@ import { ItemForm } from './ItemForm';
 import { Item } from '@/models/item';
 import { ItemSchemaType } from '@/lib/validation/item-schema';
 import { updateItem } from '@/services/items';
-import { useParts } from '@/hooks/use-parts';
-import { useBikes } from '@/hooks/use-bikes';
+import { useBikes, useParts } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 
 type EditItemProps = {
