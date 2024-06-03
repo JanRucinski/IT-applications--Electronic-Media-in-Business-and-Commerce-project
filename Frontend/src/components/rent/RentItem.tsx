@@ -10,12 +10,12 @@ import {
 import { Item } from '@/models/item';
 import RentAction from './RentAction';
 
-const RentItem = ({ id, name, description, image, price }: Item) => {
+const RentItem = ({ id, name, desc, image, price }: Item) => {
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>{desc}</CardDescription>
       </CardHeader>
       <CardContent>
         <div>

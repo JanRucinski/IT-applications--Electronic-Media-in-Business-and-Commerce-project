@@ -3,25 +3,31 @@ import Unauthorized from './Unauthorized';
 import PageNotFound from './PageNotFound';
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
-import ShopPage from './ShopPage';
+import BikesPage from './BikesPage';
 import ContactPage from './ContactPage';
 import AboutPage from './AboutPage';
 import PartsPage from './PartsPage';
 import RentalPage from './RentalPage';
-import ShopItemDetails from './ShopItemDetails';
+import BikeDetails from './BikeDetails';
 import PartDetails from './PartDetails';
+import AdminDashboard from './AdminDashboard';
+import AdminBikes from './AdminBikes';
+import AdminParts from './AdminParts';
 
 export {
   HomePage,
   Unauthorized,
   PageNotFound,
   LoginPage,
-  ShopPage,
+  BikesPage,
   SignUpPage,
   ContactPage,
   AboutPage,
   PartsPage,
   RentalPage,
-  ShopItemDetails,
+  BikeDetails,
   PartDetails,
+  AdminDashboard,
+  AdminBikes,
+  AdminParts,
 };

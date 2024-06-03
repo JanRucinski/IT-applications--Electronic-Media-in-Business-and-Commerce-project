@@ -6,13 +6,16 @@ import {
   PageNotFound,
   LoginPage,
   SignUpPage,
-  ShopPage,
+  BikesPage,
   ContactPage,
   AboutPage,
   PartsPage,
   RentalPage,
-  ShopItemDetails,
+  BikeDetails,
   PartDetails,
+  AdminDashboard,
+  AdminBikes,
+  AdminParts,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import AuthLayout from './components/layouts/AuthLayout';
@@ -22,14 +25,22 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/shop/:id" element={<ShopItemDetails />} />
+          <Route index element={<HomePage />} />
+          <Route path="/bikes" element={<BikesPage />} />
+          <Route path="/bikes/:id" element={<BikeDetails />} />
           <Route path="/parts" element={<PartsPage />} />
           <Route path="/parts/:id" element={<PartDetails />} />
           <Route path="/rental" element={<RentalPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
+        </Route>
+
+        <Route path="/dashboard" element={<Layout isAdmin />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="bikes" element={<AdminBikes />} />
+          <Route path="parts" element={<AdminParts />} />
+          <Route path="rentals" element={<div>Rentals</div>} />
+          <Route path="orders" element={<div>Orders</div>} />
         </Route>
 
         <Route element={<AuthLayout />}>

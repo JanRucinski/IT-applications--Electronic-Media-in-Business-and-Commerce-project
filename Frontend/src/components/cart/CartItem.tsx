@@ -12,15 +12,15 @@ export const CartItem = ({ item }: CartItemProps) => {
   const { removeItem, updateItem } = useCartStore();
 
   const increment = () => {
-    updateItem(item.id, item.quantity + 1);
+    updateItem(item.id, item.selectedQuantity + 1);
   };
 
   const decrement = () => {
-    if (item.quantity === 1) {
+    if (item.selectedQuantity === 1) {
       removeItem(item.id);
       return;
     }
-    updateItem(item.id, item.quantity - 1);
+    updateItem(item.id, item.selectedQuantity - 1);
   };
 
   return (
@@ -33,7 +33,7 @@ export const CartItem = ({ item }: CartItemProps) => {
       <div className="flex-1 mx-4 p-1 w-96">
         <h4 className="text-lg font-semibold text-sky-950">{item.name}</h4>
         <p className="text-muted-foreground">
-          {(item.price * item.quantity).toFixed(2)}$
+          {(item.price * item.selectedQuantity).toFixed(2)}$
         </p>
       </div>
       <div className="flex">
@@ -46,12 +46,12 @@ export const CartItem = ({ item }: CartItemProps) => {
           <MinusIcon size={24} />
         </Button>
         <span className="h-10 w-10 flex justify-center items-center text-xl text-sky-950">
-          {item.quantity}
+          {item.selectedQuantity}
         </span>
         <Button
           size="icon"
           onClick={increment}
-          disabled={item.maxQuantity === item.quantity}
+          disabled={item.selectedQuantity === item.quantity}
           variant="outline"
           className="rounded-full text-primary hover:text-sky-950"
         >

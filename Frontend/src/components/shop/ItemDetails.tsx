@@ -1,4 +1,4 @@
-import { DetailedBikeItem, DetailedPartItem } from '@/models/item';
+import { DetailedItem } from '@/models/item';
 import { createBreadcrumb } from '@/utils/helper';
 import { NavBreadcrumb } from '../shared/NavBreadcrumb';
 import { ItemCategory } from '@/types/config';
@@ -6,16 +6,12 @@ import { useManageCartItem } from '@/hooks/use-common-actions';
 import { Button } from '../ui/button';
 
 type ItemDetailsProps = {
-  item: DetailedBikeItem | DetailedPartItem;
+  item: DetailedItem;
   itemCategory: ItemCategory;
 };
 
 const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
   const { isItemInCart, buttonAction, buttonLabel } = useManageCartItem(item);
-
-  const isBike = 'bikeType' in item;
-  const bikeItem = { ...item } as DetailedBikeItem;
-  const partItem = { ...item } as DetailedPartItem;
 
   return (
     <div className="container flex flex-col flex-1">
@@ -36,51 +32,14 @@ const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
           <div className="flex-1 space-y-4 px-8">
             <div>
               <h1 className="text-4xl font-semibold">{item.name}</h1>
-              <p className="text-lg text-muted-foreground">
-                {item.description}
-              </p>
+              <p className="text-lg text-muted-foreground">{item.desc}</p>
               <p className="text-3xl font-bold mt-5">${item.price}</p>
+              <p className="text-lg text-gray-700 mt-5">
+                Max: {item.quantity} items
+              </p>
               <p className="text-lg text-gray-700 mt-5">{item.brand}</p>
               <p className="text-lg text-gray-700">{item.model}</p>
             </div>
-
-            {item.specifications && (
-              <ul className="space-y-2">
-                {Object.entries(item.specifications).map(([key, value]) => (
-                  <li key={key} className="text-lg text-gray-700">
-                    <span className="font-bold text-gray-800">{key}: </span>
-                    <span>{value.toString()}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {isBike ? (
-              <div className="space-y-2">
-                <p className="text-lg text-gray-700 mt-5">
-                  Bike Type: {bikeItem.bikeType}
-                </p>
-                <p className="text-lg text-gray-700">
-                  Frame Material: {bikeItem.frameMaterial}
-                </p>
-                <p className="text-lg text-gray-700">
-                  Brake Type: {bikeItem.brakeType}
-                </p>
-                <p className="text-lg text-gray-700">
-                  Wheel Size: {bikeItem.frameMaterial}
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <p className="text-lg text-gray-700 mt-5">
-                  Part Type: {partItem.partType}
-                </p>
-                <p className="text-lg text-gray-700">
-                  Material: {partItem.material}
-                </p>
-              </div>
-            )}
-
             <Button
               onClick={buttonAction}
               variant={isItemInCart ? 'outline' : 'default'}
