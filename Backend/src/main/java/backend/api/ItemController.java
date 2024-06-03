@@ -5,14 +5,11 @@ import backend.model.Item;
 import backend.model.ItemDTO;
 import backend.service.CategoryService;
 import backend.service.ItemService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,15 +29,10 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemDTO> addItem(@RequestParam("itemDTO") String itemDTOString,
-                                           @RequestParam("image") MultipartFile file) {
-        Item item = readItemFromPayload(itemDTOString);
-        if (item != null) {
-            try {
-                item.setImage(file.getBytes());
-            } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-            }
+    public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
+        Item item = createItemFromDTO(itemDTO);
+        if (item == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         item = is.addItem(item);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ItemDTO(item));
@@ -63,16 +55,10 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ItemDTO> updateItem(@PathVariable Long id,
-                                              @RequestParam("itemDTO") String itemDTOString,
-                                              @RequestParam("image") MultipartFile file) {
-        Item item = readItemFromPayload(itemDTOString);
-        if (item != null && file != null) {
-            try {
-                item.setImage(file.getBytes());
-            } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-            }
+    public ResponseEntity<ItemDTO> updateItem(@PathVariable Long id, @RequestBody ItemDTO itemDTO) {
+        Item item = createItemFromDTO(itemDTO);
+        if (item == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         item = is.updateItem(id, item);
         if (item != null) {
@@ -120,14 +106,7 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.OK).body(rentItems.stream().map(ItemDTO::new).collect(Collectors.toList()));
     }
 
-    private Item readItemFromPayload(String itemDTOString) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ItemDTO itemDTO;
-        try {
-            itemDTO = objectMapper.readValue(itemDTOString, ItemDTO.class);
-        } catch (IOException e) {
-            return null;
-        }
+    private Item createItemFromDTO(ItemDTO itemDTO) {
         if (itemDTO == null || itemDTO.getCategoryId() == null) {
             return null;
         }

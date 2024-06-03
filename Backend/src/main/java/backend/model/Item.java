@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +22,8 @@ public class Item {
     @Column(name = "price")
     private BigDecimal price;
     @Lob
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "image_url")
+    private String imageUrl;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -44,6 +43,7 @@ public class Item {
         this.desc = itemDTO.getDesc();
         this.quantity = itemDTO.getQuantity();
         this.price = itemDTO.getPrice();
+        this.imageUrl = itemDTO.getImageUrl();
     }
 
     public Long getId() {
@@ -86,12 +86,12 @@ public class Item {
         this.price = price;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Category getCategory() {
@@ -131,13 +131,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Arrays.equals(image, item.image) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(imageUrl, item.imageUrl) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, desc, quantity, price, category, createdAt, modifiedAt, orderItems);
-        result = 31 * result + Arrays.hashCode(image);
-        return result;
+        return Objects.hash(id, name, desc, quantity, price, imageUrl, category, createdAt, modifiedAt, orderItems);
     }
 }

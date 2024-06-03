@@ -2,7 +2,6 @@ package backend.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class ItemDTO {
@@ -11,7 +10,7 @@ public class ItemDTO {
     private String desc;
     private Integer quantity;
     private BigDecimal price;
-    private byte[] image;
+    private String imageUrl;
     private Long categoryId;
     private OffsetDateTime createdAt;
     private OffsetDateTime modifiedAt;
@@ -25,7 +24,7 @@ public class ItemDTO {
         this.desc = item.getDesc();
         this.quantity = item.getQuantity();
         this.price = item.getPrice();
-        this.image = item.getImage();
+        this.imageUrl = item.getImageUrl();
         this.categoryId = item.getCategory().getId();
         this.createdAt = item.getCreatedAt();
         this.modifiedAt = item.getModifiedAt();
@@ -71,12 +70,12 @@ public class ItemDTO {
         this.price = price;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Long getCategoryId() {
@@ -108,13 +107,11 @@ public class ItemDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemDTO itemDTO = (ItemDTO) o;
-        return Objects.equals(id, itemDTO.id) && Objects.equals(name, itemDTO.name) && Objects.equals(desc, itemDTO.desc) && Objects.equals(quantity, itemDTO.quantity) && Objects.equals(price, itemDTO.price) && Arrays.equals(image, itemDTO.image) && Objects.equals(categoryId, itemDTO.categoryId) && Objects.equals(createdAt, itemDTO.createdAt) && Objects.equals(modifiedAt, itemDTO.modifiedAt);
+        return Objects.equals(id, itemDTO.id) && Objects.equals(name, itemDTO.name) && Objects.equals(desc, itemDTO.desc) && Objects.equals(quantity, itemDTO.quantity) && Objects.equals(price, itemDTO.price) && Objects.equals(imageUrl, itemDTO.imageUrl) && Objects.equals(categoryId, itemDTO.categoryId) && Objects.equals(createdAt, itemDTO.createdAt) && Objects.equals(modifiedAt, itemDTO.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, desc, quantity, price, categoryId, createdAt, modifiedAt);
-        result = 31 * result + Arrays.hashCode(image);
-        return result;
+        return Objects.hash(id, name, desc, quantity, price, imageUrl, categoryId, createdAt, modifiedAt);
     }
 }
