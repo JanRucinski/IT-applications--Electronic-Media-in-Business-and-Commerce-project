@@ -9,7 +9,7 @@ import { aboutSection } from '@/config/content';
 const Faq = () => {
   return (
     <Accordion type="single" collapsible className="w-full">
-      {aboutSection.map((item) => {
+      {aboutSection.faq.map((item) => {
         return (
           <AccordionItem key={item.question} value={item.question}>
             <AccordionTrigger>{item.question}</AccordionTrigger>

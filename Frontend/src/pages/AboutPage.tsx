@@ -1,4 +1,5 @@
 import Faq from '@/components/about/FAQ';
+import { aboutSection } from '@/config/content';
 
 const AboutPage = () => {
   return (
@@ -12,21 +13,19 @@ const AboutPage = () => {
         <Faq />
       </div>
       <div>
-        <h1 className="text-center font-semibold text-3xl mb-4">Our Story</h1>
-        <p className="text-lg">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit assumenda
-          velit eaque nobis ex minima natus eligendi esse! Rem dolor est Lorem
-          ipsum dolor Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Iure aliquid deserunt quidem iste sequi nostrum beatae incidunt non
-          officiis fugiat animi veniam, aliquam perspiciatis accusamus natus
-          neque rerum cum quisquam! Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Illum aliquid odit quod similique in, rerum, minima
-          sunt assumenda natus distinctio nam quam laborum eius deleniti.
-          Deserunt non expedita eum labore. Lorem ipsum, dolor sit amet
-          consectetur adipisicing elit. Asperiores, dignissimos? Beatae nihil
-          enim pariatur sapiente ullam, quaerat magni rerum, architecto nam quos
-          blanditiis aliquid! Recusandae sed et dolore debitis quos.
+        <h1 className="text-center font-bold text-4xl mb-3">
+          {aboutSection.title}
+        </h1>
+        <p className="text-lg leading-relaxed mb-6">
+          {aboutSection.description}
         </p>
+        <div className="h-72 rounded-md overflow-hidden shadow-lg border py-2">
+          <img
+            src={aboutSection.image}
+            alt={aboutSection.imgAlt}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
     </section>
   );
