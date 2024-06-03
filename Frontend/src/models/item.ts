@@ -3,7 +3,7 @@ export type Item = {
   name: string;
   desc: string;
   price: number;
-  image: string;
+  imageUrl: string;
   quantity?: number;
 };
 

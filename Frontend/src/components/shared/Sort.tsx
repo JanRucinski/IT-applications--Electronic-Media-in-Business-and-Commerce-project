@@ -1,3 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
+
 import {
   Select,
   SelectContent,
@@ -10,7 +12,6 @@ enum SortEnum {
   Relevance = 'Relevance',
   Name = 'Name',
   Price = 'Price',
-  Date = 'Date',
 }
 
 type SortProps = {
@@ -20,6 +21,8 @@ type SortProps = {
 
 const Sort = ({ value, setValue }: SortProps) => {
   const selected = value || SortEnum.Relevance;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sort = searchParams.get('sort');
 
   return (
     <Select defaultValue={selected} onValueChange={setValue}>
@@ -30,7 +33,6 @@ const Sort = ({ value, setValue }: SortProps) => {
         <SelectItem value={SortEnum.Relevance}>{SortEnum.Relevance}</SelectItem>
         <SelectItem value={SortEnum.Name}>{SortEnum.Name}</SelectItem>
         <SelectItem value={SortEnum.Price}>{SortEnum.Price}</SelectItem>
-        <SelectItem value={SortEnum.Date}>{SortEnum.Date}</SelectItem>
       </SelectContent>
     </Select>
   );

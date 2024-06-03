@@ -23,12 +23,27 @@ export const headerItems: NavItem[] = [
   },
 ];
 
+export const authHeaderItems: NavItem[] = [
+  ...headerItems,
+  {
+    title: 'Orders',
+    to: '/orders',
+  },
+  {
+    title: 'Rentals',
+    to: '/rentals',
+  },
+];
+
 export const adminHeaderItems: NavItem[] = [
   {
     title: 'Bikes',
     to: '/dashboard/bikes',
   },
-
+  {
+    title: 'Rental',
+    to: '/dashboard/rental',
+  },
   {
     title: 'Parts',
     to: '/dashboard/parts',

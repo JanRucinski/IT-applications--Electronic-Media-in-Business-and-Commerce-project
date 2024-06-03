@@ -26,7 +26,7 @@ export const CartItem = ({ item }: CartItemProps) => {
   return (
     <li className="flex justify-between items-center shadow-md py-4 px-6 rounded-lg gap-4">
       <img
-        src={item.image}
+        src={item.imageUrl}
         alt={item.name}
         className="w-32 h-24 object-contain rounded-lg border p-1"
       />

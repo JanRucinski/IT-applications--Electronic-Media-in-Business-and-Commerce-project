@@ -34,7 +34,7 @@ const ShopItem = ({ item, itemCategory, isAdmin }: ShopItemProps) => {
           <div>
             <img
               className="w-64 h-64 object-contain rounded-lg"
-              src={item.image}
+              src={item.imageUrl}
               alt={item.name}
             />
           </div>

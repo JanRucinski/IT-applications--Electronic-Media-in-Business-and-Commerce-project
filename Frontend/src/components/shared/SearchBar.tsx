@@ -14,7 +14,7 @@ const SearchBar = ({ containerStyle, inputStyle }: SearchBarProps) => {
   const [search, setSearch] = useSearchParams();
   const query = search.get('name');
   const [inputValue, setInputValue] = useState(query || '');
-  const debouncedInputValue = useDebounce(inputValue, 300);
+  const debouncedInputValue = useDebounce(inputValue.trim(), 300);
 
   useEffect(() => {
     if (debouncedInputValue) {
@@ -26,7 +26,7 @@ const SearchBar = ({ containerStyle, inputStyle }: SearchBarProps) => {
   }, [debouncedInputValue, setSearch, search]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value.trim());
+    setInputValue(e.target.value);
   };
 
   return (

@@ -10,7 +10,7 @@ export const createCartItem = (item: Item) =>
     id: item.id,
     name: item.name,
     price: item.price,
-    image: item.image,
+    imageUrl: item.imageUrl,
     selectedQuantity: 1,
     quantity: item.quantity ? item.quantity : 1,
   } as CartItemType);

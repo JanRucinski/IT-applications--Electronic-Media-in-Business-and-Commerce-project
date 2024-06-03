@@ -7,11 +7,16 @@ import ErrorState from '../shared/ErrorState';
 import { Item } from '@/models/item';
 import NotFoundState from '../shared/NotFoundState';
 
-const PartsList = () => {
+type PartsListProps = {
+  isAdmin?: boolean;
+};
+
+const PartsList = ({ isAdmin }: PartsListProps) => {
   const [params] = useSearchParams();
   const query = params.get('name') || '';
 
   const { data, error, isLoading } = useParts(query);
+
   if (isLoading) {
     return <LoadingState className="h-96" spinnerSize={16} />;
   }
@@ -31,7 +36,12 @@ const PartsList = () => {
   return (
     <div className="grid md:grid-cols-4 md:gap-10 my-4">
       {data.map((item: Item) => (
-        <ShopItem key={item.id} item={item} itemCategory="parts" />
+        <ShopItem
+          key={item.id}
+          item={item}
+          itemCategory="parts"
+          isAdmin={isAdmin}
+        />
       ))}
     </div>
   );

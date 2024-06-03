@@ -25,7 +25,7 @@ const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
           <div className="flex justify-center md:justify-start">
             <img
               className="w-full md:w-96 h-80 object-contain rounded-lg shadow-lg border overflow-hidden"
-              src={item.image}
+              src={item.imageUrl}
               alt={item.name}
             />
           </div>

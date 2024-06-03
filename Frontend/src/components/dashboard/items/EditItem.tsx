@@ -28,9 +28,12 @@ export const EditItem = ({ item, itemCategory }: EditItemProps) => {
 
   const onRefresh = itemCategory === 'parts' ? refetchParts : refetchBikes;
 
-  const handleEdit = async (data: ItemSchemaType, file: File) => {
+  const handleEdit = async (data: ItemSchemaType) => {
     try {
-      await updateItem(data, file);
+      await updateItem({
+        ...data,
+        id: item.id,
+      });
       onRefresh();
       toast.success('Item updated successfully');
     } catch (error) {

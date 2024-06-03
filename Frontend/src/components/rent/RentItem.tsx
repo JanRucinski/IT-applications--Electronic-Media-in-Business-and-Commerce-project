@@ -10,7 +10,7 @@ import {
 import { Item } from '@/models/item';
 import RentAction from './RentAction';
 
-const RentItem = ({ id, name, desc, image, price }: Item) => {
+const RentItem = ({ id, name, desc, imageUrl, price }: Item) => {
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
@@ -22,7 +22,7 @@ const RentItem = ({ id, name, desc, image, price }: Item) => {
           <div>
             <img
               className="w-64 h-64 object-contain rounded-lg"
-              src={image}
+              src={imageUrl}
               alt={name}
             />
           </div>

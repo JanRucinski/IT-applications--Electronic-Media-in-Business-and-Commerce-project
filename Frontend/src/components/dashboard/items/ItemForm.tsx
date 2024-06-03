@@ -14,44 +14,39 @@ import { itemSchema, ItemSchemaType } from '@/lib/validation/item-schema';
 import { DialogFooter, DialogTrigger } from '../../ui/dialog';
 import { Button } from '../../ui/button';
 import { Item } from '@/models/item';
-import { useState } from 'react';
 
 type ItemFormProps = {
   item?: Item;
-  onSubmit: (values: ItemSchemaType, file: File) => void;
+  onSubmit: (values: ItemSchemaType) => void;
 };
 
 export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
-  const [file, setFile] = useState<File | null>(null);
-
   const form = useForm<ItemSchemaType>({
     resolver: zodResolver(itemSchema),
     mode: 'onTouched',
     defaultValues: {
       name: item?.name || '',
-      description: item?.description || '',
+      desc: item?.desc || '',
       price: item?.price || 0,
-      maxQuantity: item?.maxQuantity || 0,
+      imageUrl: item?.imageUrl || '',
+      quantity: item?.quantity || 0,
     },
-  });
-
-  const submit = form.handleSubmit((values) => {
-    if (!file) {
-      return;
-    }
-    onSubmit(values, file);
   });
 
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={submit} name="eventForm">
+      <form
+        className="space-y-6"
+        onSubmit={form.handleSubmit(onSubmit)}
+        name="itemForm"
+      >
         <div className="grid gap-4 py-4">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Event Name</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -61,7 +56,7 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
           />
           <FormField
             control={form.control}
-            name="description"
+            name="desc"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
@@ -77,9 +72,7 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Price <span className="text-sm">(USD)</span>
-                </FormLabel>
+                <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" />
                 </FormControl>
@@ -89,10 +82,23 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
           />
           <FormField
             control={form.control}
-            name="maxQuantity"
+            name="imageUrl"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Maximum Quantity</FormLabel>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <Input {...field} type="url" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="quantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Quantity</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" />
                 </FormControl>
@@ -100,18 +106,6 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
               </FormItem>
             )}
           />
-          <div>
-            <label>Image</label>
-            <input
-              type="file"
-              onChange={(e) => {
-                if (e.target.files) {
-                  setFile(e.target.files[0]);
-                }
-              }}
-            />
-            {!file && <p>Image file is required</p>}
-          </div>
         </div>
         <DialogFooter>
           <DialogTrigger asChild>

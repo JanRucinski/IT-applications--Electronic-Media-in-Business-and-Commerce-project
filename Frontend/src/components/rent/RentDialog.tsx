@@ -38,7 +38,7 @@ const RentDialog = ({ bike }: RentDialogProps) => {
 
       <div className="flex justify-between items-center shadow-md py-4 px-6 rounded-lg gap-4">
         <img
-          src={bike.image}
+          src={bike.imageUrl}
           alt={bike.name}
           className="w-48 h-44 object-contain rounded-lg border p-1"
         />
