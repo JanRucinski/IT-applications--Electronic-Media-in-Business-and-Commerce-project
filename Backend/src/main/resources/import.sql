@@ -11,12 +11,12 @@ INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUE
 -- PARTS
 INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (21, 'Brakes', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
 INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (22, 'Drivetrain', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
-INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (23, 'Wheels and Tires', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
-INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (24, 'Handlebars and Stems', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
-INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (25, 'Saddles and Seatposts', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
+INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (23, 'Wheels', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
+INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (24, 'Steering', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
+INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (25, 'Seating', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
 INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (26, 'Pedals', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
-INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (27, 'Forks and Suspension', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
-INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (28, 'Chains and Chainrings', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
+INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (27, 'Suspension', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
+INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (28, 'Transmission', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
 INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (29, 'Other', 'PARTS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
 -- RENT_ITEMS
 INSERT INTO categories (id, name, super_category, created_at, modified_at) VALUES (41, 'Mountain Bikes', 'RENT_ITEMS', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
