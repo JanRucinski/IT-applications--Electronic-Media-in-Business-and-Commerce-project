@@ -22,7 +22,7 @@ import { Button } from '../ui/button';
 import {
   contactFormSchema,
   ContactFormSchemaType,
-} from '@/lib/validation/contact-form';
+} from '@/schemas/contact-form';
 import { Textarea } from '../ui/textarea';
 
 const ContactForm = () => {

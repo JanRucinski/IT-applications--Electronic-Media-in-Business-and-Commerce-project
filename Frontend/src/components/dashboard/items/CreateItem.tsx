@@ -13,8 +13,8 @@ import {
 import { ItemForm } from './ItemForm';
 import { useBikes, useParts } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
-import { ItemSchemaType } from '@/lib/validation/item-schema';
 import { createItem } from '@/services/items';
+import { ItemSchemaType } from '@/schemas/item-schema';
 
 type CreateItemProps = {
   itemCategory: ItemCategory;

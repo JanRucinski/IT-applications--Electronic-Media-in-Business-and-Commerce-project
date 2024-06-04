@@ -19,7 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { LoginSchemaType, loginSchema } from '@/lib/validation/auth-schema';
+import { LoginSchemaType, loginSchema } from '@/schemas/auth-schema';
 import Spinner from '../shared/Spinner';
 
 export function LoginForm() {

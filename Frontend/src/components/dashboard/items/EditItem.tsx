@@ -11,10 +11,10 @@ import {
 } from '@/components/ui/dialog';
 import { ItemForm } from './ItemForm';
 import { Item } from '@/models/item';
-import { ItemSchemaType } from '@/lib/validation/item-schema';
 import { updateItem } from '@/services/items';
 import { useBikes, useParts } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
+import { ItemSchemaType } from '@/schemas/item-schema';
 
 type EditItemProps = {
   item: Item;

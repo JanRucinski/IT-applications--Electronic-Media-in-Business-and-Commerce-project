@@ -10,10 +10,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { itemSchema, ItemSchemaType } from '@/lib/validation/item-schema';
 import { DialogFooter, DialogTrigger } from '../../ui/dialog';
 import { Button } from '../../ui/button';
 import { Item } from '@/models/item';
+import { ItemSchemaType, itemSchema } from '@/schemas/item-schema';
 
 type ItemFormProps = {
   item?: Item;
@@ -27,9 +27,9 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
     defaultValues: {
       name: item?.name || '',
       desc: item?.desc || '',
-      price: item?.price || 0,
+      price: item?.price || undefined,
       imageUrl: item?.imageUrl || '',
-      quantity: item?.quantity || 0,
+      quantity: item?.quantity || undefined,
     },
   });
 
