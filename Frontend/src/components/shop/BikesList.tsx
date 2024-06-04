@@ -18,7 +18,7 @@ const BikesList = ({ isAdmin }: BikesListProps) => {
   const { data, error, isLoading } = useBikes(query);
 
   if (isLoading) {
-    return <LoadingState className="h-96" spinnerSize={16} />;
+    return <LoadingState className="h-32 md:h-96" spinnerSize={16} />;
   }
 
   if (error) {
@@ -34,7 +34,7 @@ const BikesList = ({ isAdmin }: BikesListProps) => {
   }
 
   return (
-    <div className="grid md:grid-cols-4 md:gap-10 my-4">
+    <div className="grid md:grid-cols-4 gap-6 md:gap-10 my-4">
       {data.map((item: Item) => (
         <ShopItem
           key={item.id}

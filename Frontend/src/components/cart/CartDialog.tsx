@@ -28,15 +28,15 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
   );
 
   return (
-    <DialogContent className="sm:max-w-md min-w-min max-h-[92%] overflow-y-scroll">
+    <DialogContent className="max-w-[90%] md:w-full sm:max-w-md min-w-min max-h-[92%] overflow-y-scroll text-center md:text-start rounded-lg">
       <DialogHeader>
-        <DialogTitle className="text-2xl text-sky-950">
+        <DialogTitle className="text-xl md:text-2xl text-sky-950">
           Shopping Cart
         </DialogTitle>
         <DialogDescription>{isEmpty && 'Your cart is empty'}</DialogDescription>
       </DialogHeader>
       {!isEmpty && (
-        <ul className="space-y-3">
+        <ul className="space-y-6 md:space-y-3">
           {items.map((item) => (
             <CartItem item={item} key={item.id} />
           ))}

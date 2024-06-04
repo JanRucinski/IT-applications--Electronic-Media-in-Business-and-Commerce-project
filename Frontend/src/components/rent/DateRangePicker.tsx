@@ -11,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { isMobile } from 'react-device-detect';
 
 type DateRangePickerProps = React.HTMLAttributes<HTMLDivElement> & {
   date: DateRange | undefined;
@@ -22,6 +23,8 @@ export function DateRangePicker({
   date,
   setDate,
 }: DateRangePickerProps) {
+  const numOfMonths = isMobile ? 1 : 2;
+
   return (
     <div className={cn('grid gap-2', className)}>
       <Popover>
@@ -56,7 +59,7 @@ export function DateRangePicker({
             defaultMonth={date?.from}
             selected={date}
             onSelect={setDate}
-            numberOfMonths={2}
+            numberOfMonths={numOfMonths}
             fromDate={new Date()}
             toDate={addMonths(new Date(), 3)}
           />

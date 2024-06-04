@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
@@ -10,19 +11,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
+import { adminHeaderItems, authHeaderItems } from '@/config/navigation';
 
 type UserProps = {
   name: string;
   surname: string;
   email: string;
+  isAdmin?: boolean;
 };
 
 const getFirstLetters = (name: string, surname: string) => {
   return name[0].toUpperCase() + surname[0].toUpperCase();
 };
 
-const UserNav = ({ name, surname, email }: UserProps) => {
+const UserNav = ({ name, surname, email, isAdmin }: UserProps) => {
   const navigate = useNavigate();
+
+  const navItems = isAdmin ? adminHeaderItems : authHeaderItems;
 
   const logoutHandler = async () => {
     navigate('/login', { replace: true });
@@ -46,6 +51,20 @@ const UserNav = ({ name, surname, email }: UserProps) => {
             </p>
           </div>
         </DropdownMenuLabel>
+        {isMobile && (
+          <>
+            <DropdownMenuSeparator />
+            {navItems.map((item) => (
+              <DropdownMenuItem
+                key={item.title}
+                asChild
+                className="hover:cursor-pointer"
+              >
+                <Link to={item.to}>{item.title}</Link>
+              </DropdownMenuItem>
+            ))}
+          </>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="hover:cursor-pointer"

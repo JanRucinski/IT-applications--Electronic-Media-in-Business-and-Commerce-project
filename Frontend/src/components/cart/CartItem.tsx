@@ -24,13 +24,13 @@ export const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
-    <li className="flex justify-between items-center shadow-md py-4 px-6 rounded-lg gap-4">
+    <li className="flex flex-col md:flex-row justify-between items-center shadow-md py-4 md:px-6 rounded-lg gap-2 md:gap-4">
       <img
         src={item.imageUrl}
         alt={item.name}
         className="w-32 h-24 object-contain rounded-lg border p-1"
       />
-      <div className="flex-1 mx-4 p-1 w-96">
+      <div className="flex-1 md:mx-4 p-1 md:w-96">
         <h4 className="text-lg font-semibold text-sky-950">{item.name}</h4>
         <p className="text-muted-foreground">
           {(item.price * item.selectedQuantity).toFixed(2)}$

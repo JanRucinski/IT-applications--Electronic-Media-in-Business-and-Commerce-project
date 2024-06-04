@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 
 const AuthButtons = () => {
   return (
-    <div className="space-x-3">
+    <div className="hidden md:block space-x-3">
       <Button asChild variant="ghost">
         <Link to="/login">Login</Link>
       </Button>
