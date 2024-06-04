@@ -27,8 +27,6 @@ public class OrderDTO {
         this.payment = new PaymentDTO(order.getPayment());
         this.orderItems = new ArrayList<>();
         for (OrderItem orderItem : order.getOrderItems()) {
-            OrderItemDTO orderItemDTO = new OrderItemDTO(orderItem);
-            orderItemDTO.setOrderId(order.getId());
             this.orderItems.add(new OrderItemDTO(orderItem));
         }
         this.createdAt = order.getCreatedAt();

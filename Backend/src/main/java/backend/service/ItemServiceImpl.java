@@ -32,6 +32,14 @@ public class ItemServiceImpl implements ItemService {
     public Item addItem(Item item) {
         item.setModifiedAt(OffsetDateTime.now());
         item.setCreatedAt(OffsetDateTime.now());
+        if (item.getBikeDetails() != null) {
+            item.getBikeDetails().setModifiedAt(OffsetDateTime.now());
+            item.getBikeDetails().setCreatedAt(OffsetDateTime.now());
+        }
+        if (item.getPartDetails() != null) {
+            item.getPartDetails().setModifiedAt(OffsetDateTime.now());
+            item.getPartDetails().setCreatedAt(OffsetDateTime.now());
+        }
         return itemRepository.save(item);
     }
 
@@ -61,6 +69,30 @@ public class ItemServiceImpl implements ItemService {
             oi.get().setImageUrl(item.getImageUrl());
             oi.get().setCategory(item.getCategory());
             oi.get().setModifiedAt(OffsetDateTime.now());
+            if (item.getBikeDetails() != null) {
+                if (oi.get().getBikeDetails() != null) {
+                    oi.get().getBikeDetails().setColor(item.getBikeDetails().getColor());
+                    oi.get().getBikeDetails().setModifiedAt(OffsetDateTime.now());
+                } else {
+                    oi.get().setBikeDetails(item.getBikeDetails());
+                    oi.get().getBikeDetails().setModifiedAt(OffsetDateTime.now());
+                    oi.get().getBikeDetails().setCreatedAt(OffsetDateTime.now());
+                }
+            } else {
+                oi.get().setBikeDetails(null);
+            }
+            if (item.getPartDetails() != null) {
+                if (oi.get().getPartDetails() != null) {
+                    oi.get().getPartDetails().setColor(item.getPartDetails().getColor());
+                    oi.get().getPartDetails().setModifiedAt(OffsetDateTime.now());
+                } else {
+                    oi.get().setPartDetails(item.getPartDetails());
+                    oi.get().getPartDetails().setModifiedAt(OffsetDateTime.now());
+                    oi.get().getPartDetails().setCreatedAt(OffsetDateTime.now());
+                }
+            } else {
+                oi.get().setPartDetails(null);
+            }
             return itemRepository.save(oi.get());
         }
         return null;

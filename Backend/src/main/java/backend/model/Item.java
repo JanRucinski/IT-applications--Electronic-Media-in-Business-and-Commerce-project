@@ -27,6 +27,12 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "bike_details_id")
+    private BikeDetails bikeDetails;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "part_details_id")
+    private PartDetails partDetails;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
@@ -102,6 +108,22 @@ public class Item {
         this.category = category;
     }
 
+    public BikeDetails getBikeDetails() {
+        return bikeDetails;
+    }
+
+    public void setBikeDetails(BikeDetails bikeDetails) {
+        this.bikeDetails = bikeDetails;
+    }
+
+    public PartDetails getPartDetails() {
+        return partDetails;
+    }
+
+    public void setPartDetails(PartDetails partDetails) {
+        this.partDetails = partDetails;
+    }
+
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
@@ -131,11 +153,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(imageUrl, item.imageUrl) && Objects.equals(category, item.category) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(imageUrl, item.imageUrl) && Objects.equals(category, item.category) && Objects.equals(bikeDetails, item.bikeDetails) && Objects.equals(partDetails, item.partDetails) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, quantity, price, imageUrl, category, createdAt, modifiedAt, orderItems);
+        return Objects.hash(id, name, desc, quantity, price, imageUrl, category, bikeDetails, partDetails, createdAt, modifiedAt, orderItems);
     }
 }

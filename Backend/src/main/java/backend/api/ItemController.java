@@ -1,8 +1,6 @@
 package backend.api;
 
-import backend.model.Category;
-import backend.model.Item;
-import backend.model.ItemDTO;
+import backend.model.*;
 import backend.service.CategoryService;
 import backend.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +114,12 @@ public class ItemController {
         }
         Item item = new Item(itemDTO);
         item.setCategory(category);
+        if (itemDTO.getBikeDetails() != null) {
+            item.setBikeDetails(new BikeDetails(itemDTO.getBikeDetails()));
+        }
+        if (itemDTO.getPartDetails() != null) {
+            item.setPartDetails(new PartDetails(itemDTO.getPartDetails()));
+        }
         return item;
     }
 }

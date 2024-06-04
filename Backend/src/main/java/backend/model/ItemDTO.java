@@ -12,6 +12,8 @@ public class ItemDTO {
     private BigDecimal price;
     private String imageUrl;
     private Long categoryId;
+    private BikeDetailsDTO bikeDetails;
+    private PartDetailsDTO partDetails;
     private OffsetDateTime createdAt;
     private OffsetDateTime modifiedAt;
 
@@ -28,6 +30,12 @@ public class ItemDTO {
         this.categoryId = item.getCategory().getId();
         this.createdAt = item.getCreatedAt();
         this.modifiedAt = item.getModifiedAt();
+        if (item.getBikeDetails() != null) {
+            this.bikeDetails = new BikeDetailsDTO(item.getBikeDetails());
+        }
+        if (item.getPartDetails() != null) {
+            this.partDetails = new PartDetailsDTO(item.getPartDetails());
+        }
     }
 
     public Long getId() {
@@ -84,6 +92,22 @@ public class ItemDTO {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public BikeDetailsDTO getBikeDetails() {
+        return bikeDetails;
+    }
+
+    public void setBikeDetails(BikeDetailsDTO bikeDetails) {
+        this.bikeDetails = bikeDetails;
+    }
+
+    public PartDetailsDTO getPartDetails() {
+        return partDetails;
+    }
+
+    public void setPartDetails(PartDetailsDTO partDetails) {
+        this.partDetails = partDetails;
     }
 
     public OffsetDateTime getCreatedAt() {
