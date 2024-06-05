@@ -1,7 +1,9 @@
 package backend.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class ItemDTO {
@@ -16,6 +18,7 @@ public class ItemDTO {
     private PartDetailsDTO partDetails;
     private OffsetDateTime createdAt;
     private OffsetDateTime modifiedAt;
+    private List<LocalDate> reservedDates;
 
     public ItemDTO() {
     }
@@ -126,16 +129,24 @@ public class ItemDTO {
         this.modifiedAt = modifiedAt;
     }
 
+    public List<LocalDate> getReservedDates() {
+        return reservedDates;
+    }
+
+    public void setReservedDates(List<LocalDate> reservedDates) {
+        this.reservedDates = reservedDates;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemDTO itemDTO = (ItemDTO) o;
-        return Objects.equals(id, itemDTO.id) && Objects.equals(name, itemDTO.name) && Objects.equals(desc, itemDTO.desc) && Objects.equals(quantity, itemDTO.quantity) && Objects.equals(price, itemDTO.price) && Objects.equals(imageUrl, itemDTO.imageUrl) && Objects.equals(categoryId, itemDTO.categoryId) && Objects.equals(createdAt, itemDTO.createdAt) && Objects.equals(modifiedAt, itemDTO.modifiedAt);
+        return Objects.equals(id, itemDTO.id) && Objects.equals(name, itemDTO.name) && Objects.equals(desc, itemDTO.desc) && Objects.equals(quantity, itemDTO.quantity) && Objects.equals(price, itemDTO.price) && Objects.equals(imageUrl, itemDTO.imageUrl) && Objects.equals(categoryId, itemDTO.categoryId) && Objects.equals(bikeDetails, itemDTO.bikeDetails) && Objects.equals(partDetails, itemDTO.partDetails) && Objects.equals(createdAt, itemDTO.createdAt) && Objects.equals(modifiedAt, itemDTO.modifiedAt) && Objects.equals(reservedDates, itemDTO.reservedDates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, quantity, price, imageUrl, categoryId, createdAt, modifiedAt);
+        return Objects.hash(id, name, desc, quantity, price, imageUrl, categoryId, bikeDetails, partDetails, createdAt, modifiedAt, reservedDates);
     }
 }

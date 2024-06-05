@@ -2,6 +2,7 @@ package backend.service;
 
 import backend.model.Rental;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RentalService {
@@ -14,4 +15,5 @@ public interface RentalService {
     Rental updateRental(Long id, Rental rental);
 
     Rental findRentalById(Long id);
+    List<LocalDate> findReservedDatesOfItem(Long itemId);
 }

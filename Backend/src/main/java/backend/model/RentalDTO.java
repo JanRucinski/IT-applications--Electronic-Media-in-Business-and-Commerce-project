@@ -1,13 +1,14 @@
 package backend.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class RentalDTO {
     private Long id;
-    private OffsetDateTime rentalStart;
-    private OffsetDateTime rentalEnd;
+    private LocalDate rentalStart;
+    private LocalDate rentalEnd;
     private BigDecimal total;
     private Rental.RentalStatus status;
     private Long itemId;
@@ -40,19 +41,19 @@ public class RentalDTO {
         this.id = id;
     }
 
-    public OffsetDateTime getRentalStart() {
+    public LocalDate getRentalStart() {
         return rentalStart;
     }
 
-    public void setRentalStart(OffsetDateTime rentalStart) {
+    public void setRentalStart(LocalDate rentalStart) {
         this.rentalStart = rentalStart;
     }
 
-    public OffsetDateTime getRentalEnd() {
+    public LocalDate getRentalEnd() {
         return rentalEnd;
     }
 
-    public void setRentalEnd(OffsetDateTime rentalEnd) {
+    public void setRentalEnd(LocalDate rentalEnd) {
         this.rentalEnd = rentalEnd;
     }
 

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,5 +62,18 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public Rental findRentalById(Long id) {
         return rentalRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<LocalDate> findReservedDatesOfItem(Long itemId) {
+        List<Rental> rentalsOfItem = rentalRepository.findRentalsByItemId(itemId);
+        List<LocalDate> reservedDates = new ArrayList<>();
+        for (Rental rental : rentalsOfItem) {
+            if (rental.getStatus() == Rental.RentalStatus.CANCELLED) {
+                continue;
+            }
+            reservedDates.addAll(rental.getRentalStart().datesUntil(rental.getRentalEnd().plusDays(1)).toList());
+        }
+        return reservedDates;
     }
 }

@@ -25,6 +25,9 @@ public class User {
     private String lastName;
     @Column(name = "phone")
     private String phone;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
@@ -45,6 +48,7 @@ public class User {
         this.firstName = userDTO.getFirstName();
         this.lastName = userDTO.getLastName();
         this.phone = userDTO.getPhone();
+        this.role = userDTO.getRole();
     }
 
     public Long getId() {
@@ -107,6 +111,14 @@ public class User {
         this.phone = phone;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
@@ -144,11 +156,16 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && role == user.role && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName, phone, createdAt, modifiedAt, orders, rentals);
+        return Objects.hash(id, username, password, email, firstName, lastName, phone, role, createdAt, modifiedAt, orders, rentals);
+    }
+
+    public enum Role {
+        ADMIN,
+        USER
     }
 }

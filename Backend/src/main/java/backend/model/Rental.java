@@ -3,6 +3,7 @@ package backend.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -13,9 +14,9 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "rental_start")
-    private OffsetDateTime rentalStart;
+    private LocalDate rentalStart;
     @Column(name = "rental_end")
-    private OffsetDateTime rentalEnd;
+    private LocalDate rentalEnd;
     @Column(name = "total")
     private BigDecimal total;
     @Column(name = "status")
@@ -54,19 +55,19 @@ public class Rental {
         this.id = id;
     }
 
-    public OffsetDateTime getRentalStart() {
+    public LocalDate getRentalStart() {
         return rentalStart;
     }
 
-    public void setRentalStart(OffsetDateTime rentalStart) {
+    public void setRentalStart(LocalDate rentalStart) {
         this.rentalStart = rentalStart;
     }
 
-    public OffsetDateTime getRentalEnd() {
+    public LocalDate getRentalEnd() {
         return rentalEnd;
     }
 
-    public void setRentalEnd(OffsetDateTime rentalEnd) {
+    public void setRentalEnd(LocalDate rentalEnd) {
         this.rentalEnd = rentalEnd;
     }
 
@@ -131,7 +132,7 @@ public class Rental {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rental rental = (Rental) o;
-        return Objects.equals(id, rental.id) && Objects.equals(rentalStart, rental.rentalStart) && Objects.equals(rentalEnd, rental.rentalEnd) && Objects.equals(total, rental.total) && Objects.equals(status, rental.status) && Objects.equals(item, rental.item) && Objects.equals(user, rental.user) && Objects.equals(payment, rental.payment) && Objects.equals(createdAt, rental.createdAt) && Objects.equals(modifiedAt, rental.modifiedAt);
+        return Objects.equals(id, rental.id) && Objects.equals(rentalStart, rental.rentalStart) && Objects.equals(rentalEnd, rental.rentalEnd) && Objects.equals(total, rental.total) && status == rental.status && Objects.equals(item, rental.item) && Objects.equals(user, rental.user) && Objects.equals(payment, rental.payment) && Objects.equals(createdAt, rental.createdAt) && Objects.equals(modifiedAt, rental.modifiedAt);
     }
 
     @Override

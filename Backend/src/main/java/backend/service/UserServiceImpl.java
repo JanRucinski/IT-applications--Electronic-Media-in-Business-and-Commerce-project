@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
             ou.get().setFirstName(user.getFirstName());
             ou.get().setLastName(user.getLastName());
             ou.get().setPhone(user.getPhone());
+            ou.get().setRole(user.getRole());
             ou.get().setModifiedAt(OffsetDateTime.now());
             return userRepository.save(ou.get());
         }

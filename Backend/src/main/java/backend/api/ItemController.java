@@ -3,6 +3,7 @@ package backend.api;
 import backend.model.*;
 import backend.service.CategoryService;
 import backend.service.ItemService;
+import backend.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,13 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final ItemService is;
     private final CategoryService cs;
+    private final RentalService rs;
 
     @Autowired
-    public ItemController(ItemService is, CategoryService cs) {
+    public ItemController(ItemService is, CategoryService cs, RentalService rs) {
         this.is = is;
         this.cs = cs;
+        this.rs = rs;
     }
 
     @PostMapping
@@ -101,7 +104,11 @@ public class ItemController {
                                                       @RequestParam(required = false) BigDecimal minPrice,
                                                       @RequestParam(required = false) BigDecimal maxPrice) {
         List<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice);
-        return ResponseEntity.status(HttpStatus.OK).body(rentItems.stream().map(ItemDTO::new).collect(Collectors.toList()));
+        List<ItemDTO> rentItemDTOs = rentItems.stream().map(ItemDTO::new).toList();
+        for (ItemDTO rentItemDTO : rentItemDTOs) {
+            rentItemDTO.setReservedDates(rs.findReservedDatesOfItem(rentItemDTO.getId()));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(rentItemDTOs);
     }
 
     private Item createItemFromDTO(ItemDTO itemDTO) {
