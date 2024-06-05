@@ -67,11 +67,7 @@ public class RentalController {
 
     @PutMapping("/{id}")
     public ResponseEntity<RentalDTO> updateRental(@PathVariable Long id, @RequestBody RentalDTO rentalDTO) {
-        if (rentalDTO == null || rentalDTO.getPayment().getId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        Payment payment = ps.findPaymentById(rentalDTO.getPayment().getId());
-        if (payment == null) {
+        if (rentalDTO == null || rentalDTO.getPayment() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Rental rental = new Rental(rentalDTO);

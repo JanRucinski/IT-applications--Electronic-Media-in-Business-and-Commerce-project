@@ -156,7 +156,7 @@ public class ItemServiceImpl implements ItemService {
     private List<Predicate> generateCommonItemPredicates(Root<Item> root, CriteriaBuilder criteriaBuilder, Join<Item, Category> categoryJoin, String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
         List<Predicate> predicates = new ArrayList<>();
         if (name != null && !name.isEmpty()) {
-            predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
         }
         if (categoryNames != null && categoryNames.length > 0) {
             predicates.add(categoryJoin.get("name").in((Object[]) categoryNames));

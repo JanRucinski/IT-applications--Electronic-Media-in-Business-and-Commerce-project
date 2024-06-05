@@ -94,11 +94,7 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
-        if (orderDTO == null || orderDTO.getPayment().getId() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        Payment payment = ps.findPaymentById(orderDTO.getPayment().getId());
-        if (payment == null) {
+        if (orderDTO == null || orderDTO.getPayment() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Order order = new Order(orderDTO);
