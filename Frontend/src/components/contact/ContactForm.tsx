@@ -24,6 +24,7 @@ import {
   ContactFormSchemaType,
 } from '@/schemas/contact-form';
 import { Textarea } from '../ui/textarea';
+import { toast } from 'sonner';
 
 const ContactForm = () => {
   const form = useForm<ContactFormSchemaType>({
@@ -34,11 +35,16 @@ const ContactForm = () => {
       email: '',
       message: '',
     },
+    mode: 'onSubmit',
   });
 
   const onSubmit = async (values: ContactFormSchemaType) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        resolve(values);
+        toast.success('Message sent successfully');
+      }, 1000)
+    );
     form.reset();
   };
 
