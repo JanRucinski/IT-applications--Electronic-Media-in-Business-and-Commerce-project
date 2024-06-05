@@ -18,6 +18,7 @@ public class PartDetailsDTO {
 
     public PartDetailsDTO() {
     }
+
     public PartDetailsDTO(PartDetails partDetails) {
         this.id = partDetails.getId();
         this.color = partDetails.getColor();

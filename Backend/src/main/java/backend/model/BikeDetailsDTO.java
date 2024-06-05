@@ -11,6 +11,7 @@ public class BikeDetailsDTO {
 
     public BikeDetailsDTO() {
     }
+
     public BikeDetailsDTO(BikeDetails bikeDetails) {
         this.id = bikeDetails.getId();
         this.color = bikeDetails.getColor();

@@ -9,6 +9,8 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,7 +106,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+    public Page<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         return itemRepository.findAll((root, query, criteriaBuilder) -> {
             Join<Item, Category> categoryJoin = root.join("category");
             List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
@@ -112,11 +114,11 @@ public class ItemServiceImpl implements ItemService {
             predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.BIKES));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
+        }, pageable);
     }
 
     @Override
-    public List<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+    public Page<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         return itemRepository.findAll((root, query, criteriaBuilder) -> {
             Join<Item, Category> categoryJoin = root.join("category");
             List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
@@ -124,11 +126,11 @@ public class ItemServiceImpl implements ItemService {
             predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.PARTS));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
+        }, pageable);
     }
 
     @Override
-    public List<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice) {
+    public Page<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         return itemRepository.findAll((root, query, criteriaBuilder) -> {
             Join<Item, Category> categoryJoin = root.join("category");
             List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
@@ -136,7 +138,7 @@ public class ItemServiceImpl implements ItemService {
             predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.RENT_ITEMS));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
+        }, pageable);
     }
 
     @Override
