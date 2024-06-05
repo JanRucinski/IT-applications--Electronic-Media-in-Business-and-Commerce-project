@@ -18,20 +18,35 @@ public class ContactPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[1]/div/div/div[4]/div/p")
     private WebElement workingHours;
 
-    @FindBy(xpath = "//*[@id=\":r7t:-form-item\"]")
+    @FindBy(xpath = "//*[@id=\":rb:-form-item\"]")
     private WebElement firstNameInputField;
 
-    @FindBy(xpath = "//*[@id=\":r7v:-form-item\"]")
+    @FindBy(xpath = "//*[@id=\":rd:-form-item\"]")
     private WebElement lastNameInputField;
 
-    @FindBy(xpath = "//*[@id=\":r81:-form-item\"]")
+    @FindBy(xpath = "//*[@id=\":rf:-form-item\"]")
     private WebElement emailInputField;
 
-    @FindBy(xpath = "//*[@id=\":r83:-form-item\"]")
+    @FindBy(xpath = "//*[@id=\":rh:-form-item\"]")
     private WebElement messageInputField;
 
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[2]/div/div[2]/form/button")
     private WebElement sendMessageButton;
+
+    @FindBy(xpath = "//*[@id=\"root\"]/div/section/ol/li")
+    private WebElement successfulNotification;
+
+    @FindBy(xpath = "//*[@id=\":r1r:-form-item-message\"]")
+    private WebElement firstNameErrorMessage;
+
+    @FindBy(xpath = "//*[@id=\":r1t:-form-item-message\"]")
+    private WebElement lastNameErrorMessage;
+
+    @FindBy(xpath = "//*[@id=\":r1v:-form-item-message\"]")
+    private WebElement emailErrorMessage;
+
+    @FindBy(xpath = "//*[@id=\":r21:-form-item-message\"]")
+    private WebElement messageFieldErrorMessage;
 
     public ContactPage(WebDriver driver){
         super(driver);
@@ -39,7 +54,7 @@ public class ContactPage extends BasePage{
 
     @Override
     public String getUrl() {
-        return null;
+        return "http://localhost:5173/contact";
     }
 
     public String getAddress(){
@@ -80,5 +95,9 @@ public class ContactPage extends BasePage{
 
     public void clickSendMessageButton(){
         sendMessageButton.click();
+    }
+
+    public WebElement getSuccessfulNotification(){
+        return successfulNotification;
     }
 }
