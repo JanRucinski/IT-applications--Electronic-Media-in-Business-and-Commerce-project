@@ -7,6 +7,7 @@ import { headerItems, adminHeaderItems } from '@/config/navigation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import Cart from '../cart/Cart';
+import MobileNav from './MobileNav';
 
 type HeaderProps = {
   isAdmin?: boolean;
@@ -20,9 +21,9 @@ const Header = ({ isAdmin }: HeaderProps) => {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background">
-      <div className="container flex h-16 items-center justify-between py-9">
+      <div className="container flex h-14 md:h-16 items-center justify-between py-2 md:py-9">
         <MainLogo />
-        <nav>
+        <nav className="hidden md:block">
           <ul className="flex space-x-8">
             {navItems.map((item) => (
               <li key={item.title}>
@@ -52,6 +53,7 @@ const Header = ({ isAdmin }: HeaderProps) => {
           ) : (
             <AuthButtons />
           )}
+          {!isAuthenticated && <MobileNav />}
         </nav>
       </div>
     </header>

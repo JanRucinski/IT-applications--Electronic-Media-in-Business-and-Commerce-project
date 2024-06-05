@@ -12,7 +12,9 @@ const Faq = () => {
       {aboutSection.faq.map((item) => {
         return (
           <AccordionItem key={item.question} value={item.question}>
-            <AccordionTrigger>{item.question}</AccordionTrigger>
+            <AccordionTrigger className="text-start">
+              {item.question}
+            </AccordionTrigger>
             <AccordionContent>{item.answer}</AccordionContent>
           </AccordionItem>
         );

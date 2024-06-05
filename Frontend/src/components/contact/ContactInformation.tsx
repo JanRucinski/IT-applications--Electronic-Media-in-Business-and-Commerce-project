@@ -9,9 +9,9 @@ type ContactItemProps = {
 const ContactItem = ({ Icon, title, children }: ContactItemProps) => {
   return (
     <div className="flex gap-5 items-center border rounded-lg shadow-sm p-4 bg-background">
-      <Icon size={28} className="text-primary" />
+      <Icon className="text-primary w-5 h-5 md:w-7 md:h-7" />
       <div>
-        <h3 className="font-medium text-lg">{title}</h3>
+        <h3 className="font-medium text-base md:text-lg">{title}</h3>
         {children}
       </div>
     </div>
@@ -21,7 +21,7 @@ const ContactItem = ({ Icon, title, children }: ContactItemProps) => {
 const ContactInformation = () => {
   return (
     <div>
-      <h1 className="text-3xl font-semibold text-gray-800 mb-10">
+      <h1 className="text-xl text-center md:text-3xl font-semibold text-gray-800 mb-6 md:mb-10">
         Contact Information
       </h1>
       <div className="space-y-4">

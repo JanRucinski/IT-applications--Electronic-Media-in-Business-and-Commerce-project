@@ -34,7 +34,7 @@ const PartsList = ({ isAdmin }: PartsListProps) => {
   }
 
   return (
-    <div className="grid md:grid-cols-4 md:gap-10 my-4">
+    <div className="grid md:grid-cols-4 gap-6 md:gap-10 my-4">
       {data.map((item: Item) => (
         <ShopItem
           key={item.id}

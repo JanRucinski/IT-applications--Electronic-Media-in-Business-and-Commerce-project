@@ -50,3 +50,21 @@ export const calculateRentPrice = (
 
   return (diffDays > 0 ? diffDays : 1) * price;
 };
+
+export const sortByPrice = (items: Item[], order: 'asc' | 'desc') => {
+  return items.sort((a, b) => {
+    if (order === 'asc') {
+      return a.price - b.price;
+    }
+    return b.price - a.price;
+  });
+};
+
+export const sortByName = (items: Item[], order: 'asc' | 'desc') => {
+  return items.sort((a, b) => {
+    if (order === 'asc') {
+      return a.name.localeCompare(b.name);
+    }
+    return b.name.localeCompare(a.name);
+  });
+};
