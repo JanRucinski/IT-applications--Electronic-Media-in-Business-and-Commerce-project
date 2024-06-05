@@ -5,6 +5,9 @@ import backend.service.CategoryService;
 import backend.service.ItemService;
 import backend.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,34 +83,43 @@ public class ItemController {
     }
 
     @GetMapping("/bikes")
-    public ResponseEntity<List<ItemDTO>> getBikes(@RequestParam(required = false) String name,
+    public ResponseEntity<Page<ItemDTO>> getBikes(@RequestParam(required = false) String name,
                                                   @RequestParam(required = false) String[] categoryNames,
                                                   @RequestParam(required = false) BigDecimal minPrice,
-                                                  @RequestParam(required = false) BigDecimal maxPrice) {
-        List<Item> bikes = is.findAllBikes(name, categoryNames, minPrice, maxPrice);
-        return ResponseEntity.status(HttpStatus.OK).body(bikes.stream().map(ItemDTO::new).collect(Collectors.toList()));
-
+                                                  @RequestParam(required = false) BigDecimal maxPrice,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Item> bikes = is.findAllBikes(name, categoryNames, minPrice, maxPrice, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(bikes.map(ItemDTO::new));
     }
 
     @GetMapping("/parts")
-    public ResponseEntity<List<ItemDTO>> getParts(@RequestParam(required = false) String name,
+    public ResponseEntity<Page<ItemDTO>> getParts(@RequestParam(required = false) String name,
                                                   @RequestParam(required = false) String[] categoryNames,
                                                   @RequestParam(required = false) BigDecimal minPrice,
-                                                  @RequestParam(required = false) BigDecimal maxPrice) {
-        List<Item> parts = is.findAllParts(name, categoryNames, minPrice, maxPrice);
-        return ResponseEntity.status(HttpStatus.OK).body(parts.stream().map(ItemDTO::new).collect(Collectors.toList()));
+                                                  @RequestParam(required = false) BigDecimal maxPrice,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Item> parts = is.findAllParts(name, categoryNames, minPrice, maxPrice, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(parts.map(ItemDTO::new));
     }
 
     @GetMapping("/rent-items")
-    public ResponseEntity<List<ItemDTO>> getRentItems(@RequestParam(required = false) String name,
+    public ResponseEntity<Page<ItemDTO>> getRentItems(@RequestParam(required = false) String name,
                                                       @RequestParam(required = false) String[] categoryNames,
                                                       @RequestParam(required = false) BigDecimal minPrice,
-                                                      @RequestParam(required = false) BigDecimal maxPrice) {
-        List<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice);
-        List<ItemDTO> rentItemDTOs = rentItems.stream().map(ItemDTO::new).toList();
-        for (ItemDTO rentItemDTO : rentItemDTOs) {
-            rentItemDTO.setReservedDates(rs.findReservedDatesOfItem(rentItemDTO.getId()));
-        }
+                                                      @RequestParam(required = false) BigDecimal maxPrice,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice, pageable);
+        Page<ItemDTO> rentItemDTOs = rentItems.map(item -> {
+            ItemDTO dto = new ItemDTO(item);
+            dto.setReservedDates(rs.findReservedDatesOfItem(dto.getId()));
+            return dto;
+        });
         return ResponseEntity.status(HttpStatus.OK).body(rentItemDTOs);
     }
 

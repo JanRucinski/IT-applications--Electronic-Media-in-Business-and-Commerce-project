@@ -3,7 +3,6 @@ package backend.api;
 import backend.model.*;
 import backend.service.ItemService;
 import backend.service.OrderService;
-import backend.service.PaymentService;
 import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,12 @@ public class OrderController {
     private final OrderService os;
     private final ItemService is;
     private final UserService us;
-    private final PaymentService ps;
 
     @Autowired
-    public OrderController(OrderService os, ItemService is, UserService us, PaymentService ps) {
+    public OrderController(OrderService os, ItemService is, UserService us) {
         this.os = os;
         this.is = is;
         this.us = us;
-        this.ps = ps;
     }
 
     @PostMapping

@@ -2,6 +2,8 @@ package backend.service;
 
 import backend.model.Item;
 import backend.model.OrderItem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,11 +19,11 @@ public interface ItemService {
 
     Item findItemById(Long id);
 
-    List<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
+    Page<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
-    List<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
+    Page<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
-    List<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice);
+    Page<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
 
     void updateItemQuantity(OrderItem orderItem, Boolean subtract);
 }

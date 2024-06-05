@@ -12,6 +12,7 @@ public class UserDTO {
     private String lastName;
     private String phone;
     private User.Role role;
+    private Boolean active;
     private OffsetDateTime createdAt;
     private OffsetDateTime modifiedAt;
 
@@ -27,6 +28,7 @@ public class UserDTO {
         this.lastName = user.getLastName();
         this.phone = user.getPhone();
         this.role = user.getRole();
+        this.active = user.getActive();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
     }
@@ -95,6 +97,14 @@ public class UserDTO {
         this.role = role;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
@@ -116,11 +126,11 @@ public class UserDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(id, userDTO.id) && Objects.equals(username, userDTO.username) && Objects.equals(password, userDTO.password) && Objects.equals(email, userDTO.email) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(phone, userDTO.phone) && role == userDTO.role && Objects.equals(createdAt, userDTO.createdAt) && Objects.equals(modifiedAt, userDTO.modifiedAt);
+        return Objects.equals(id, userDTO.id) && Objects.equals(username, userDTO.username) && Objects.equals(password, userDTO.password) && Objects.equals(email, userDTO.email) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(phone, userDTO.phone) && role == userDTO.role && Objects.equals(active, userDTO.active) && Objects.equals(createdAt, userDTO.createdAt) && Objects.equals(modifiedAt, userDTO.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName, phone, role, createdAt, modifiedAt);
+        return Objects.hash(id, username, password, email, firstName, lastName, phone, role, active, createdAt, modifiedAt);
     }
 }
