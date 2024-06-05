@@ -18,7 +18,8 @@ const SearchBar = ({ containerStyle, inputStyle }: SearchBarProps) => {
 
   useEffect(() => {
     if (debouncedInputValue) {
-      setSearch({ name: debouncedInputValue });
+      search.set('name', debouncedInputValue);
+      setSearch(search);
     } else {
       search.delete('name');
       setSearch(search);

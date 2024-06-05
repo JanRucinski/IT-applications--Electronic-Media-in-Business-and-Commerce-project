@@ -1,7 +1,7 @@
 import Filter from '@/components/shared/Filter';
 import SearchBar from '@/components/shared/SearchBar';
 import PartsList from '@/components/shop/PartsList';
-import { partsCategories } from '@/config/categories';
+import { partsCategories } from '@/constants/categories';
 
 const PartsPage = () => {
   return (

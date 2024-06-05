@@ -17,8 +17,9 @@ const PartsList = ({ isAdmin }: PartsListProps) => {
   const [params] = useSearchParams();
   const nameQuery = params.get('name') || '';
   const page = params.get('page') ?? 1;
+  const category = params.get('category') || '';
 
-  const { data, error, isLoading } = useParts(+page, nameQuery);
+  const { data, error, isLoading } = useParts(+page, nameQuery, category);
 
   useEffect(() => {
     window.scrollTo(0, 0);

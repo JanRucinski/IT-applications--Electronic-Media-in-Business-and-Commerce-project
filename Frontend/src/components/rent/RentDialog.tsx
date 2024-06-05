@@ -26,7 +26,7 @@ const RentDialog = ({ bike }: RentDialogProps) => {
   });
 
   return (
-    <DialogContent className="w-[90%] md:w-full sm:max-w-md min-w-min max-h-[92%] overflow-y-scroll">
+    <DialogContent className="w-[90%] md:w-full sm:max-w-md min-w-min max-h-[92%] overflow-y-scroll rounded-lg">
       <DialogHeader>
         <DialogTitle className="text-xl md:text-2xl text-sky-950">
           Rent {bike.name}

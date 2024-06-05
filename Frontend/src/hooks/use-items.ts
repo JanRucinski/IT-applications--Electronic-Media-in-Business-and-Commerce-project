@@ -6,22 +6,40 @@ const BIKES_URL = ITEMS_URL + '/bikes';
 const PARTS_URL = ITEMS_URL + '/parts';
 const RENT_ITEMS_URL = ITEMS_URL + '/rent-items';
 
-export const useBikes = (page: number = 1, nameQuery?: string) => {
-  const { data, isLoading, error, mutate } = useSWR(
-    nameQuery
-      ? `${BIKES_URL}?name=${nameQuery}`
-      : `${BIKES_URL}?page=${page}&size=${MAX_ITEMS_PER_PAGE}`
-  );
+export const useBikes = (
+  page: number = 1,
+  nameQuery?: string,
+  category?: string
+) => {
+  let url = `${BIKES_URL}?page=${page}&size=${MAX_ITEMS_PER_PAGE}`;
+
+  if (nameQuery) {
+    url += `&name=${nameQuery}`;
+  }
+  if (category !== undefined) {
+    url += `&categoryNames=${category}`;
+  }
+
+  const { data, isLoading, error, mutate } = useSWR(url);
 
   return { data, isLoading, error, mutate };
 };
 
-export const useParts = (page: number = 1, nameQuery?: string) => {
-  const { data, isLoading, error, mutate } = useSWR(
-    nameQuery
-      ? `${PARTS_URL}?name=${nameQuery}`
-      : `${PARTS_URL}?page=${page}&size=${MAX_ITEMS_PER_PAGE}`
-  );
+export const useParts = (
+  page: number = 1,
+  nameQuery?: string,
+  category?: string
+) => {
+  let url = `${PARTS_URL}?page=${page}&size=${MAX_ITEMS_PER_PAGE}`;
+
+  if (nameQuery) {
+    url += `&name=${nameQuery}`;
+  }
+  if (category !== undefined) {
+    url += `&categoryNames=${category}`;
+  }
+
+  const { data, isLoading, error, mutate } = useSWR(url);
 
   return { data, isLoading, error, mutate };
 };

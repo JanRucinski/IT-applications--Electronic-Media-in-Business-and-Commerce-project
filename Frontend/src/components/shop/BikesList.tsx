@@ -20,8 +20,9 @@ const BikesList = ({ isAdmin }: BikesListProps) => {
   const nameQuery = params.get('name') || '';
   const page = params.get('page') ?? 1;
   const sort = (params.get('sort') as SortEnum) || '';
+  const category = params.get('category') || '';
 
-  const { data, error, isLoading } = useBikes(+page, nameQuery);
+  const { data, error, isLoading } = useBikes(+page, nameQuery, category);
 
   useEffect(() => {
     window.scrollTo(0, 0);

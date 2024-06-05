@@ -2,7 +2,7 @@ import Filter from '@/components/shared/Filter';
 import SearchBar from '@/components/shared/SearchBar';
 import Sort from '@/components/shared/Sort';
 import BikesList from '@/components/shop/BikesList';
-import { bikesCategories } from '@/config/categories';
+import { bikesCategories } from '@/constants/categories';
 
 const BikesPage = () => {
   return (
@@ -18,7 +18,7 @@ const BikesPage = () => {
         </div>
         <div className="flex items-center gap-2">
           <span>Sort by:</span>
-          <Sort setValue={(value) => console.log(value)} />
+          <Sort />
         </div>
       </div>
       <BikesList />
