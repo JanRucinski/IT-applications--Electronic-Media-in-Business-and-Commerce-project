@@ -87,9 +87,9 @@ public class ItemController {
                                                   @RequestParam(required = false) String[] categoryNames,
                                                   @RequestParam(required = false) BigDecimal minPrice,
                                                   @RequestParam(required = false) BigDecimal maxPrice,
-                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "1") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<Item> bikes = is.findAllBikes(name, categoryNames, minPrice, maxPrice, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(bikes.map(ItemDTO::new));
     }
@@ -99,9 +99,9 @@ public class ItemController {
                                                   @RequestParam(required = false) String[] categoryNames,
                                                   @RequestParam(required = false) BigDecimal minPrice,
                                                   @RequestParam(required = false) BigDecimal maxPrice,
-                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "1") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<Item> parts = is.findAllParts(name, categoryNames, minPrice, maxPrice, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(parts.map(ItemDTO::new));
     }
@@ -111,9 +111,9 @@ public class ItemController {
                                                       @RequestParam(required = false) String[] categoryNames,
                                                       @RequestParam(required = false) BigDecimal minPrice,
                                                       @RequestParam(required = false) BigDecimal maxPrice,
-                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "1") int page,
                                                       @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice, pageable);
         Page<ItemDTO> rentItemDTOs = rentItems.map(item -> {
             ItemDTO dto = new ItemDTO(item);
