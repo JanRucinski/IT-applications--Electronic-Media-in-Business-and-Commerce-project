@@ -8,6 +8,8 @@ import ErrorState from '../shared/ErrorState';
 import { Item } from '@/models/item';
 import NotFoundState from '../shared/NotFoundState';
 import ItemsPagination from '../shared/ItemsPagination';
+import { SortEnum } from '@/constants/sorting-filters';
+import { getSortedItems } from '@/utils/sort';
 
 type BikesListProps = {
   isAdmin?: boolean;
@@ -17,6 +19,7 @@ const BikesList = ({ isAdmin }: BikesListProps) => {
   const [params] = useSearchParams();
   const nameQuery = params.get('name') || '';
   const page = params.get('page') ?? 1;
+  const sort = (params.get('sort') as SortEnum) || '';
 
   const { data, error, isLoading } = useBikes(+page, nameQuery);
 
@@ -40,10 +43,12 @@ const BikesList = ({ isAdmin }: BikesListProps) => {
     return <NotFoundState />;
   }
 
+  const bikes = getSortedItems(data.content, sort);
+
   return (
     <>
       <div className="grid md:grid-cols-4 gap-6 md:gap-10 my-4">
-        {data.content.map((item: Item) => (
+        {bikes.map((item: Item) => (
           <ShopItem
             key={item.id}
             item={item}
