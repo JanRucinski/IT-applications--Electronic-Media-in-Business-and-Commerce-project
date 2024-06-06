@@ -1,6 +1,10 @@
 package backend.service;
 
+import backend.model.Order;
+import backend.model.Rental;
 import backend.model.User;
+import backend.repository.OrderRepository;
+import backend.repository.RentalRepository;
 import backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +18,14 @@ import java.util.Optional;
 @Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RentalRepository rentalRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, RentalRepository rentalRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
+        this.rentalRepository = rentalRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -33,6 +41,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {
+            List<Rental> rentals = rentalRepository.findRentalsByUserId(id);
+            for (Rental rental : rentals) {
+                rental.setUser(null);
+                rentalRepository.save(rental);
+            }
+            List<Order> orders = orderRepository.findOrdersByUserId(id);
+            for (Order order : orders) {
+                order.setUser(null);
+                orderRepository.save(order);
+            }
             userRepository.deleteById(id);
             return true;
         }

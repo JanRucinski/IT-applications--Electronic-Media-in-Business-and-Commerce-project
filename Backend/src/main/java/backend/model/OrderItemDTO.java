@@ -21,7 +21,9 @@ public class OrderItemDTO {
         this.quantity = orderItem.getQuantity();
         this.prize = orderItem.getPrize();
         this.orderId = orderItem.getOrder().getId();
-        this.itemId = orderItem.getItem().getId();
+        if (orderItem.getItem() != null) {
+            this.itemId = orderItem.getItem().getId();
+        }
         this.createdAt = orderItem.getCreatedAt();
         this.modifiedAt = orderItem.getModifiedAt();
     }

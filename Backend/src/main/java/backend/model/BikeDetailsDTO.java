@@ -5,7 +5,10 @@ import java.util.Objects;
 
 public class BikeDetailsDTO {
     private Long id;
-    private String color;
+    private String brand;
+    private String model;
+    private Double weight;
+    private String wheelSize;
     private OffsetDateTime createdAt;
     private OffsetDateTime modifiedAt;
 
@@ -14,7 +17,10 @@ public class BikeDetailsDTO {
 
     public BikeDetailsDTO(BikeDetails bikeDetails) {
         this.id = bikeDetails.getId();
-        this.color = bikeDetails.getColor();
+        this.brand = bikeDetails.getBrand();
+        this.model = bikeDetails.getModel();
+        this.weight = bikeDetails.getWeight();
+        this.wheelSize = bikeDetails.getWheelSize();
         this.createdAt = bikeDetails.getCreatedAt();
         this.modifiedAt = bikeDetails.getModifiedAt();
     }
@@ -27,12 +33,36 @@ public class BikeDetailsDTO {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public String getWheelSize() {
+        return wheelSize;
+    }
+
+    public void setWheelSize(String wheelSize) {
+        this.wheelSize = wheelSize;
     }
 
     public OffsetDateTime getCreatedAt() {
@@ -56,11 +86,11 @@ public class BikeDetailsDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BikeDetailsDTO that = (BikeDetailsDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(color, that.color) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
+        return Objects.equals(id, that.id) && Objects.equals(brand, that.brand) && Objects.equals(model, that.model) && Objects.equals(weight, that.weight) && Objects.equals(wheelSize, that.wheelSize) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, color, createdAt, modifiedAt);
+        return Objects.hash(id, brand, model, weight, wheelSize, createdAt, modifiedAt);
     }
 }

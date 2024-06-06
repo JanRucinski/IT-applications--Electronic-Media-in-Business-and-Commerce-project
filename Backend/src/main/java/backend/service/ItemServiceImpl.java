@@ -1,13 +1,10 @@
 package backend.service;
 
-import backend.model.Category;
-import backend.model.Item;
-import backend.model.OrderItem;
+import backend.model.*;
 import backend.repository.ItemRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import backend.repository.OrderItemRepository;
+import backend.repository.RentalRepository;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +21,14 @@ import java.util.Optional;
 @Transactional
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
+    private final RentalRepository rentalRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, RentalRepository rentalRepository, OrderItemRepository orderItemRepository) {
         this.itemRepository = itemRepository;
+        this.rentalRepository = rentalRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -48,6 +49,16 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean deleteItem(Long id) {
         if (itemRepository.existsById(id)) {
+            List<Rental> rentals = rentalRepository.findRentalsByItemId(id);
+            for (Rental rental : rentals) {
+                rental.setItem(null);
+                rentalRepository.save(rental);
+            }
+            List<OrderItem> orderItems = orderItemRepository.findOrderItemsByItemId(id);
+            for (OrderItem orderItem : orderItems) {
+                orderItem.setItem(null);
+                orderItemRepository.save(orderItem);
+            }
             itemRepository.deleteById(id);
             return true;
         } else {
@@ -73,7 +84,10 @@ public class ItemServiceImpl implements ItemService {
             oi.get().setModifiedAt(OffsetDateTime.now());
             if (item.getBikeDetails() != null) {
                 if (oi.get().getBikeDetails() != null) {
-                    oi.get().getBikeDetails().setColor(item.getBikeDetails().getColor());
+                    oi.get().getBikeDetails().setBrand(item.getBikeDetails().getBrand());
+                    oi.get().getBikeDetails().setModel(item.getBikeDetails().getModel());
+                    oi.get().getBikeDetails().setWeight(item.getBikeDetails().getWeight());
+                    oi.get().getBikeDetails().setWheelSize(item.getBikeDetails().getWheelSize());
                     oi.get().getBikeDetails().setModifiedAt(OffsetDateTime.now());
                 } else {
                     oi.get().setBikeDetails(item.getBikeDetails());
@@ -85,7 +99,8 @@ public class ItemServiceImpl implements ItemService {
             }
             if (item.getPartDetails() != null) {
                 if (oi.get().getPartDetails() != null) {
-                    oi.get().getPartDetails().setColor(item.getPartDetails().getColor());
+                    oi.get().getPartDetails().setMaterial(item.getPartDetails().getMaterial());
+                    oi.get().getPartDetails().setPartType(item.getPartDetails().getPartType());
                     oi.get().getPartDetails().setModifiedAt(OffsetDateTime.now());
                 } else {
                     oi.get().setPartDetails(item.getPartDetails());
@@ -106,36 +121,48 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+    public Page<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, String brand, String model, Double minWeight, Double maxWeight, String wheelSize, Pageable pageable) {
         return itemRepository.findAll((root, query, criteriaBuilder) -> {
             Join<Item, Category> categoryJoin = root.join("category");
             List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
 
             predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.BIKES));
 
+            predicates.addAll(generateCommonBikePredicates(root, criteriaBuilder, brand, model, minWeight, maxWeight, wheelSize));
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, pageable);
     }
 
     @Override
-    public Page<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+    public Page<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, String material, String partType, Pageable pageable) {
         return itemRepository.findAll((root, query, criteriaBuilder) -> {
             Join<Item, Category> categoryJoin = root.join("category");
             List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
 
             predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.PARTS));
 
+            Join<Item, PartDetails> partDetailsJoin = root.join("partDetails", JoinType.LEFT);
+            if (material != null && !material.isEmpty()) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(partDetailsJoin.get("material")), "%" + material.toLowerCase() + "%"));
+            }
+            if (partType != null && !partType.isEmpty()) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(partDetailsJoin.get("partType")), "%" + partType.toLowerCase() + "%"));
+            }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, pageable);
     }
 
     @Override
-    public Page<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
+    public Page<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, String brand, String model, Double minWeight, Double maxWeight, String wheelSize, Pageable pageable) {
         return itemRepository.findAll((root, query, criteriaBuilder) -> {
             Join<Item, Category> categoryJoin = root.join("category");
             List<Predicate> predicates = generateCommonItemPredicates(root, criteriaBuilder, categoryJoin, name, categoryNames, minPrice, maxPrice);
 
             predicates.add(criteriaBuilder.equal(categoryJoin.get("superCategory"), Category.SuperCategory.RENT_ITEMS));
+
+            predicates.addAll(generateCommonBikePredicates(root, criteriaBuilder, brand, model, minWeight, maxWeight, wheelSize));
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, pageable);
@@ -168,6 +195,27 @@ public class ItemServiceImpl implements ItemService {
         }
         if (maxPrice != null) {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+        }
+        return predicates;
+    }
+
+    private List<Predicate> generateCommonBikePredicates(Root<Item> root, CriteriaBuilder criteriaBuilder, String brand, String model, Double minWeight, Double maxWeight, String wheelSize) {
+        List<Predicate> predicates = new ArrayList<>();
+        Join<Item, BikeDetails> bikeDetailsJoin = root.join("bikeDetails", JoinType.LEFT);
+        if (brand != null && !brand.isEmpty()) {
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(bikeDetailsJoin.get("brand")), "%" + brand.toLowerCase() + "%"));
+        }
+        if (model != null && !model.isEmpty()) {
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(bikeDetailsJoin.get("model")), "%" + model.toLowerCase() + "%"));
+        }
+        if (minWeight != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(bikeDetailsJoin.get("weight"), minWeight));
+        }
+        if (maxWeight != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(bikeDetailsJoin.get("weight"), maxWeight));
+        }
+        if (wheelSize != null && !wheelSize.isEmpty()) {
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(bikeDetailsJoin.get("wheelSize")), "%" + wheelSize.toLowerCase() + "%"));
         }
         return predicates;
     }

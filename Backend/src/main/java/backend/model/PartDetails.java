@@ -11,8 +11,10 @@ public class PartDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "color")
-    private String color;
+    @Column(name = "material")
+    private String material;
+    @Column(name = "part_type")
+    private String partType;
     @OneToOne(mappedBy = "partDetails")
     private Item item;
     private OffsetDateTime createdAt;
@@ -23,7 +25,8 @@ public class PartDetails {
 
     public PartDetails(PartDetailsDTO partDetailsDTO) {
         this.id = partDetailsDTO.getId();
-        this.color = partDetailsDTO.getColor();
+        this.material = partDetailsDTO.getMaterial();
+        this.partType = partDetailsDTO.getPartType();
     }
 
     public Long getId() {
@@ -34,12 +37,20 @@ public class PartDetails {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
+    public String getMaterial() {
+        return material;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getPartType() {
+        return partType;
+    }
+
+    public void setPartType(String partType) {
+        this.partType = partType;
     }
 
     public Item getItem() {
@@ -71,11 +82,11 @@ public class PartDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PartDetails that = (PartDetails) o;
-        return Objects.equals(id, that.id) && Objects.equals(color, that.color) && Objects.equals(item, that.item) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
+        return Objects.equals(id, that.id) && Objects.equals(material, that.material) && Objects.equals(partType, that.partType) && Objects.equals(item, that.item) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, color, item, createdAt, modifiedAt);
+        return Objects.hash(id, material, partType, item, createdAt, modifiedAt);
     }
 }

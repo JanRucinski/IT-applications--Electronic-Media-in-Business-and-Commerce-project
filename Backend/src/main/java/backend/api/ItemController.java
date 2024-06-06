@@ -87,10 +87,15 @@ public class ItemController {
                                                   @RequestParam(required = false) String[] categoryNames,
                                                   @RequestParam(required = false) BigDecimal minPrice,
                                                   @RequestParam(required = false) BigDecimal maxPrice,
+                                                  @RequestParam(required = false) String brand,
+                                                  @RequestParam(required = false) String model,
+                                                  @RequestParam(required = false) Double minWeight,
+                                                  @RequestParam(required = false) Double maxWeight,
+                                                  @RequestParam(required = false) String wheelSize,
                                                   @RequestParam(defaultValue = "1") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Item> bikes = is.findAllBikes(name, categoryNames, minPrice, maxPrice, pageable);
+        Page<Item> bikes = is.findAllBikes(name, categoryNames, minPrice, maxPrice, brand, model, minWeight, maxWeight, wheelSize, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(bikes.map(ItemDTO::new));
     }
 
@@ -99,10 +104,12 @@ public class ItemController {
                                                   @RequestParam(required = false) String[] categoryNames,
                                                   @RequestParam(required = false) BigDecimal minPrice,
                                                   @RequestParam(required = false) BigDecimal maxPrice,
+                                                  @RequestParam(required = false) String material,
+                                                  @RequestParam(required = false) String partType,
                                                   @RequestParam(defaultValue = "1") int page,
                                                   @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Item> parts = is.findAllParts(name, categoryNames, minPrice, maxPrice, pageable);
+        Page<Item> parts = is.findAllParts(name, categoryNames, minPrice, maxPrice, material, partType, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(parts.map(ItemDTO::new));
     }
 
@@ -111,10 +118,15 @@ public class ItemController {
                                                       @RequestParam(required = false) String[] categoryNames,
                                                       @RequestParam(required = false) BigDecimal minPrice,
                                                       @RequestParam(required = false) BigDecimal maxPrice,
+                                                      @RequestParam(required = false) String brand,
+                                                      @RequestParam(required = false) String model,
+                                                      @RequestParam(required = false) Double minWeight,
+                                                      @RequestParam(required = false) Double maxWeight,
+                                                      @RequestParam(required = false) String wheelSize,
                                                       @RequestParam(defaultValue = "1") int page,
                                                       @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice, pageable);
+        Page<Item> rentItems = is.findAllRentItems(name, categoryNames, minPrice, maxPrice, brand, model, minWeight, maxWeight, wheelSize, pageable);
         Page<ItemDTO> rentItemDTOs = rentItems.map(item -> {
             ItemDTO dto = new ItemDTO(item);
             dto.setReservedDates(rs.findReservedDatesOfItem(dto.getId()));
