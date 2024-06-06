@@ -35,7 +35,9 @@ const RentItem = ({ id, name, desc, imageUrl, price }: Item) => {
       </CardContent>
       <CardFooter>
         <RentAction bikeId={id}>
-          <Button className="flex-1">Rent now</Button>
+          <Button className="flex-1" id="checkout-btn">
+            Rent now
+          </Button>
         </RentAction>
       </CardFooter>
     </Card>

@@ -42,7 +42,12 @@ const Filter = ({ buttonStyle, filterOptions, query }: FilterProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className={buttonStyle}>
-          <Button variant="outline" size="lg" className="h-10 gap-1">
+          <Button
+            variant="outline"
+            size="lg"
+            className="h-10 gap-1"
+            id="filter-btn"
+          >
             <ListFilter className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               {filter ? filter.split(' ')[0] : 'Filter'}
@@ -55,6 +60,7 @@ const Filter = ({ buttonStyle, filterOptions, query }: FilterProps) => {
           {filterOptions.map((option) => (
             <DropdownMenuCheckboxItem
               key={option.id}
+              id={'filter-' + option.id}
               onClick={selectFilter.bind(this, option.name)}
               checked={filter === option.name}
             >
@@ -66,6 +72,7 @@ const Filter = ({ buttonStyle, filterOptions, query }: FilterProps) => {
       {filter && (
         <Button
           onClick={clearFilter}
+          id="clear-filter-btn"
           variant="secondary"
           className={cn('ml-3 rounded-lg', isMobile && 'ml-1')}
         >
