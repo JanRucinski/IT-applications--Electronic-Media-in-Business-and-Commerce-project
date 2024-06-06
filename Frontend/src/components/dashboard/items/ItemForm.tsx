@@ -14,13 +14,40 @@ import { DialogFooter, DialogTrigger } from '../../ui/dialog';
 import { Button } from '../../ui/button';
 import { Item } from '@/models/item';
 import { ItemSchemaType, itemSchema } from '@/schemas/item-schema';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { ItemCategory } from '@/types/config';
+import {
+  bikesCategories,
+  partsCategories,
+  rentalCategories,
+} from '@/constants/categories';
+import { useMemo } from 'react';
 
 type ItemFormProps = {
   item?: Item;
+  categoryName: ItemCategory;
   onSubmit: (values: ItemSchemaType) => void;
 };
 
-export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
+export const ItemForm = ({ item, onSubmit, categoryName }: ItemFormProps) => {
+  const dict =
+    categoryName === 'bikes'
+      ? bikesCategories
+      : categoryName === 'parts'
+      ? partsCategories
+      : rentalCategories;
+
+  const category = useMemo(
+    () => dict.find((c) => c.id === item?.categoryId),
+    [dict, item?.categoryId]
+  );
+
   const form = useForm<ItemSchemaType>({
     resolver: zodResolver(itemSchema),
     mode: 'onTouched',
@@ -30,6 +57,7 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
       price: item?.price || undefined,
       imageUrl: item?.imageUrl || '',
       quantity: item?.quantity || undefined,
+      categoryId: category?.id || undefined,
     },
   });
 
@@ -103,6 +131,32 @@ export const ItemForm = ({ item, onSubmit }: ItemFormProps) => {
                   <Input {...field} type="number" />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field?.value?.toString() || undefined}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {dict.map((c) => (
+                      <SelectItem key={c.id} value={c.id.toString()}>
+                        {c.name.split(' ')[0]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormItem>
             )}
           />

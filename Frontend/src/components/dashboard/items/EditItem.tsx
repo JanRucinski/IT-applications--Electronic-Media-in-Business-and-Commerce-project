@@ -12,9 +12,10 @@ import {
 import { ItemForm } from './ItemForm';
 import { Item } from '@/models/item';
 import { updateItem } from '@/services/items';
-import { useBikes, useParts } from '@/hooks/use-items';
+import { useBikes, useParts, useRentItems } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 import { ItemSchemaType } from '@/schemas/item-schema';
+import { useResetSearchParams } from '@/hooks/use-common-actions';
 
 type EditItemProps = {
   item: Item;
@@ -25,8 +26,16 @@ type EditItemProps = {
 export const EditItem = ({ item, itemCategory }: EditItemProps) => {
   const { mutate: refetchBikes } = useBikes();
   const { mutate: refetchParts } = useParts();
+  const { mutate: refetchRentItems } = useRentItems();
 
-  const onRefresh = itemCategory === 'parts' ? refetchParts : refetchBikes;
+  const { reset } = useResetSearchParams();
+
+  const onRefresh =
+    itemCategory === 'parts'
+      ? refetchParts
+      : itemCategory === 'bikes'
+      ? refetchBikes
+      : refetchRentItems;
 
   const handleEdit = async (data: ItemSchemaType) => {
     try {
@@ -34,7 +43,8 @@ export const EditItem = ({ item, itemCategory }: EditItemProps) => {
         ...data,
         id: item.id,
       });
-      onRefresh();
+      await onRefresh();
+      reset();
       toast.success('Item updated successfully');
     } catch (error) {
       toast.error('Failed to update item');
@@ -53,7 +63,11 @@ export const EditItem = ({ item, itemCategory }: EditItemProps) => {
           <DialogTitle>Edit Item</DialogTitle>
           <DialogDescription>Make changes to the item.</DialogDescription>
         </DialogHeader>
-        <ItemForm item={item} onSubmit={handleEdit} />
+        <ItemForm
+          categoryName={itemCategory}
+          item={item}
+          onSubmit={handleEdit}
+        />
       </DialogContent>
     </Dialog>
   );

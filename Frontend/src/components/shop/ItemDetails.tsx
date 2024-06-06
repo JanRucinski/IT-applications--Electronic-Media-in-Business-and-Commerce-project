@@ -4,6 +4,7 @@ import { NavBreadcrumb } from '../shared/NavBreadcrumb';
 import { ItemCategory } from '@/types/config';
 import { useManageCartItem } from '@/hooks/use-common-actions';
 import { Button } from '../ui/button';
+import { isMobile } from 'react-device-detect';
 
 type ItemDetailsProps = {
   item: DetailedItem;
@@ -16,25 +17,31 @@ const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
   return (
     <div className="container flex flex-col flex-1">
       <NavBreadcrumb
-        containerClasses="mt-5 mb-5"
+        containerClasses="mt-2 mb-2 md:mt-5 md:mb-5"
         currentPage={item.name}
         breadcrumbs={createBreadcrumb(itemCategory)}
       />
-      <div className="container items-center justify-center flex mt-20 flex-1">
+      <div className="container items-center justify-center flex mt-4 md:mt-20 flex-1">
         <section className="flex flex-col md:flex-row gap-8 justify-center items-center">
           <div className="flex justify-center md:justify-start">
             <img
-              className="w-full md:w-96 h-80 object-contain rounded-lg shadow-lg border overflow-hidden"
+              className="w-64 h-52 p-4 md:w-96 md:h-80 object-contain rounded-lg shadow-lg border overflow-hidden"
               src={item.imageUrl}
               alt={item.name}
             />
           </div>
-          <div className="flex-1 space-y-4 px-8">
+          <div className="flex-1 md:space-y-4 md:px-8">
             <div>
-              <h1 className="text-4xl font-semibold">{item.name}</h1>
-              <p className="text-lg text-muted-foreground">{item.desc}</p>
-              <p className="text-3xl font-bold mt-5">${item.price}</p>
-              <p className="text-lg text-gray-700 mt-5">
+              <h1 className="text-2xl md:text-4xl font-semibold">
+                {item.name}
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground">
+                {item.desc}
+              </p>
+              <p className="text-xl mt-2 text-center md:text-start md:text-3xl font-bold md:mt-5">
+                ${item.price}
+              </p>
+              <p className="text-center md:text-start text-base md:text-lg text-gray-700 mt-2 md:mt-5">
                 Max: {item.quantity} items
               </p>
               <p className="text-lg text-gray-700 mt-5">{item.brand}</p>
@@ -42,6 +49,7 @@ const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
             </div>
             <Button
               onClick={buttonAction}
+              className={isMobile ? 'w-full mb-4' : undefined}
               variant={isItemInCart ? 'outline' : 'default'}
             >
               {buttonLabel}

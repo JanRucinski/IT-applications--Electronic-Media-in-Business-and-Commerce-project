@@ -31,6 +31,14 @@ export const createBreadcrumb = (itemCategory: ItemCategory) => {
           url: `/${itemCategory}`,
         },
       ];
+    case 'rental': {
+      return [
+        {
+          name: 'Rental',
+          url: `/${itemCategory}`,
+        },
+      ];
+    }
     default:
       return [];
   }

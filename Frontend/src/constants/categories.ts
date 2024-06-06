@@ -14,6 +14,10 @@ export const bikesCategories: Category[] = [
   { id: 8, name: 'Other' },
 ] as const;
 
+export const bikeCategoryNames = bikesCategories.map(
+  (category) => category.name
+);
+
 export const partsCategories: Category[] = [
   { id: 21, name: 'Brakes' },
   { id: 22, name: 'Drivetrain' },
@@ -24,6 +28,10 @@ export const partsCategories: Category[] = [
   { id: 27, name: 'Suspension' },
   { id: 28, name: 'Other' },
 ] as const;
+
+export const partCategoryNames = partsCategories.map(
+  (category) => category.name
+);
 
 export const rentalCategories: Category[] = [
   { id: 41, name: 'Mountain' },
