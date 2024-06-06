@@ -49,7 +49,11 @@ const RentDialog = ({ bike }: RentDialogProps) => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <DateRangePicker date={date} setDate={setDate} />
+        <DateRangePicker
+          date={date}
+          setDate={setDate}
+          reservedDates={bike.reservedDates || []}
+        />
         <span className="text-lg md:text-2xl px-2 md:px-6 text-sky-950">
           {calculateRentPrice(date, bike.price).toFixed(2)}$
         </span>

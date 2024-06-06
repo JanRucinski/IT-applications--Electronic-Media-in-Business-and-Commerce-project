@@ -9,7 +9,7 @@ import {
 } from '../ui/card';
 import { Item } from '@/models/item';
 import RentAction from './RentAction';
-import ShopItemFooter from '../dashboard/items/ShopItemFooter';
+import ItemActionFooter from '../dashboard/items/ItemActionFooter';
 
 type RentItemProps = {
   item: Item;
@@ -40,10 +40,10 @@ const RentItem = ({ item, isAdmin }: RentItemProps) => {
         </div>
       </CardContent>
       {isAdmin ? (
-        <ShopItemFooter item={item} itemCategory="rental" />
+        <ItemActionFooter item={item} itemCategory="rental" />
       ) : (
         <CardFooter>
-          <RentAction bikeId={item.id}>
+          <RentAction bike={item}>
             <Button className="flex-1" id="checkout-btn">
               Rent now
             </Button>
