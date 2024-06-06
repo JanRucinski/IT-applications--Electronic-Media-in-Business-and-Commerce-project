@@ -48,8 +48,8 @@ public class SecurityConfig {
             // Permit POST requests to /items
             .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
             .requestMatchers(HttpMethod.POST, "/items").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.POST, "/orders/**").hasAnyRole("ADMIN", "USER")
-            .requestMatchers(HttpMethod.POST, "/rentals/**").hasAnyRole("ADMIN", "USER")
+            .requestMatchers(HttpMethod.POST, "/orders").hasAnyRole("ADMIN", "USER")
+            .requestMatchers(HttpMethod.POST, "/rentals").hasAnyRole("ADMIN", "USER")
             // Restrict PUT requests to ADMIN role
             .requestMatchers(HttpMethod.PUT, "/users/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.PUT, "/items/**").hasRole("ADMIN")
