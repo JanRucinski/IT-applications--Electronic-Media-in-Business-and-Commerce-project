@@ -16,6 +16,7 @@ import {
   AdminDashboard,
   AdminBikes,
   AdminParts,
+  AdminRental,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import AuthLayout from './components/layouts/AuthLayout';
@@ -39,6 +40,7 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="bikes" element={<AdminBikes />} />
           <Route path="parts" element={<AdminParts />} />
+          <Route path="rental" element={<AdminRental />} />
           <Route path="rentals" element={<div>Rentals</div>} />
           <Route path="orders" element={<div>Orders</div>} />
         </Route>
