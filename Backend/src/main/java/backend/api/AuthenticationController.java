@@ -86,6 +86,8 @@ public class AuthenticationController {
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
 
+        user.setRole(Role.ROLE_USER);
+
         if (userDTO.getFirstName() != null) {
             user.setFirstName(userDTO.getFirstName());
         }
