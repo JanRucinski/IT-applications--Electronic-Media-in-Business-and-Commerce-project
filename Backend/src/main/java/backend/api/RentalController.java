@@ -65,8 +65,16 @@ public class RentalController {
 
     @GetMapping
     public ResponseEntity<List<RentalDTO>> getRentals() {
-        List<Rental> rentals = rs.findAllRentals();
-        return ResponseEntity.status(HttpStatus.OK).body(rentals.stream().map(RentalDTO::new).collect(Collectors.toList()));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User user = us.findUserByUsernameOrEmail(username);
+        if (user.getRole() == User.Role.ROLE_ADMIN) {
+            List<Rental> rentals = rs.findAllRentals();
+            return ResponseEntity.status(HttpStatus.OK).body(rentals.stream().map(RentalDTO::new).collect(Collectors.toList()));
+        } else {
+            List<Rental> rentals = rs.findRentalsByUserId(user.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(rentals.stream().map(RentalDTO::new).collect(Collectors.toList()));
+        }
     }
 
     @PutMapping("/{id}")

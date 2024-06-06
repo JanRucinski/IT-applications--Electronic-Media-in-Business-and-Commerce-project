@@ -76,4 +76,9 @@ public class RentalServiceImpl implements RentalService {
         }
         return reservedDates;
     }
+
+    @Override
+    public List<Rental> findRentalsByUserId(Long userId) {
+        return rentalRepository.findRentalsByUserId(userId);
+    }
 }

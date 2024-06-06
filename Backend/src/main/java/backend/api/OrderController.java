@@ -90,8 +90,16 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderDTO>> getOrders() {
-        List<Order> orders = os.findAllOrders();
-        return ResponseEntity.status(HttpStatus.OK).body(orders.stream().map(OrderDTO::new).collect(Collectors.toList()));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User user = us.findUserByUsernameOrEmail(username);
+        if (user.getRole() == User.Role.ROLE_ADMIN) {
+            List<Order> orders = os.findAllOrders();
+            return ResponseEntity.status(HttpStatus.OK).body(orders.stream().map(OrderDTO::new).collect(Collectors.toList()));
+        } else {
+            List<Order> orders = os.findOrdersByUserId(user.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(orders.stream().map(OrderDTO::new).collect(Collectors.toList()));
+        }
     }
 
     @PutMapping("/{id}")

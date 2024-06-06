@@ -17,4 +17,6 @@ public interface RentalService {
     Rental findRentalById(Long id);
 
     List<LocalDate> findReservedDatesOfItem(Long itemId);
+
+    List<Rental> findRentalsByUserId(Long userId);
 }
