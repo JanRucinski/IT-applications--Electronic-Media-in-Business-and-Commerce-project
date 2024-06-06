@@ -100,4 +100,6 @@ public class ContactPage extends BasePage{
     public WebElement getSuccessfulNotification(){
         return successfulNotification;
     }
+
+    public WebElement getEmailErrorMessage() { return emailErrorMessage;}
 }

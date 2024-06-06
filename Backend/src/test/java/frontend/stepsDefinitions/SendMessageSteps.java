@@ -1,10 +1,7 @@
 package frontend.stepsDefinitions;
 
 import frontend.pages.ContactPage;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.util.Assert;
@@ -40,5 +37,17 @@ public class SendMessageSteps extends BaseSteps{
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(contactPage.getSuccessfulNotification()));
         Assert.isTrue(contactPage.getSuccessfulNotification().isDisplayed(), "The form wasn't filled in correctly");
+    }
+
+    @But("the user forgot about filling in an email form")
+    public void forgetAboutEmailField(){
+        contactPage.getEmailErrorMessage().clear();
+    }
+
+    @Then("the error about filling form should be shown")
+    public void verifyEmailErrorMessage(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(contactPage.getEmailErrorMessage()));
+        Assert.isTrue(contactPage.getEmailErrorMessage().isDisplayed(), "The email input has been filled in");
     }
 }
