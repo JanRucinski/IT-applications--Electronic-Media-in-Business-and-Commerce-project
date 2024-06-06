@@ -4,8 +4,8 @@ public class LoginReq {
   private String username;
   private String password;
 
-  public LoginReq(String email, String password) {
-    this.username = email;
+  public LoginReq(String username, String password) {
+    this.username = username;
     this.password = password;
   }
 

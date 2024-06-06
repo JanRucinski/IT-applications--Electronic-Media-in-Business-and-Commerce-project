@@ -4,7 +4,6 @@ import backend.model.User;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,10 +22,8 @@ public class JwtUtil {
 
   public String createToken(User user) {
     Claims claims = Jwts.claims().setSubject(user.getEmail());
-    claims.put("firstName", user.getFirstName());
-    claims.put("lastName", user.getLastName());
-    // Add roles if necessary
-    claims.put("roles", user.getRole());
+    claims.put("username", user.getUsername());
+    claims.put("role", user.getRole());
 
     Date now = new Date();
     Date expirationDate = new Date(now.getTime() + accessTokenValidity);
@@ -70,8 +67,8 @@ public class JwtUtil {
   public boolean validateToken(String token, User user) {
     try {
       Claims claims = parseJwtClaims(token);
-      String email = claims.getSubject();
-      return email.equals(user.getEmail()) && !isTokenExpired(claims);
+      String username = claims.getSubject();
+      return username.equals(user.getUsername()) && !isTokenExpired(claims);
     } catch (JwtException | IllegalArgumentException e) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token", e);
     }
@@ -82,12 +79,12 @@ public class JwtUtil {
     return expiration.before(new Date());
   }
 
-  public String getEmail(Claims claims) {
+  public String getUsername(Claims claims) {
     return claims.getSubject();
   }
 
-  public List<String> getRoles(Claims claims) {
-    return (List<String>) claims.get("roles");
+  public String getRole(Claims claims) {
+    return (String) claims.get("role");
   }
 
   public boolean validateClaims(Claims claims) {
