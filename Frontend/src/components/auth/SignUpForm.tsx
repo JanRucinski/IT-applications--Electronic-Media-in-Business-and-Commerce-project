@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,6 +22,9 @@ import {
 } from '@/components/ui/form';
 import { SignUpSchemaType, signUpSchema } from '@/schemas/auth-schema';
 import Spinner from '../shared/Spinner';
+import { signUp } from '@/services/auth';
+import { useAuth } from '@/store/user';
+import { useEffect } from 'react';
 
 export function SignUpForm() {
   const form = useForm<SignUpSchemaType>({
@@ -31,13 +35,27 @@ export function SignUpForm() {
       password: '',
       firstName: '',
       lastName: '',
-      phone: '',
+      username: '',
     },
   });
 
+  const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate(-1);
+    }
+  }, [user, navigate]);
+
   const onSubmit = async (values: SignUpSchemaType) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
+    try {
+      await signUp(values);
+      navigate('/login', { replace: true });
+    } catch (error) {
+      toast.error('Sign up failed. Please try again.');
+    }
   };
 
   return (
@@ -94,12 +112,12 @@ export function SignUpForm() {
             />
             <FormField
               control={form.control}
-              name="phone"
+              name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="+48 712 345 678" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

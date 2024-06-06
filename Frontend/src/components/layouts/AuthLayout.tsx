@@ -1,10 +1,10 @@
 import { Link, Outlet } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
+import { Toaster } from 'sonner';
 
 import { Button } from '../ui/button';
 import Footer from './Footer';
 
-// TODO: Add protection form auth users
 const AuthLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -18,6 +18,7 @@ const AuthLayout = () => {
       <section className="flex flex-1 justify-center items-center py-4 px-4">
         <Outlet />
       </section>
+      <Toaster richColors offset={30} />
       <Footer />
     </div>
   );

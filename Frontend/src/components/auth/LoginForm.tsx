@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,20 +22,45 @@ import {
 } from '@/components/ui/form';
 import { LoginSchemaType, loginSchema } from '@/schemas/auth-schema';
 import Spinner from '../shared/Spinner';
+import { login } from '@/services/auth';
+import { useAuth } from '@/store/user';
+import { useEffect } from 'react';
 
 export function LoginForm() {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     mode: 'all',
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
+  const navigate = useNavigate();
+
+  const { setUser, user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate(user.role === 'admin' ? '/dashboard' : '/bikes');
+    }
+  }, [user, navigate]);
+
   const onSubmit = async (values: LoginSchemaType) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('Submitted:', values);
+    try {
+      const response = await login(values);
+      const isAdmin = response.isAdmin;
+      setUser({
+        email: response.user,
+        token: response.token,
+        fullName: response.fullName,
+        role: isAdmin ? 'admin' : 'user',
+      });
+      // const redirect = isAdmin ? '/dashboard' : '/bikes';
+      // navigate(redirect, { replace: true });
+    } catch (error) {
+      toast.error('Login failed. Please try again.');
+    }
   };
 
   return (
@@ -42,7 +68,7 @@ export function LoginForm() {
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          Enter your login below to login to your account
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -50,12 +76,12 @@ export function LoginForm() {
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name="email"
+              name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="m@example.com" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
