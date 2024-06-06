@@ -1,5 +1,5 @@
 import { MAX_ITEMS_PER_PAGE } from '@/constants/pagination';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 
 const ITEMS_URL = '/items';
 const BIKES_URL = ITEMS_URL + '/bikes';
@@ -56,4 +56,18 @@ export const useItem = (id: string) => {
   const { data, isLoading, error, mutate } = useSWR(`${ITEMS_URL}/${id}`);
 
   return { data, isLoading, error, mutate };
+};
+
+export const useRefreshItems = () => {
+  const { mutate } = useSWRConfig();
+
+  const refresh = () => {
+    mutate(
+      (key) => typeof key === 'string' && key.startsWith('/items'),
+      undefined,
+      { revalidate: true }
+    );
+  };
+
+  return { refresh };
 };

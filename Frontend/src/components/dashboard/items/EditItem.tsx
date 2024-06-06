@@ -12,10 +12,9 @@ import {
 import { ItemForm } from './ItemForm';
 import { Item } from '@/models/item';
 import { updateItem } from '@/services/items';
-import { useBikes, useParts, useRentItems } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 import { ItemSchemaType } from '@/schemas/item-schema';
-import { useResetSearchParams } from '@/hooks/use-common-actions';
+import { useRefreshItems } from '@/hooks/use-items';
 
 type EditItemProps = {
   item: Item;
@@ -24,18 +23,7 @@ type EditItemProps = {
 };
 
 export const EditItem = ({ item, itemCategory }: EditItemProps) => {
-  const { mutate: refetchBikes } = useBikes();
-  const { mutate: refetchParts } = useParts();
-  const { mutate: refetchRentItems } = useRentItems();
-
-  const { reset } = useResetSearchParams();
-
-  const onRefresh =
-    itemCategory === 'parts'
-      ? refetchParts
-      : itemCategory === 'bikes'
-      ? refetchBikes
-      : refetchRentItems;
+  const { refresh } = useRefreshItems();
 
   const handleEdit = async (data: ItemSchemaType) => {
     try {
@@ -43,8 +31,7 @@ export const EditItem = ({ item, itemCategory }: EditItemProps) => {
         ...data,
         id: item.id,
       });
-      await onRefresh();
-      reset();
+      refresh();
       toast.success('Item updated successfully');
     } catch (error) {
       toast.error('Failed to update item');
