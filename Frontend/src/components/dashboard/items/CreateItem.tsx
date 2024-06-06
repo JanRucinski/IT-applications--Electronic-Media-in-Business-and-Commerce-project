@@ -11,11 +11,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { ItemForm } from './ItemForm';
-import { useBikes, useParts, useRentItems } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 import { createItem } from '@/services/items';
 import { ItemSchemaType } from '@/schemas/item-schema';
-import { useResetSearchParams } from '@/hooks/use-common-actions';
+import { useRefreshItems } from '@/hooks/use-items';
 
 type CreateItemProps = {
   itemCategory: ItemCategory;
@@ -23,24 +22,12 @@ type CreateItemProps = {
 };
 
 export const CreateItem = ({ itemCategory, label }: CreateItemProps) => {
-  const { mutate: refetchBikes } = useBikes();
-  const { mutate: refetchParts } = useParts();
-  const { mutate: refetchRentItems } = useRentItems();
-
-  const { reset } = useResetSearchParams();
-
-  const onRefresh =
-    itemCategory === 'parts'
-      ? refetchParts
-      : itemCategory === 'bikes'
-      ? refetchBikes
-      : refetchRentItems;
+  const { refresh } = useRefreshItems();
 
   const handleCreateItem = async (data: ItemSchemaType) => {
     try {
       await createItem(data);
-      await onRefresh();
-      reset();
+      refresh();
       toast.success('Item added successfully');
     } catch (error) {
       toast.error('Failed to add item');

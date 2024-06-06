@@ -67,7 +67,7 @@ const ContactForm = () => {
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Max" {...field} />
+                      <Input placeholder="Max" {...field} id="firstName" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -80,7 +80,7 @@ const ContactForm = () => {
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Robinson" {...field} />
+                      <Input placeholder="Robinson" {...field} id="lastName" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -94,7 +94,7 @@ const ContactForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="m@example.com" {...field} />
+                    <Input placeholder="m@example.com" {...field} id="email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,6 +110,7 @@ const ContactForm = () => {
                     <Textarea
                       placeholder="Type your message here."
                       {...field}
+                      id="message"
                     />
                   </FormControl>
                   <FormMessage />
@@ -119,6 +120,7 @@ const ContactForm = () => {
             <Button
               type="submit"
               className="w-full disabled:none"
+              id="send-message-btn"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? (

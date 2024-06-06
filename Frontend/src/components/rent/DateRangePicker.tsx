@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { format, addMonths } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
-import { DateRange } from 'react-day-picker';
+import { DateRange, Matcher } from 'react-day-picker';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -16,15 +16,21 @@ import { isMobile } from 'react-device-detect';
 type DateRangePickerProps = React.HTMLAttributes<HTMLDivElement> & {
   date: DateRange | undefined;
   setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
+  reservedDates: string[] | [];
 };
 
 export function DateRangePicker({
   className,
   date,
   setDate,
+  reservedDates,
 }: DateRangePickerProps) {
   const numOfMonths = isMobile ? 1 : 2;
 
+  const disabledDates: Matcher = React.useMemo(
+    () => reservedDates?.map((dateString) => new Date(dateString)),
+    [reservedDates]
+  );
   return (
     <div className={cn('grid gap-2', className)}>
       <Popover>
@@ -58,6 +64,7 @@ export function DateRangePicker({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
+            disabled={disabledDates}
             onSelect={setDate}
             numberOfMonths={numOfMonths}
             fromDate={new Date()}

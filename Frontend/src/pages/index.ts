@@ -13,6 +13,7 @@ import PartDetails from './PartDetails';
 import AdminDashboard from './AdminDashboard';
 import AdminBikes from './AdminBikes';
 import AdminParts from './AdminParts';
+import AdminRental from './AdminRental';
 
 export {
   HomePage,
@@ -30,4 +31,5 @@ export {
   AdminDashboard,
   AdminBikes,
   AdminParts,
+  AdminRental,
 };

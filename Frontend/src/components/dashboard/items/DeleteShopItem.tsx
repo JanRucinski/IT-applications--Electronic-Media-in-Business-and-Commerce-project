@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import axiosInstance from '@/lib/axios-instance';
-import { useBikes, useParts, useRentItems } from '@/hooks/use-items';
+import { useRefreshItems } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 
 type DeleteShopItemProps = {
@@ -26,25 +26,15 @@ type DeleteShopItemProps = {
 export const DeleteShopItem = ({
   itemId,
   children,
-  itemCategory,
   buttonStyles,
 }: DeleteShopItemProps) => {
-  const { mutate: refetchBikes } = useBikes();
-  const { mutate: refetchParts } = useParts();
-  const { mutate: refetchRentItems } = useRentItems();
-
-  const onRefresh =
-    itemCategory === 'parts'
-      ? refetchParts
-      : itemCategory === 'bikes'
-      ? refetchBikes
-      : refetchRentItems;
+  const { refresh } = useRefreshItems();
 
   const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/items/${itemId}`);
+      refresh();
       toast.success('Item deleted successfully');
-      onRefresh();
     } catch (error) {
       toast.error('Failed to delete item');
     }

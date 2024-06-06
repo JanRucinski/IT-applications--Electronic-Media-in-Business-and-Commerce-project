@@ -54,9 +54,9 @@ export const ItemForm = ({ item, onSubmit, categoryName }: ItemFormProps) => {
     defaultValues: {
       name: item?.name || '',
       desc: item?.desc || '',
-      price: item?.price || undefined,
+      price: item?.price || 0.0,
       imageUrl: item?.imageUrl || '',
-      quantity: item?.quantity || undefined,
+      quantity: item?.quantity || 1,
       categoryId: category?.id || undefined,
     },
   });
@@ -68,7 +68,7 @@ export const ItemForm = ({ item, onSubmit, categoryName }: ItemFormProps) => {
         onSubmit={form.handleSubmit(onSubmit)}
         name="itemForm"
       >
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 py-2">
           <FormField
             control={form.control}
             name="name"
@@ -163,7 +163,7 @@ export const ItemForm = ({ item, onSubmit, categoryName }: ItemFormProps) => {
         </div>
         <DialogFooter>
           <DialogTrigger asChild>
-            <Button type="submit">
+            <Button type="submit" className="flex-1">
               {item ? 'Save changes' : 'Create item'}
             </Button>
           </DialogTrigger>

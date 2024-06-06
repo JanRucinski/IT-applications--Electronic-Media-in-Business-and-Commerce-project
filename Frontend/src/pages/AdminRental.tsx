@@ -1,4 +1,3 @@
-import { isMobile } from 'react-device-detect';
 import { useSearchParams } from 'react-router-dom';
 
 import RentItem from '@/components/rent/RentItem';
@@ -7,8 +6,9 @@ import LoadingState from '@/components/shared/LoadingState';
 import { useRentItems } from '@/hooks/use-items';
 import { Item } from '@/models/item';
 import ItemsPagination from '@/components/shared/ItemsPagination';
+import { CreateItem } from '@/components/dashboard/items/CreateItem';
 
-const RentalPage = () => {
+const AdminRental = () => {
   const [params] = useSearchParams();
   const page = params.get('page') ?? 1;
 
@@ -26,8 +26,7 @@ const RentalPage = () => {
     return (
       <div className="flex-1 flex justify-center items-center">
         <h1 className="text-xl md:text-2xl text-center text-sky-950">
-          Seems like there are no rentals available at the moment. Please check
-          back later.
+          No rentals found.
         </h1>
       </div>
     );
@@ -35,21 +34,12 @@ const RentalPage = () => {
 
   return (
     <section className="container">
-      <div className="mt-5 mb-6 md:mb-10 flex justify-between">
-        {!isMobile && (
-          <div className="text-center mx-auto">
-            <h2 className="text-3xl font-semibold">
-              Rent a bike for your next adventure
-            </h2>
-            <p className="text-lg mt-2 text-muted-foreground">
-              Choose from a variety of bikes to rent for your next trip.
-            </p>
-          </div>
-        )}
+      <div className="mt-5 mb-6 md:mb-10 flex justify-end">
+        <CreateItem itemCategory="rental" label="Add a new rental" />
       </div>
       <div className="grid md:grid-cols-4 gap-6 md:gap-10 my-4">
         {data.content.map((item: Item) => (
-          <RentItem key={item.id} item={item} />
+          <RentItem key={item.id} item={item} isAdmin />
         ))}
       </div>
       {data.totalPages > 1 && (
@@ -63,4 +53,4 @@ const RentalPage = () => {
   );
 };
 
-export default RentalPage;
+export default AdminRental;
