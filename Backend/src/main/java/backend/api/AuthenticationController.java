@@ -26,16 +26,15 @@ import java.util.regex.Pattern;
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173/", maxAge = 3600)
 public class AuthenticationController {
-    private final UserService userservice;
+    private final UserService rs;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthenticationController(@Lazy AuthenticationManager authenticationManager,
-                                    JwtUtil jwtUtil, UserService userservice) {
+    public AuthenticationController(@Lazy AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService rs) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        this.userservice = userservice;
+        this.rs = rs;
     }
 
     @ResponseBody
@@ -47,7 +46,7 @@ public class AuthenticationController {
                             new UsernamePasswordAuthenticationToken(loginReq.getUsername(),
                                     loginReq.getPassword()));
             String username = authentication.getName();
-            User user = userservice.findUserByUsernameOrEmail(username);
+            User user = rs.findUserByUsernameOrEmail(username);
             String email = user.getEmail();
             String token = jwtUtil.createToken(user);
             Boolean isAdmin = user.getRole().equals(Role.ROLE_ADMIN);
@@ -67,35 +66,22 @@ public class AuthenticationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
         try {
-            User newUser = createUserFromDTO(userDTO);
-            return ResponseEntity.ok(newUser);
+            if (userDTO.getUsername() == null || !isValidEmail(userDTO.getEmail()) || userDTO.getPassword() == null) {
+                throw new IllegalArgumentException("Username, email, and password must be provided");
+            }
+            User user = new User(userDTO);
+            user.setRole(Role.ROLE_USER);
+            if (userDTO.getActive() != null) {
+                user.setActive(userDTO.getActive());
+            } else {
+                user.setActive(true);
+            }
+            user = rs.addUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new UserDTO(user));
         } catch (Exception e) {
             ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
-    }
-
-    private User createUserFromDTO(UserDTO userDTO) {
-        User user = new User();
-
-        if (userDTO.getUsername() == null || !isValidEmail(userDTO.getEmail()) || userDTO.getPassword() == null) {
-            throw new IllegalArgumentException("Username, email, and password must be provided");
-        }
-
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-
-        user.setRole(Role.ROLE_USER);
-
-        if (userDTO.getFirstName() != null) {
-            user.setFirstName(userDTO.getFirstName());
-        }
-        if (userDTO.getLastName() != null) {
-            user.setLastName(userDTO.getLastName());
-        }
-
-        return userservice.addUser(user);
     }
 
     private boolean isValidEmail(String email) {
@@ -104,5 +90,4 @@ public class AuthenticationController {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
 }

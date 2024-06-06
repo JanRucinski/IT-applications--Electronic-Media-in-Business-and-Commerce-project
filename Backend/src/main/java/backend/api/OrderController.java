@@ -116,7 +116,7 @@ public class OrderController {
                     is.updateItemQuantity(orderItem, false);
                 }
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body(new OrderDTO(order));
+            return ResponseEntity.status(HttpStatus.OK).body(new OrderDTO(order));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

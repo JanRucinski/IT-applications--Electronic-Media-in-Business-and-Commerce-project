@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserService {
     public User addUser(User user) {
         user.setModifiedAt(OffsetDateTime.now());
         user.setCreatedAt(OffsetDateTime.now());
-        if (user.getActive() == null) {
-            user.setActive(true);
-        }
         return userRepository.save(user);
     }
 
@@ -67,12 +64,16 @@ public class UserServiceImpl implements UserService {
         Optional<User> ou = userRepository.findById(id);
         if (ou.isPresent()) {
             ou.get().setUsername(user.getUsername());
-            ou.get().setPassword(user.getPassword());
+            ou.get().setPasswordWithoutEncrypting(user.getPassword());
             ou.get().setEmail(user.getEmail());
             ou.get().setFirstName(user.getFirstName());
             ou.get().setLastName(user.getLastName());
             ou.get().setPhone(user.getPhone());
-            ou.get().setRole(user.getRole());
+            if (user.getRole() != null) {
+                ou.get().setRole(user.getRole());
+            } else {
+                ou.get().setRole(User.Role.ROLE_USER);
+            }
             if (user.getActive() != null) {
                 ou.get().setActive(user.getActive());
             } else {

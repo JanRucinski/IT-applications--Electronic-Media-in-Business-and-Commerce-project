@@ -78,6 +78,10 @@ public class User {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    public void setPasswordWithoutEncrypting(String password) {
+        this.password = password;
+    }
+
     public boolean verifyPassword(String password) {
         return BCrypt.checkpw(password, this.password);
     }
