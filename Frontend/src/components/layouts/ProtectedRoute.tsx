@@ -1,14 +1,11 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { Role } from '@/types/roles';
+import { useAuth } from '@/store/user';
 
 const ProtectedRoute = ({ allowedRoles }: { allowedRoles: Role[] }) => {
-  // todo : Add authentication
-  // !TEMP
-  const user = {
-    role: 'admin' as Role,
-  };
   const location = useLocation();
+  const { user } = useAuth();
 
   if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
   if (!allowedRoles.includes(user.role))

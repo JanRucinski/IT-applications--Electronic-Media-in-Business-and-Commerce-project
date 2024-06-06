@@ -8,16 +8,18 @@ import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import Cart from '../cart/Cart';
 import MobileNav from './MobileNav';
+import { useAuth } from '@/store/user';
 
 type HeaderProps = {
   isAdmin?: boolean;
 };
 
 const Header = ({ isAdmin }: HeaderProps) => {
-  // TODO: Implement authentication
-  const isAuthenticated = false;
-  const navItems = isAdmin ? adminHeaderItems : headerItems;
+  const { user } = useAuth();
   const { pathname } = useLocation();
+
+  const isAuthenticated = user?.token ? true : false;
+  const navItems = isAdmin ? adminHeaderItems : headerItems;
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background">
@@ -46,8 +48,7 @@ const Header = ({ isAdmin }: HeaderProps) => {
           {!isAdmin ? <Cart /> : null}
           {isAuthenticated ? (
             <UserNav
-              name="Murad"
-              surname="Shahbazov"
+              fullName="Mushfig Shahbazov"
               email="shahbazov.msh@gmail.com"
             />
           ) : (
