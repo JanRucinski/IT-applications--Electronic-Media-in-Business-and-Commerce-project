@@ -17,7 +17,8 @@ import {
   AdminBikes,
   AdminParts,
   AdminRental,
-  CheckoutPage,
+  OrderCheckoutPage,
+  RentalCheckoutPage,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import ProtectedRoute from './components/layouts/ProtectedRoute';
@@ -56,7 +57,8 @@ function App() {
         <Route element={<LayoutWithoutHeader />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout/order" element={<OrderCheckoutPage />} />
+          <Route path="/checkout/rental" element={<RentalCheckoutPage />} />
         </Route>
 
         <Route path="/unauthorized" element={<Unauthorized />} />

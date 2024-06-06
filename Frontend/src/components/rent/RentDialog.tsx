@@ -13,6 +13,8 @@ import {
 import { Item } from '@/models/item';
 import { DateRangePicker } from './DateRangePicker';
 import { calculateRentPrice } from '@/utils/helper';
+import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 
 type RentDialogProps = {
   onClose?: () => void;
@@ -24,6 +26,21 @@ const RentDialog = ({ bike }: RentDialogProps) => {
     from: undefined,
     to: undefined,
   });
+
+  const navigate = useNavigate();
+
+  const total = calculateRentPrice(date, bike.price).toFixed(2);
+
+  const handleNavigate = () => {
+    navigate('/checkout/rental', {
+      state: {
+        itemId: bike.id,
+        rentalStart: date?.from && format(date.from, 'yyyy-MM-dd'),
+        rentalEnd: date?.to && format(date.to, 'yyyy-MM-dd'),
+        total,
+      },
+    });
+  };
 
   return (
     <DialogContent className="w-[90%] md:w-full sm:max-w-md min-w-min max-h-[92%] overflow-y-scroll rounded-lg">
@@ -55,11 +72,15 @@ const RentDialog = ({ bike }: RentDialogProps) => {
           reservedDates={bike.reservedDates || []}
         />
         <span className="text-lg md:text-2xl px-2 md:px-6 text-sky-950">
-          {calculateRentPrice(date, bike.price).toFixed(2)}$
+          {total}$
         </span>
       </div>
       <DialogFooter>
-        <Button className="flex-1" disabled={!date || !date.from || !date.to}>
+        <Button
+          className="flex-1"
+          disabled={!date || !date.from || !date.to}
+          onClick={handleNavigate}
+        >
           Checkout
           <ArrowRightIcon size={18} className="ml-2" />
         </Button>

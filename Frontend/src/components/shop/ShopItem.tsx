@@ -23,6 +23,8 @@ type ShopItemProps = {
 const ShopItem = ({ item, itemCategory, isAdmin }: ShopItemProps) => {
   const { isItemInCart, buttonAction, buttonLabel } = useManageCartItem(item);
 
+  const itemDisabled = item.quantity === 0;
+
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>
@@ -51,8 +53,9 @@ const ShopItem = ({ item, itemCategory, isAdmin }: ShopItemProps) => {
             className="flex-1"
             onClick={buttonAction}
             variant={isItemInCart ? 'outline' : 'default'}
+            disabled={itemDisabled}
           >
-            {buttonLabel}
+            {itemDisabled ? 'Not Available' : buttonLabel}
           </Button>
           <Button variant="link" className="text-sky-950" asChild>
             <Link to={`/${itemCategory}/${item.id}`}>Details</Link>

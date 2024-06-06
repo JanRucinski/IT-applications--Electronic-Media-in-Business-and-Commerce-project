@@ -31,7 +31,7 @@ const OrderCheckout = () => {
   );
 
   if (!user) {
-    return <Navigate to="/login?checkout=true" />;
+    return <Navigate to="/login?checkout=order" />;
   }
 
   const handlePayment = async (payment: Payment) => {

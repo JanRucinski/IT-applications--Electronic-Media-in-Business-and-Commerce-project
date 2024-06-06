@@ -14,6 +14,8 @@ type ItemDetailsProps = {
 const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
   const { isItemInCart, buttonAction, buttonLabel } = useManageCartItem(item);
 
+  const itemDisabled = item.quantity === 0;
+
   return (
     <div className="container flex flex-col flex-1">
       <NavBreadcrumb
@@ -51,8 +53,9 @@ const ItemDetails = ({ item, itemCategory }: ItemDetailsProps) => {
               onClick={buttonAction}
               className={isMobile ? 'w-full mb-4' : undefined}
               variant={isItemInCart ? 'outline' : 'default'}
+              disabled={itemDisabled}
             >
-              {buttonLabel}
+              {itemDisabled ? 'Not Available' : buttonLabel}
             </Button>
           </div>
         </section>

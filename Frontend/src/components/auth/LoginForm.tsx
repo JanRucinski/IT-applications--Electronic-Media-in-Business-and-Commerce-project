@@ -46,7 +46,9 @@ export function LoginForm() {
   useEffect(() => {
     if (user) {
       if (checkout) {
-        return navigate(`/checkout?action=${action}`);
+        const path =
+          checkout === 'rental' ? '/checkout/rental' : '/checkout/order';
+        return navigate(path);
       }
       navigate(user.role === 'admin' ? '/dashboard' : '/bikes');
     }

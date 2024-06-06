@@ -1,7 +1,7 @@
 import OrderCheckout from '@/components/checkout/OrderCheckout';
 
-const CheckoutPage = () => {
+const OrderCheckoutPage = () => {
   return <OrderCheckout />;
 };
 
-export default CheckoutPage;
+export default OrderCheckoutPage;
