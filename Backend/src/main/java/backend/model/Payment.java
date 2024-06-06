@@ -108,12 +108,12 @@ public class Payment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(id, payment.id) && Objects.equals(amount, payment.amount) && Objects.equals(provider, payment.provider) && status == payment.status && Objects.equals(createdAt, payment.createdAt) && Objects.equals(modifiedAt, payment.modifiedAt) && Objects.equals(order, payment.order) && Objects.equals(rental, payment.rental);
+        return Objects.equals(id, payment.id) && Objects.equals(amount, payment.amount) && Objects.equals(provider, payment.provider) && status == payment.status && Objects.equals(createdAt, payment.createdAt) && Objects.equals(modifiedAt, payment.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, amount, provider, status, createdAt, modifiedAt, order, rental);
+        return Objects.hash(id, amount, provider, status, createdAt, modifiedAt);
     }
 
     public enum PaymentStatus {

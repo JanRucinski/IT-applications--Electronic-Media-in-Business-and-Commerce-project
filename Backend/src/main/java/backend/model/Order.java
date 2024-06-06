@@ -118,12 +118,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(total, order.total) && status == order.status && Objects.equals(payment, order.payment) && Objects.equals(createdAt, order.createdAt) && Objects.equals(modifiedAt, order.modifiedAt) && Objects.equals(orderItems, order.orderItems);
+        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(total, order.total) && status == order.status && Objects.equals(payment, order.payment) && Objects.equals(createdAt, order.createdAt) && Objects.equals(modifiedAt, order.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, total, status, payment, createdAt, modifiedAt, orderItems);
+        return Objects.hash(id, user, total, status, payment, createdAt, modifiedAt);
     }
 
     public enum OrderStatus {

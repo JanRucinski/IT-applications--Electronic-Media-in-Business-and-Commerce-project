@@ -19,12 +19,12 @@ public class BikeDetails {
     private Double weight;
     @Column(name = "wheel_size")
     private String wheelSize;
-    @OneToOne(mappedBy = "bikeDetails")
-    private Item item;
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
     @Column(name = "modified_at")
     private OffsetDateTime modifiedAt;
+    @OneToOne(mappedBy = "bikeDetails")
+    private Item item;
 
     public BikeDetails() {
     }
@@ -77,14 +77,6 @@ public class BikeDetails {
         this.wheelSize = wheelSize;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
@@ -101,16 +93,24 @@ public class BikeDetails {
         this.modifiedAt = modifiedAt;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BikeDetails that = (BikeDetails) o;
-        return Objects.equals(id, that.id) && Objects.equals(brand, that.brand) && Objects.equals(model, that.model) && Objects.equals(weight, that.weight) && Objects.equals(wheelSize, that.wheelSize) && Objects.equals(item, that.item) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
+        return Objects.equals(id, that.id) && Objects.equals(brand, that.brand) && Objects.equals(model, that.model) && Objects.equals(weight, that.weight) && Objects.equals(wheelSize, that.wheelSize) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, brand, model, weight, wheelSize, item, createdAt, modifiedAt);
+        return Objects.hash(id, brand, model, weight, wheelSize, createdAt, modifiedAt);
     }
 }

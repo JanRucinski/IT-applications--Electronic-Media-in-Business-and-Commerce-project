@@ -167,12 +167,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && role == user.role && Objects.equals(active, user.active) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt) && Objects.equals(orders, user.orders) && Objects.equals(rentals, user.rentals);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phone, user.phone) && role == user.role && Objects.equals(active, user.active) && Objects.equals(createdAt, user.createdAt) && Objects.equals(modifiedAt, user.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email, firstName, lastName, phone, role, active, createdAt, modifiedAt, orders, rentals);
+        return Objects.hash(id, username, password, email, firstName, lastName, phone, role, active, createdAt, modifiedAt);
     }
 
     public enum Role {

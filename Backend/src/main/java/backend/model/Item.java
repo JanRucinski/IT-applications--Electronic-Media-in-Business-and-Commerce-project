@@ -153,11 +153,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(imageUrl, item.imageUrl) && Objects.equals(category, item.category) && Objects.equals(bikeDetails, item.bikeDetails) && Objects.equals(partDetails, item.partDetails) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt) && Objects.equals(orderItems, item.orderItems);
+        return Objects.equals(id, item.id) && Objects.equals(name, item.name) && Objects.equals(desc, item.desc) && Objects.equals(quantity, item.quantity) && Objects.equals(price, item.price) && Objects.equals(imageUrl, item.imageUrl) && Objects.equals(category, item.category) && Objects.equals(bikeDetails, item.bikeDetails) && Objects.equals(partDetails, item.partDetails) && Objects.equals(createdAt, item.createdAt) && Objects.equals(modifiedAt, item.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, quantity, price, imageUrl, category, bikeDetails, partDetails, createdAt, modifiedAt, orderItems);
+        return Objects.hash(id, name, desc, quantity, price, imageUrl, category, bikeDetails, partDetails, createdAt, modifiedAt);
     }
 }

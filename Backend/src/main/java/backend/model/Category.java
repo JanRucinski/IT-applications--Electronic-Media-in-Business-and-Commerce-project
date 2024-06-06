@@ -86,12 +86,12 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(name, category.name) && superCategory == category.superCategory && Objects.equals(createdAt, category.createdAt) && Objects.equals(modifiedAt, category.modifiedAt) && Objects.equals(items, category.items);
+        return Objects.equals(id, category.id) && Objects.equals(name, category.name) && superCategory == category.superCategory && Objects.equals(createdAt, category.createdAt) && Objects.equals(modifiedAt, category.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, superCategory, createdAt, modifiedAt, items);
+        return Objects.hash(id, name, superCategory, createdAt, modifiedAt);
     }
 
     public enum SuperCategory {
