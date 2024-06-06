@@ -8,6 +8,11 @@ export const createOrder = async (order: Order) => {
   return response.data;
 };
 
+export const updateOrder = async (order: Order) => {
+  const response = await axiosInstance.put(ORDERS_URL, order);
+  return response.data;
+};
+
 export const cancelOrder = async (id: string) => {
   const response = await axiosInstance.delete(`${ORDERS_URL}/${id}`);
   return response.data;

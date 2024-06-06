@@ -14,6 +14,7 @@ import AdminDashboard from './AdminDashboard';
 import AdminBikes from './AdminBikes';
 import AdminParts from './AdminParts';
 import AdminRental from './AdminRental';
+import CheckoutPage from './CheckoutPage';
 
 export {
   HomePage,
@@ -32,4 +33,5 @@ export {
   AdminBikes,
   AdminParts,
   AdminRental,
+  CheckoutPage,
 };

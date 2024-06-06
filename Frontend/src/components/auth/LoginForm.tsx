@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -37,14 +37,20 @@ export function LoginForm() {
   });
 
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const checkout = params.get('checkout');
+  const action = params.get('action');
 
   const { setUser, user } = useAuth();
 
   useEffect(() => {
     if (user) {
+      if (checkout) {
+        return navigate(`/checkout?action=${action}`);
+      }
       navigate(user.role === 'admin' ? '/dashboard' : '/bikes');
     }
-  }, [user, navigate]);
+  }, [user, navigate, checkout, action]);
 
   const onSubmit = async (values: LoginSchemaType) => {
     try {
@@ -56,8 +62,6 @@ export function LoginForm() {
         fullName: response.fullName,
         role: isAdmin ? 'admin' : 'user',
       });
-      // const redirect = isAdmin ? '/dashboard' : '/bikes';
-      // navigate(redirect, { replace: true });
     } catch (error) {
       toast.error('Login failed. Please try again.');
     }
@@ -94,7 +98,7 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} type="password" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

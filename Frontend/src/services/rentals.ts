@@ -8,6 +8,11 @@ export const rentItem = async (rental: Rental) => {
   return response.data;
 };
 
+export const updateRent = async () => {
+  const response = await axiosInstance.put(RENTALS_URL);
+  return response.data;
+};
+
 export const cancelRental = async (id: string) => {
   const response = await axiosInstance.delete(`${RENTALS_URL}/${id}`);
   return response.data;

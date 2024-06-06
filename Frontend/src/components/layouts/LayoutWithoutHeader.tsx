@@ -5,7 +5,7 @@ import { Toaster } from 'sonner';
 import { Button } from '../ui/button';
 import Footer from './Footer';
 
-const AuthLayout = () => {
+const LayoutWithoutHeader = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="md:container pt-10 px-4">
@@ -24,4 +24,4 @@ const AuthLayout = () => {
   );
 };
 
-export default AuthLayout;
+export default LayoutWithoutHeader;

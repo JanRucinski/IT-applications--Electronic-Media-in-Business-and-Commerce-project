@@ -54,9 +54,11 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
             <span className="text-2xl px-6 text-sky-950" id="cart-total-price">
               {totalCost.toFixed(2)}$
             </span>
-            <Button className="flex-1" id="checkout-btn">
-              Checkout
-              <ArrowRightIcon size={18} className="ml-2" />
+            <Button className="flex-1" id="checkout-btn" asChild>
+              <Link to="/checkout" onClick={onClose}>
+                Checkout
+                <ArrowRightIcon size={18} className="ml-2" />
+              </Link>
             </Button>
           </div>
         )}

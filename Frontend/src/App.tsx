@@ -17,10 +17,11 @@ import {
   AdminBikes,
   AdminParts,
   AdminRental,
+  CheckoutPage,
 } from './pages';
 import Layout from './components/layouts/Layout';
-import AuthLayout from './components/layouts/AuthLayout';
 import ProtectedRoute from './components/layouts/ProtectedRoute';
+import LayoutWithoutHeader from './components/layouts/LayoutWithoutHeader';
 
 function App() {
   return (
@@ -52,9 +53,10 @@ function App() {
           </Route>
         </Route>
 
-        <Route element={<AuthLayout />}>
+        <Route element={<LayoutWithoutHeader />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
 
         <Route path="/unauthorized" element={<Unauthorized />} />
