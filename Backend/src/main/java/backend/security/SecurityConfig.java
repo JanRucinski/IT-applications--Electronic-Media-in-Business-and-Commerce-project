@@ -62,6 +62,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.DELETE, "/rentals/**").hasRole("ADMIN")
 
             .requestMatchers("/auth/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/auth/users").permitAll()
             .anyRequest().authenticated()
     )
         .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
