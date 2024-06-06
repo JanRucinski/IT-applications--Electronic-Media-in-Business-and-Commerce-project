@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Item } from '@/models/item';
 import { useCartStore } from '@/store/cart';
 import { createCartItem } from '@/utils/helper';
+import { useSearchParams } from 'react-router-dom';
 
 export const useManageCartItem = (item: Item) => {
   const { cart, addItem, removeItem } = useCartStore();
@@ -19,4 +20,14 @@ export const useManageCartItem = (item: Item) => {
     : () => addItem(createCartItem({ ...item }));
 
   return { isItemInCart, buttonLabel, buttonAction, cart };
+};
+
+export const useResetSearchParams = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const reset = () => {
+    setSearchParams({});
+  };
+
+  return { reset, searchParams };
 };

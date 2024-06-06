@@ -11,10 +11,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { ItemForm } from './ItemForm';
-import { useBikes, useParts } from '@/hooks/use-items';
+import { useBikes, useParts, useRentItems } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 import { createItem } from '@/services/items';
 import { ItemSchemaType } from '@/schemas/item-schema';
+import { useResetSearchParams } from '@/hooks/use-common-actions';
 
 type CreateItemProps = {
   itemCategory: ItemCategory;
@@ -24,13 +25,22 @@ type CreateItemProps = {
 export const CreateItem = ({ itemCategory, label }: CreateItemProps) => {
   const { mutate: refetchBikes } = useBikes();
   const { mutate: refetchParts } = useParts();
+  const { mutate: refetchRentItems } = useRentItems();
 
-  const onRefresh = itemCategory === 'parts' ? refetchParts : refetchBikes;
+  const { reset } = useResetSearchParams();
+
+  const onRefresh =
+    itemCategory === 'parts'
+      ? refetchParts
+      : itemCategory === 'bikes'
+      ? refetchBikes
+      : refetchRentItems;
 
   const handleCreateItem = async (data: ItemSchemaType) => {
     try {
       await createItem(data);
-      onRefresh();
+      await onRefresh();
+      reset();
       toast.success('Item added successfully');
     } catch (error) {
       toast.error('Failed to add item');
@@ -52,7 +62,7 @@ export const CreateItem = ({ itemCategory, label }: CreateItemProps) => {
             Fill in the details of the item to add.
           </DialogDescription>
         </DialogHeader>
-        <ItemForm onSubmit={handleCreateItem} />
+        <ItemForm onSubmit={handleCreateItem} categoryName={itemCategory} />
       </DialogContent>
     </Dialog>
   );

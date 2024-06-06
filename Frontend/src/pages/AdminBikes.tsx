@@ -2,7 +2,7 @@ import { CreateItem } from '@/components/dashboard/items/CreateItem';
 import Filter from '@/components/shared/Filter';
 import SearchBar from '@/components/shared/SearchBar';
 import BikesList from '@/components/shop/BikesList';
-import { bikeTypes } from '@/config/filter-options';
+import { bikesCategories } from '@/constants/categories';
 
 const AdminBikes = () => {
   return (
@@ -11,7 +11,8 @@ const AdminBikes = () => {
         <div className="flex justify-center items-center">
           <SearchBar inputStyle="rounded-none rounded-l-lg" />
           <Filter
-            filterOptions={bikeTypes}
+            query="category"
+            filterOptions={bikesCategories}
             buttonStyle="rounded-none rounded-r-lg border-l-0"
           />
         </div>

@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import axiosInstance from '@/lib/axios-instance';
-import { useBikes, useParts } from '@/hooks/use-items';
+import { useBikes, useParts, useRentItems } from '@/hooks/use-items';
 import { ItemCategory } from '@/types/config';
 
 type DeleteShopItemProps = {
@@ -31,8 +31,14 @@ export const DeleteShopItem = ({
 }: DeleteShopItemProps) => {
   const { mutate: refetchBikes } = useBikes();
   const { mutate: refetchParts } = useParts();
+  const { mutate: refetchRentItems } = useRentItems();
 
-  const onRefresh = itemCategory === 'parts' ? refetchParts : refetchBikes;
+  const onRefresh =
+    itemCategory === 'parts'
+      ? refetchParts
+      : itemCategory === 'bikes'
+      ? refetchBikes
+      : refetchRentItems;
 
   const handleDelete = async () => {
     try {

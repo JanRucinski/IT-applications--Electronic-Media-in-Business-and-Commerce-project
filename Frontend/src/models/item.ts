@@ -5,6 +5,7 @@ export type Item = {
   price: number;
   imageUrl: string;
   quantity?: number;
+  categoryId: number;
 };
 
 export type DetailedItem = Item & {

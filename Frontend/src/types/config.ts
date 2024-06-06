@@ -11,4 +11,4 @@ export type BreadcrumbItemType = {
   url: string;
 };
 
-export type ItemCategory = 'bikes' | 'parts';
+export type ItemCategory = 'bikes' | 'parts' | 'rental';

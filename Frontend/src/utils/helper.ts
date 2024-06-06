@@ -31,6 +31,14 @@ export const createBreadcrumb = (itemCategory: ItemCategory) => {
           url: `/${itemCategory}`,
         },
       ];
+    case 'rental': {
+      return [
+        {
+          name: 'Rental',
+          url: `/${itemCategory}`,
+        },
+      ];
+    }
     default:
       return [];
   }
@@ -49,22 +57,4 @@ export const calculateRentPrice = (
   const diffDays = differenceInCalendarDays(to, from);
 
   return (diffDays > 0 ? diffDays : 1) * price;
-};
-
-export const sortByPrice = (items: Item[], order: 'asc' | 'desc') => {
-  return items.sort((a, b) => {
-    if (order === 'asc') {
-      return a.price - b.price;
-    }
-    return b.price - a.price;
-  });
-};
-
-export const sortByName = (items: Item[], order: 'asc' | 'desc') => {
-  return items.sort((a, b) => {
-    if (order === 'asc') {
-      return a.name.localeCompare(b.name);
-    }
-    return b.name.localeCompare(a.name);
-  });
 };

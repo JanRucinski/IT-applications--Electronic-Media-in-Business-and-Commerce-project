@@ -2,7 +2,7 @@ import { CreateItem } from '@/components/dashboard/items/CreateItem';
 import Filter from '@/components/shared/Filter';
 import SearchBar from '@/components/shared/SearchBar';
 import PartsList from '@/components/shop/PartsList';
-import { bikeParts } from '@/config/filter-options';
+import { partsCategories } from '@/constants/categories';
 
 const AdminParts = () => {
   return (
@@ -11,8 +11,9 @@ const AdminParts = () => {
         <div className="flex justify-center items-center">
           <SearchBar inputStyle="rounded-none rounded-l-lg" />
           <Filter
-            filterOptions={bikeParts}
+            filterOptions={partsCategories}
             buttonStyle="rounded-none rounded-r-lg border-l-0"
+            query="category"
           />
         </div>
         <CreateItem itemCategory="parts" label="Add a new bike part" />
