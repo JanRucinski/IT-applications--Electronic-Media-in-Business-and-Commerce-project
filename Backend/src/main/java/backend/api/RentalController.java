@@ -7,6 +7,8 @@ import backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -31,11 +33,13 @@ public class RentalController {
 
     @PostMapping
     public ResponseEntity<RentalDTO> addRental(@RequestBody RentalDTO rentalDTO) {
-        if (rentalDTO == null || rentalDTO.getItemId() == null || rentalDTO.getUserId() == null || rentalDTO.getPayment() == null || rentalDTO.getRentalStart().isAfter(rentalDTO.getRentalEnd())) {
+        if (rentalDTO == null || rentalDTO.getItemId() == null || rentalDTO.getPayment() == null || rentalDTO.getRentalStart().isAfter(rentalDTO.getRentalEnd())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        User user = us.findUserByUsernameOrEmail(username);
         Item item = is.findItemById(rentalDTO.getItemId());
-        User user = us.findUserById(rentalDTO.getUserId());
         if (item == null || user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
