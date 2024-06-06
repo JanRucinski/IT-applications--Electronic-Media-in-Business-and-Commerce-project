@@ -15,23 +15,33 @@ public class BikesPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[1]/div[1]/div/input")
     private WebElement searchField;
 
-    @FindBy(xpath = "//*[@id=\"radix-:rng:\"]")
+    @FindBy(id = "filter-btn")
     private WebElement filterButton;
 
-    @FindBy(xpath = "//*[@id=\"radix-:rnh:\"]/div[3]")
-    private WebElement roadFilter;
-
-    @FindBy(xpath = "//*[@id=\"radix-:rnh:\"]/div[4]")
+    @FindBy(id = "filter-1")
     private WebElement mountainFilter;
 
-    @FindBy(xpath = "//*[@id=\"radix-:rnh:\"]/div[5]")
-    private WebElement gravelFilter;
+    @FindBy(id = "filter-2")
+    private WebElement roadFilter;
 
-    @FindBy(xpath = "//*[@id=\"radix-:rnh:\"]/div[6]")
-    private WebElement cityFilter;
+    @FindBy(id = "filter-3")
+    private WebElement hybridFilter;
 
-    @FindBy(xpath = "//*[@id=\"radix-:rnh:\"]/div[7]")
+    @FindBy(id = "filter-4")
+    private WebElement electricFilter;
+
+    @FindBy(id = "filter-5")
+    private WebElement foldingFilter;
+
+    @FindBy(id = "filter-6")
+    private WebElement cruiserFilter;
+
+    @FindBy(id = "filter-7")
     private WebElement kidsFilter;
+
+    @FindBy(id = "filter-8")
+    private WebElement otherFilter;
+
 
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[1]/div[2]/button")
     private WebElement sortByCombobox;
@@ -62,19 +72,24 @@ public class BikesPage extends BasePage{
         mountainFilter.click();
     }
 
-    public void selectGravelFilter(){
+    public void selectHybridFilter(){
         filterButton.click();
-        gravelFilter.click();
+        hybridFilter.click();
     }
 
-    public void selectCityFilter(){
+    public void selectElectricFilter(){
         filterButton.click();
-        cityFilter.click();
+        electricFilter.click();
     }
 
     public void selectKidsFilter(){
         filterButton.click();
         kidsFilter.click();
+    }
+
+    public void selectOtherFilter(){
+        filterButton.click();
+        otherFilter.click();
     }
 
     public void writeToSearchField(String value){

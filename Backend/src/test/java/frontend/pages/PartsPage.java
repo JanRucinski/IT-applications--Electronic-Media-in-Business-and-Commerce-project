@@ -14,27 +14,35 @@ public class PartsPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[1]/div/input")
     private WebElement searchInputField;
 
-    @FindBy(id = "radix-:r6a:")
+    @FindBy(id = "filter-btn")
     private WebElement filterButton;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r6b:\"]/div[3]")
-    private WebElement framesFilter;
+    @FindBy(id = "filter-btn")
+    private WebElement filterButton;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r6b:\"]/div[4]")
-    private WebElement wheelsFilter;
-
-    @FindBy(xpath = "//*[@id=\"radix-:r6b:\"]/div[5]")
-    private WebElement drivetrainFilter;
-
-    @FindBy(xpath = "//*[@id=\"radix-:r6b:\"]/div[6]")
+    @FindBy(id = "filter-21")
     private WebElement brakesFilter;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r6b:\"]/div[7]")
+    @FindBy(id = "filter-22")
+    private WebElement drivetrainFilter;
+
+    @FindBy(id = "filter-23")
+    private WebElement wheelsFilter;
+
+    @FindBy(id = "filter-24")
+    private WebElement steeringFilter;
+
+    @FindBy(id = "filter-25")
+    private WebElement seatingFilter;
+
+    @FindBy(id = "filter-26")
+    private WebElement pedalsFilter;
+
+    @FindBy(id = "filter-27")
     private WebElement suspensionFilter;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r6b:\"]/div[8]")
-    private WebElement accessoriesFilter;
-
+    @FindBy(id = "filter-28")
+    private WebElement otherFilter;
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[2]")
     private List<WebElement> allParts;
 

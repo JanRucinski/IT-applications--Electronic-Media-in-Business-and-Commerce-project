@@ -18,34 +18,34 @@ public class ContactPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[1]/div/div/div[4]/div/p")
     private WebElement workingHours;
 
-    @FindBy(xpath = "//*[@id=\":rb:-form-item\"]")
+    @FindBy(id = "firstName")
     private WebElement firstNameInputField;
 
-    @FindBy(xpath = "//*[@id=\":rd:-form-item\"]")
+    @FindBy(id = "lastName")
     private WebElement lastNameInputField;
 
-    @FindBy(xpath = "//*[@id=\":rf:-form-item\"]")
+    @FindBy(id = "email")
     private WebElement emailInputField;
 
-    @FindBy(xpath = "//*[@id=\":rh:-form-item\"]")
+    @FindBy(id = "message")
     private WebElement messageInputField;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[2]/div/div[2]/form/button")
+    @FindBy(id = "send-message-btn")
     private WebElement sendMessageButton;
 
     @FindBy(xpath = "//*[@id=\"root\"]/div/section/ol/li")
     private WebElement successfulNotification;
 
-    @FindBy(xpath = "//*[@id=\":r1r:-form-item-message\"]")
+    @FindBy(id = ":rb:-form-item-message")
     private WebElement firstNameErrorMessage;
 
-    @FindBy(xpath = "//*[@id=\":r1t:-form-item-message\"]")
+    @FindBy(id = ":rd:-form-item-message")
     private WebElement lastNameErrorMessage;
 
-    @FindBy(xpath = "//*[@id=\":r1v:-form-item-message\"]")
+    @FindBy(id = ":rf:-form-item-message")
     private WebElement emailErrorMessage;
 
-    @FindBy(xpath = "//*[@id=\":r21:-form-item-message\"]")
+    @FindBy(id = ":rh:-form-item-message")
     private WebElement messageFieldErrorMessage;
 
     public ContactPage(WebDriver driver){

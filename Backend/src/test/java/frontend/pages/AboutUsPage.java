@@ -12,39 +12,39 @@ public class AboutUsPage extends BasePage{
     @FindBy(xpath = "//*[@id=\"root\"]/div/main/section/div[2]/p")
     private WebElement story;
 
-    @FindBy(id = "radix-:r75")
+    @FindBy(id = "radix-:rb:")
     private WebElement question1;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r77:\"]/div")
+    @FindBy(xpath = "//*[@id=\"radix-:rb:\"]/div")
     private WebElement answer1;
 
-    @FindBy(id = "radix-:r79")
+    @FindBy(id = "radix-:rf:")
     private WebElement question2;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r79:\"]/div")
+    @FindBy(xpath = "//*[@id=\"radix-:rf:\"]/div")
     private WebElement answer2;
 
-    @FindBy(id = "radix-:r7d")
+    @FindBy(id = "radix-:rj:")
     private WebElement question3;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r7d:\"]/div")
+    @FindBy(xpath = "//*[@id=\"radix-:rj:\"]/div")
     private WebElement answer3;
 
-    @FindBy(id = "radix-:r7h")
+    @FindBy(id = "radix-:rn:")
     private WebElement question4;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r7h:\"]/div")
+    @FindBy(xpath = "//*[@id=\"radix-:rn::\"]/div")
     private WebElement answer4;
-    @FindBy(id = "radix-:r7l")
+    @FindBy(id = "radix-:rr:")
     private WebElement question5;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r7l:\"]/div")
+    @FindBy(xpath = "//*[@id=\"radix-:rr:\"]/div")
     private WebElement answer5;
 
-    @FindBy(id = "radix-:r7p")
+    @FindBy(id = "radix-:rv:")
     private WebElement question6;
 
-    @FindBy(xpath = "//*[@id=\"radix-:r7p:\"]/div")
+    @FindBy(xpath = "//*[@id=\"radix-:rv:\"]/div")
     private WebElement answer6;
 
 
