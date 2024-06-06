@@ -1,18 +1,13 @@
 package backend.model;
 
-import jakarta.persistence.*;
-
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "part_details")
+
 public class PartDetailsDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "color")
-    private String color;
+    private String material;
+    private String partType;
     private OffsetDateTime createdAt;
     private OffsetDateTime modifiedAt;
 
@@ -21,7 +16,8 @@ public class PartDetailsDTO {
 
     public PartDetailsDTO(PartDetails partDetails) {
         this.id = partDetails.getId();
-        this.color = partDetails.getColor();
+        this.material = partDetails.getMaterial();
+        this.partType = partDetails.getPartType();
         this.createdAt = partDetails.getCreatedAt();
         this.modifiedAt = partDetails.getModifiedAt();
     }
@@ -34,12 +30,20 @@ public class PartDetailsDTO {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
+    public String getMaterial() {
+        return material;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getPartType() {
+        return partType;
+    }
+
+    public void setPartType(String partType) {
+        this.partType = partType;
     }
 
     public OffsetDateTime getCreatedAt() {
@@ -63,11 +67,11 @@ public class PartDetailsDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PartDetailsDTO that = (PartDetailsDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(color, that.color) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
+        return Objects.equals(id, that.id) && Objects.equals(material, that.material) && Objects.equals(partType, that.partType) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, color, createdAt, modifiedAt);
+        return Objects.hash(id, material, partType, createdAt, modifiedAt);
     }
 }

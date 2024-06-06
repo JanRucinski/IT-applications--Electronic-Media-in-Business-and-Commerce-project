@@ -26,8 +26,12 @@ public class RentalDTO {
         this.rentalEnd = rental.getRentalEnd();
         this.total = rental.getTotal();
         this.status = rental.getStatus();
-        this.itemId = rental.getItem().getId();
-        this.userId = rental.getUser().getId();
+        if (rental.getItem() != null) {
+            this.itemId = rental.getItem().getId();
+        }
+        if (rental.getUser() != null) {
+            this.userId = rental.getUser().getId();
+        }
         this.payment = new PaymentDTO(rental.getPayment());
         this.createdAt = rental.getCreatedAt();
         this.modifiedAt = rental.getModifiedAt();

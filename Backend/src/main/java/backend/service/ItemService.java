@@ -19,11 +19,11 @@ public interface ItemService {
 
     Item findItemById(Long id);
 
-    Page<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
+    Page<Item> findAllBikes(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, String brand, String model, Double minWeight, Double maxWeight, String wheelSize, Pageable pageable);
 
-    Page<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
+    Page<Item> findAllParts(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, String material, String partType, Pageable pageable);
 
-    Page<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
+    Page<Item> findAllRentItems(String name, String[] categoryNames, BigDecimal minPrice, BigDecimal maxPrice, String brand, String model, Double minWeight, Double maxWeight, String wheelSize, Pageable pageable);
 
     void updateItemQuantity(OrderItem orderItem, Boolean subtract);
 }

@@ -11,8 +11,14 @@ public class BikeDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "color")
-    private String color;
+    @Column(name = "brand")
+    private String brand;
+    @Column(name = "model")
+    private String model;
+    @Column(name = "weight")
+    private Double weight;
+    @Column(name = "wheel_size")
+    private String wheelSize;
     @OneToOne(mappedBy = "bikeDetails")
     private Item item;
     @Column(name = "created_at")
@@ -25,7 +31,10 @@ public class BikeDetails {
 
     public BikeDetails(BikeDetailsDTO bikeDetailsDTO) {
         this.id = bikeDetailsDTO.getId();
-        this.color = bikeDetailsDTO.getColor();
+        this.brand = bikeDetailsDTO.getBrand();
+        this.model = bikeDetailsDTO.getModel();
+        this.weight = bikeDetailsDTO.getWeight();
+        this.wheelSize = bikeDetailsDTO.getWheelSize();
     }
 
     public Long getId() {
@@ -36,12 +45,36 @@ public class BikeDetails {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public String getWheelSize() {
+        return wheelSize;
+    }
+
+    public void setWheelSize(String wheelSize) {
+        this.wheelSize = wheelSize;
     }
 
     public Item getItem() {
@@ -73,11 +106,11 @@ public class BikeDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BikeDetails that = (BikeDetails) o;
-        return Objects.equals(id, that.id) && Objects.equals(color, that.color) && Objects.equals(item, that.item) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
+        return Objects.equals(id, that.id) && Objects.equals(brand, that.brand) && Objects.equals(model, that.model) && Objects.equals(weight, that.weight) && Objects.equals(wheelSize, that.wheelSize) && Objects.equals(item, that.item) && Objects.equals(createdAt, that.createdAt) && Objects.equals(modifiedAt, that.modifiedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, color, item, createdAt, modifiedAt);
+        return Objects.hash(id, brand, model, weight, wheelSize, item, createdAt, modifiedAt);
     }
 }

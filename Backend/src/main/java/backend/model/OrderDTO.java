@@ -21,7 +21,9 @@ public class OrderDTO {
 
     public OrderDTO(Order order) {
         this.id = order.getId();
-        this.userId = order.getUser().getId();
+        if (order.getUser() != null) {
+            this.userId = order.getUser().getId();
+        }
         this.total = order.getTotal();
         this.status = order.getStatus();
         this.payment = new PaymentDTO(order.getPayment());
