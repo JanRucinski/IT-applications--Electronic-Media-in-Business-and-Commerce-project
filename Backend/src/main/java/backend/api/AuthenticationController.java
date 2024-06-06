@@ -1,6 +1,7 @@
 package backend.api;
 
 import backend.model.User;
+import backend.model.User.Role;
 import backend.model.UserDTO;
 import backend.security.ErrorRes;
 import backend.security.JwtUtil;
@@ -54,8 +55,9 @@ public class AuthenticationController {
       User user = userservice.findUserByUsernameOrEmail(username);
       String email = user.getEmail();
       String token = jwtUtil.createToken(user);
-      Boolean isAdmin = user.getRole().equals("ROLE_ADMIN");
-      LoginRes loginRes = new LoginRes(username, token, isAdmin, email);
+      Boolean isAdmin = user.getRole().equals(Role.ROLE_ADMIN);
+      String fullName = user.getFirstName() + " " + user.getLastName();
+      LoginRes loginRes = new LoginRes(username, token, isAdmin, email, fullName);
       return ResponseEntity.ok(loginRes);
     } catch (BadCredentialsException e) {
       ErrorRes errorResponse = new ErrorRes(HttpStatus.BAD_REQUEST, "Invalid username or password");

@@ -6,12 +6,14 @@ public class LoginRes {
   private String token;
   private Boolean isAdmin;
   private String email;
+  private String fullName;
 
-  public LoginRes(String username, String token, Boolean isAdmin, String email) {
+  public LoginRes(String username, String token, Boolean isAdmin, String email, String fullName) {
     this.username = username;
     this.token = token;
     this.isAdmin = isAdmin;
     this.email = email;
+    this.fullName = fullName;
   }
 
   public String getUsername() {
@@ -44,5 +46,13 @@ public class LoginRes {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
   }
 }
