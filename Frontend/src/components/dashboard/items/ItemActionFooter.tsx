@@ -4,12 +4,12 @@ import { DeleteShopItem } from './DeleteShopItem';
 import { Item } from '@/models/item';
 import { EditItem } from './EditItem';
 
-type ShopItemFooterProps = {
+type ItemActionFooterProps = {
   item: Item;
   itemCategory: ItemCategory;
 };
 
-const ShopItemFooter = ({ item, itemCategory }: ShopItemFooterProps) => {
+const ItemActionFooter = ({ item, itemCategory }: ItemActionFooterProps) => {
   return (
     <CardFooter className="flex justify-between gap-2">
       <EditItem item={item} itemCategory={itemCategory} />
@@ -24,4 +24,4 @@ const ShopItemFooter = ({ item, itemCategory }: ShopItemFooterProps) => {
   );
 };
 
-export default ShopItemFooter;
+export default ItemActionFooter;

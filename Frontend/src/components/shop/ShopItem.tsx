@@ -12,7 +12,7 @@ import { Button } from '../ui/button';
 import { Item } from '@/models/item';
 import { ItemCategory } from '@/types/config';
 import { useManageCartItem } from '@/hooks/use-common-actions';
-import ShopItemFooter from '../dashboard/items/ShopItemFooter';
+import ItemActionFooter from '../dashboard/items/ItemActionFooter';
 
 type ShopItemProps = {
   item: Item;
@@ -44,7 +44,7 @@ const ShopItem = ({ item, itemCategory, isAdmin }: ShopItemProps) => {
         </div>
       </CardContent>
       {isAdmin ? (
-        <ShopItemFooter itemCategory={itemCategory} item={item} />
+        <ItemActionFooter itemCategory={itemCategory} item={item} />
       ) : (
         <CardFooter className="flex justify-between gap-4">
           <Button

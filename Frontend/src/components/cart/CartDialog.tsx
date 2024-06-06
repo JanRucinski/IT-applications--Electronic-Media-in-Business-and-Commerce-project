@@ -51,10 +51,10 @@ export const CartDialog = ({ items, onClose }: CartDialogProps) => {
           </Button>
         ) : (
           <div className="flex-1 mt-4 flex justify-between items-center gap-4">
-            <span className="text-2xl px-6 text-sky-950">
+            <span className="text-2xl px-6 text-sky-950" id="cart-total-price">
               {totalCost.toFixed(2)}$
             </span>
-            <Button className="flex-1">
+            <Button className="flex-1" id="checkout-btn">
               Checkout
               <ArrowRightIcon size={18} className="ml-2" />
             </Button>
