@@ -37,6 +37,7 @@ INSERT INTO bike_details (id, brand, model, weight, wheel_size, created_at, modi
 INSERT INTO part_details (id, material, part_type, created_at, modified_at) VALUES (121, 'Aluminum', 'Brake Set', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
 INSERT INTO part_details (id, material, part_type, created_at, modified_at) VALUES (122, 'Steel', 'Drivetrain', '2024-06-04 00:00:00', '2024-06-04 00:00:00');
 
+
 -- ITEMS
 -- BIKES
 INSERT INTO items (id, name, `desc`, quantity, price, image_url, category_id, bike_details_id, created_at, modified_at) VALUES (101, 'Trek Mountain Bike', 'A high-quality mountain bike.', 10, 1200.00, 'https://rower-sport.pl/environment/cache/images/0_0_productGfx_35140/Marlin4_22_29759_A_Primary.webp', 1, 101, '2024-06-04 00:00:00', '2024-06-04 00:00:00');
@@ -68,9 +69,9 @@ INSERT INTO items (id, name, `desc`, quantity, price, image_url, category_id, cr
 
 -- USERS
 -- Password: password123
-INSERT INTO users (id, username, password, email, first_name, last_name, phone, role, active, created_at, modified_at) VALUES (100, 'johndoe', '$2a$10$yIrxbAfqvQAK4xiqhxI4XeFzAvpHqN83Rw2GZTU5MAbWWg7RnKJ/G', 'john.doe@example.com', 'John', 'Doe', 1234567890, 'ROLE_ADMIN', true, '2024-05-19 10:00:00 +02:00', '2024-05-19 10:00:00 +02:00');
+INSERT INTO users (id, username, password, email, first_name, last_name, phone, role, active, created_at, modified_at) VALUES (100, 'johndoe', '{bcrypt}$2a$10$yIrxbAfqvQAK4xiqhxI4XeFzAvpHqN83Rw2GZTU5MAbWWg7RnKJ/G', 'john.doe@example.com', 'John', 'Doe', 1234567890, 'ROLE_ADMIN', true, '2024-05-19 10:00:00 +02:00', '2024-05-19 10:00:00 +02:00');
 -- Password: password456
-INSERT INTO users (id, username, password, email, first_name, last_name, phone, role, active, created_at, modified_at) VALUES (101, 'janedoe', '$2a$10$g0OtfOU0hxJAHrxeoVQ0c.6SURuLJfFjebgkqDbNN33Kp/3oe.eIa', 'jane.doe@example.com', 'Jane', 'Doe', 9876543210, 'ROLE_USER', true, '2024-05-19 11:00:00 +02:00', '2024-05-19 11:00:00 +02:00');
+INSERT INTO users (id, username, password, email, first_name, last_name, phone, role, active, created_at, modified_at) VALUES (101, 'janedoe', '{bcrypt}$2a$10$g0OtfOU0hxJAHrxeoVQ0c.6SURuLJfFjebgkqDbNN33Kp/3oe.eIa', 'jane.doe@example.com', 'Jane', 'Doe', 9876543210, 'ROLE_USER', true, '2024-05-19 11:00:00 +02:00', '2024-05-19 11:00:00 +02:00');
 
 -- PAYMENTS
 INSERT INTO payments (id, amount, provider, status, created_at, modified_at) VALUES (100, 1400.00, 'PayPal', 'COMPLETED', '2024-05-19 10:40:00 +02:00', '2024-05-19 10:40:00 +02:00');
