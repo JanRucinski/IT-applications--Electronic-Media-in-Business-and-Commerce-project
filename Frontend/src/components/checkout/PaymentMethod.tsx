@@ -43,7 +43,7 @@ export function PaymentMethod({ onSubmit }: PaymentMethodProps) {
   };
 
   return (
-    <Card>
+    <Card className="mb-6 md:mb-4">
       <CardHeader>
         <CardTitle>Payment Method</CardTitle>
         <CardDescription>

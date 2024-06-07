@@ -24,7 +24,7 @@ export const headerItems: NavItem[] = [
 ];
 
 export const authHeaderItems: NavItem[] = [
-  ...headerItems,
+  ...headerItems.slice(0, 3),
   {
     title: 'Orders',
     to: '/orders',
@@ -33,6 +33,7 @@ export const authHeaderItems: NavItem[] = [
     title: 'Rentals',
     to: '/rentals',
   },
+  ...headerItems.slice(3),
 ];
 
 export const adminHeaderItems: NavItem[] = [

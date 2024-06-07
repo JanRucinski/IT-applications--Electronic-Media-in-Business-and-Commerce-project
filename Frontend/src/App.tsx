@@ -19,6 +19,10 @@ import {
   AdminRental,
   OrderCheckoutPage,
   RentalCheckoutPage,
+  OrdersPage,
+  RentsPage,
+  AdminRentals,
+  AdminOrders,
 } from './pages';
 import Layout from './components/layouts/Layout';
 import ProtectedRoute from './components/layouts/ProtectedRoute';
@@ -38,8 +42,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route element={<ProtectedRoute allowedRoles={['user']} />}>
-            <Route path="/orders" element={<div>Users Orders</div>} />
-            <Route path="/rentals" element={<div>Users Rentals</div>} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/rentals" element={<RentsPage />} />
           </Route>
         </Route>
 
@@ -49,8 +53,8 @@ function App() {
             <Route path="bikes" element={<AdminBikes />} />
             <Route path="parts" element={<AdminParts />} />
             <Route path="rental" element={<AdminRental />} />
-            <Route path="rentals" element={<div>Rentals</div>} />
-            <Route path="orders" element={<div>Orders</div>} />
+            <Route path="rentals" element={<AdminRentals />} />
+            <Route path="orders" element={<AdminOrders />} />
           </Route>
         </Route>
 

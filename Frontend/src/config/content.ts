@@ -1,7 +1,7 @@
 export const heroSection = {
   title: 'Welcome to our store',
   description:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit assumendavelit eaque nobis ex minima natus eligendi esse! Rem dolor est Loremipsum dolor sit, amet consectetur adipisicing elit. At culpa rem illumdeleniti deserunt. Lorem ipsum dolor sit amet, consectetur adipisicingelit. Dolor quas a ipsa nostrum.',
+    'Discover top-quality bikes, premium parts, and convenient rentals. Your adventure starts here with expert advice and exceptional service. Join our biking community today!',
   image: './images/hero1.webp',
   imgAlt: 'Hero section',
   ctaButtons: [

@@ -16,6 +16,10 @@ import AdminParts from './AdminParts';
 import AdminRental from './AdminRental';
 import OrderCheckoutPage from './OrderCheckout';
 import RentalCheckoutPage from './RentalCheckout';
+import OrdersPage from './OrdersPage';
+import RentsPage from './RentsPage';
+import AdminOrders from './AdminOrders';
+import AdminRentals from './AdminRentals';
 
 export {
   HomePage,
@@ -36,4 +40,8 @@ export {
   AdminRental,
   OrderCheckoutPage,
   RentalCheckoutPage,
+  OrdersPage,
+  RentsPage,
+  AdminOrders,
+  AdminRentals,
 };

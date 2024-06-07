@@ -3,7 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import MainLogo from './MainLogo';
 import AuthButtons from './AuthButtons';
 import UserNav from './UserNav';
-import { headerItems, adminHeaderItems } from '@/config/navigation';
+import {
+  headerItems,
+  adminHeaderItems,
+  authHeaderItems,
+} from '@/config/navigation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import Cart from '../cart/Cart';
@@ -19,7 +23,11 @@ const Header = ({ isAdmin }: HeaderProps) => {
   const { pathname } = useLocation();
 
   const isAuthenticated = user?.token ? true : false;
-  const navItems = isAdmin ? adminHeaderItems : headerItems;
+  const navItems = isAdmin
+    ? adminHeaderItems
+    : isAuthenticated
+    ? authHeaderItems
+    : headerItems;
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background">
@@ -35,7 +43,13 @@ const Header = ({ isAdmin }: HeaderProps) => {
                   size="link"
                   className={cn(
                     'text-base',
-                    pathname.includes(item.to) && 'text-primary'
+                    pathname === item.to && 'text-primary',
+                    pathname.includes(item.to) &&
+                      item.to === '/bikes' &&
+                      'text-primary',
+                    pathname.includes(item.to) &&
+                      item.to === '/parts' &&
+                      'text-primary'
                   )}
                 >
                   <Link to={item.to}>{item.title}</Link>
@@ -48,8 +62,8 @@ const Header = ({ isAdmin }: HeaderProps) => {
           {!isAdmin ? <Cart /> : null}
           {isAuthenticated ? (
             <UserNav
-              fullName="Mushfig Shahbazov"
-              email="shahbazov.msh@gmail.com"
+              fullName={user?.fullName || ''}
+              email={user?.email || ''}
             />
           ) : (
             <AuthButtons />
