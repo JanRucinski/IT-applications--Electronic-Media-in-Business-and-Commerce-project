@@ -102,4 +102,6 @@ public class ContactPage extends BasePage{
     }
 
     public WebElement getEmailErrorMessage() { return emailErrorMessage;}
+
+    public WebElement getEmailInputField() { return emailInputField;}
 }

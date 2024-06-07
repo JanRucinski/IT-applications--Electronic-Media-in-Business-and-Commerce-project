@@ -6,8 +6,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class LogInPage extends BasePage{
 
-    @FindBy(name = "email")
-    private WebElement emailInputField;
+    @FindBy(name = "username")
+    private WebElement usernameInputField;
 
     @FindBy(name = "password")
     private WebElement passwordInputField;
@@ -24,9 +24,9 @@ public class LogInPage extends BasePage{
         return "http://localhost:5173/login";
     }
 
-    public void fillInEmailField(String email){
-        emailInputField.clear();
-        emailInputField.sendKeys(email);
+    public void fillInUsernameField(String username){
+        usernameInputField.clear();
+        usernameInputField.sendKeys(username);
     }
 
     public void fillInPasswordField(String password){

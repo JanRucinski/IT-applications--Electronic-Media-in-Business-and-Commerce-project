@@ -15,8 +15,8 @@ public class SignUpPage extends BasePage{
     @FindBy(name = "email")
     private WebElement emailField;
 
-    @FindBy(name = "phone")
-    private WebElement phoneField;
+    @FindBy(name = "username")
+    private WebElement usernameField;
 
     @FindBy(name = "password")
     private WebElement passwordfield;
@@ -47,9 +47,9 @@ public class SignUpPage extends BasePage{
         emailField.sendKeys(email);
     }
 
-    public void writeIntoPhoneField(String phone){
-        phoneField.clear();
-        phoneField.sendKeys(phone);
+    public void writeIntoUsernameField(String username){
+        usernameField.clear();
+        usernameField.sendKeys(username);
     }
 
     public void writeIntoPasswordField(String password){

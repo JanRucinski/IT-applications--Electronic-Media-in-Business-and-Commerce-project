@@ -7,7 +7,7 @@ Feature: Adding bike to shopping cart
     Then the bike should be added to the cart
 
   Scenario: User adds part to a shop cart
-    Given the user is on the part buing page
-    When the user searches for "Bontrager Wheels" part
+    Given the user is on the part buying page
+    When the user searches for "Shimano Brake Set" part
     And the user adds the part to the cart
     Then the part should be added to the cart

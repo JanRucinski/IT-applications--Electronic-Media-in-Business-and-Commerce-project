@@ -9,9 +9,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AddToCartSteps extends BaseSteps{
 
@@ -41,7 +45,7 @@ public class AddToCartSteps extends BaseSteps{
         bikesPage.clickShopCartButton();
         ShoppingCartPage shoppingCartPage = new ShoppingCartPage(driver);
         List<WebElement> cartProducts = shoppingCartPage.getAllProductsInCart();
-        Assert.assertTrue(isProductFound(cartProducts, ".//div[1]/h4\"", bikeName), "The product was not found in the cart");
+        Assert.assertEquals(cartProducts.size(), 1, "The product was not found in the cart");
     }
 
     @Then("the part should be added to the cart")
@@ -49,7 +53,7 @@ public class AddToCartSteps extends BaseSteps{
         partsPage.clickShopCartButton();
         ShoppingCartPage shoppingCartPage = new ShoppingCartPage(driver);
         List<WebElement> cartProducts = shoppingCartPage.getAllProductsInCart();
-        Assert.assertTrue(isProductFound(cartProducts, ".//div[1]/h4\"", partName), "The product was not found in the cart");
+        Assert.assertEquals(cartProducts.size(), 1, "The product was not found in the cart");
     }
     private boolean isProductFound(List<WebElement> cartProducts, String locator, String expectedValue){
         System.out.println("EEEE - " + cartProducts.size());
@@ -59,7 +63,7 @@ public class AddToCartSteps extends BaseSteps{
         return false;
     }
 
-    @Given("the user is on the part buing page")
+    @Given("the user is on the part buying page")
     public void visitPartsPage(){
         partsPage = new PartsPage(driver);
         partsPage.visitPage();
@@ -67,6 +71,7 @@ public class AddToCartSteps extends BaseSteps{
 
     @When("the user searches for {string} part")
     public void searchForPart(String partName){
+        partsPage.writeToSearchField(partName);
         this.partName = partName;
     }
 

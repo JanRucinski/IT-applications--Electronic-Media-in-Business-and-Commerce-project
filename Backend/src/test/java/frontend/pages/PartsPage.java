@@ -17,9 +17,6 @@ public class PartsPage extends BasePage{
     @FindBy(id = "filter-btn")
     private WebElement filterButton;
 
-    @FindBy(id = "filter-btn")
-    private WebElement filterButton;
-
     @FindBy(id = "filter-21")
     private WebElement brakesFilter;
 
@@ -58,7 +55,7 @@ public class PartsPage extends BasePage{
 
     public void clickFramesFilter(){
         filterButton.click();
-        framesFilter.click();
+        seatingFilter.click();
     }
 
     public void clickWheelsFilter(){
@@ -83,22 +80,25 @@ public class PartsPage extends BasePage{
 
     public void clickAccessoriesFilter(){
         filterButton.click();
-        accessoriesFilter.click();
+        otherFilter.click();
     }
 
     public void addToCartPartWithGivenName(String productName) {
         WebElement product = findPartByName(productName);
         if (product != null) {
-            WebElement addToCartButton = product.findElement(By.xpath(".//button[text()='Add to cart']")); // Locating the button with specific text
+            WebElement addToCartButton = product.findElement(By.xpath("//*[@id=\"root\"]/div/main/section/div[2]/div/div[3]/button")); // Locating the button with specific text
             addToCartButton.click();
         } else {
             throw new NoSuchElementException("Part with name " + productName + " not found.");
         }
     }
 
+
     private WebElement findPartByName(String bikeName) {
+        System.out.print(allParts.size());
         for (WebElement part : allParts) {
             WebElement productNameElement = part.findElement(By.xpath(".//h3")); // Assuming the product name is located within an <h3> element
+            System.out.print(productNameElement.getText());
             if (bikeName.equals(productNameElement.getText())) {
                 return part;
             }
@@ -106,6 +106,9 @@ public class PartsPage extends BasePage{
         return null;
     }
 
+    public void writeToSearchField(String query){
+        searchInputField.sendKeys(query);
+    }
 
 
 }
