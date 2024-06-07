@@ -4,7 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class ShoppingCartPage extends BasePage{
@@ -14,7 +17,7 @@ public class ShoppingCartPage extends BasePage{
     @FindBy(xpath = "/html/body/div[2]/div/ul")
     WebElement allProductsInCart;
 
-    @FindBy(xpath = "//*[@id=\"radix-:rd1:\"]/div[2]/div/button")
+    @FindBy(id = "checkout-btn")
     WebElement checkoutButton;
 
     public ShoppingCartPage(WebDriver driver){
@@ -31,6 +34,8 @@ public class ShoppingCartPage extends BasePage{
     }
 
     public void clickCheckoutButton(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(checkoutButton));
         checkoutButton.click();
     }
 

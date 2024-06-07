@@ -27,6 +27,13 @@ public class SendMessageSteps extends BaseSteps{
         contactPage.fillInMessage(MESSAGE);
     }
 
+    @And("the user has filled in almost the form fields")
+    public void userFillInAllDataNotComplete(){
+        contactPage.fillInFirstName(FIRST_NAME);
+        contactPage.fillInLastName(LAST_NAME);
+        contactPage.fillInMessage(MESSAGE);
+    }
+
     @When("the user clicks send message button")
     public void clickSendMessageButton(){
         contactPage.clickSendMessageButton();
@@ -39,10 +46,6 @@ public class SendMessageSteps extends BaseSteps{
         Assert.isTrue(contactPage.getSuccessfulNotification().isDisplayed(), "The form wasn't filled in correctly");
     }
 
-    @But("the user forgot about filling in an email form")
-    public void forgetAboutEmailField(){
-        contactPage.getEmailErrorMessage().clear();
-    }
 
     @Then("the error about filling form should be shown")
     public void verifyEmailErrorMessage(){

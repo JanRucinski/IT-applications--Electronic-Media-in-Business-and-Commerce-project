@@ -6,15 +6,20 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.time.Duration;
 
 public class AccountCreationSteps extends BaseSteps{
 
     private SignUpPage signUpPage;
 
-    private final String FIRST_NAME = "Maciej";
-    private final String LAST_NAME = "Mądry";
+    private final String FIRST_NAME = "Test1";
+    private final String LAST_NAME = "Test2";
     private final String EMAIL = "maciek.madry@o2.pl";
-    private final String PHONE_NUMBER = "123456789";
+    private final String USERNAME = "Test1";
     private final String PASSWORD = "password";
 
     @Given("the user is on the sign-up page")
@@ -28,7 +33,7 @@ public class AccountCreationSteps extends BaseSteps{
         signUpPage.writeIntoFirstNameField(FIRST_NAME);
         signUpPage.writeIntoLastNameField(LAST_NAME);
         signUpPage.writeIntoEmailField(EMAIL);
-        signUpPage.writeIntoPhoneField(PHONE_NUMBER);
+        signUpPage.writeIntoUsernameField(USERNAME);
         signUpPage.writeIntoPasswordField(PASSWORD);
     }
 
@@ -37,12 +42,19 @@ public class AccountCreationSteps extends BaseSteps{
         signUpPage.clickSignUpButton();
     }
 
-    @Then("the user can log in using provided credentials"){
-        LogInPage logInPage = new LogInPage(driver);
-        logInPage.visitPage();
-        logInPage.fillInEmailField(EMAIL);
-        logInPage.fillInPasswordField(PASSWORD);
+    @Then("the user logs in using provided credentials")
+    public void userLogsIntoWebsite(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("http://localhost:5173/login"));
 
+        LogInPage logInPage = new LogInPage(driver);
+        logInPage.fillInUsernameField(USERNAME);
+        logInPage.fillInPasswordField(PASSWORD);
+        logInPage.clickLogInButton();
+        String expectedURL = "http://localhost:5173/bikes";
+
+        wait.until(ExpectedConditions.urlToBe(expectedURL));
+        Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
     }
 
 }
